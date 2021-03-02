@@ -60,7 +60,7 @@ export default function Menu({
         <header className={classnames(s.menu, className)}>
             <div className={s.menu__items}>
                 <div className={s.menu__item}>
-                    <Link to="/">
+                    <Link to="/" className={s.menu__logoWrapper}>
                         <div className={s.menu__logo} />
                     </Link>
                 </div>

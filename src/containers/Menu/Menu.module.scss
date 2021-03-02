@@ -26,13 +26,21 @@
 
     &__item {
         width: 33.33%;
+        height: 100%;
+    }
+
+    &__logoWrapper {
+        display: flex;
+        align-items: center;
+        height: 100%;
     }
 
     &__logo {
-        width: 4rem;
-        height: 1.75rem;
+        width: 80px;
+        height: 35px;
         background-size: 100%;
         background-image: var(--i-logo);
+        background-repeat: no-repeat;
     }
 
     &__last-item {
