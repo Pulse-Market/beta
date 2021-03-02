@@ -74,6 +74,7 @@ export function fetchMarkets(filters: MarketFilters, append?: boolean) {
             dispatch(setMarketLoading(true));
             const markets = await getMarkets({
                 ...filters,
+                finalized: false,
                 expired: false,
             });
 
