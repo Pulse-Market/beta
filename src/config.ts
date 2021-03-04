@@ -23,6 +23,5 @@ export const SCALAR_VALUE_DECIMALS = 2;
 
 
 export const DEFAULT_LIMIT = 100;
-export const ANALYTICS_STORAGE_KEY = 'flux_selected_period';
 
 Big.PE = 1000000;
