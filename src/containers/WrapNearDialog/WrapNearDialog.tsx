@@ -15,6 +15,7 @@ import validateWrapNearFormValues from './utils/validateWrapNearFormValues';
 
 import s from './WrapNearDialog.module.scss';
 import Button from '../../components/Button';
+import LabeledTokenSelect from '../LabeledTokenSelect';
 
 interface Props {
     open: boolean;
@@ -93,19 +94,15 @@ export default function WrapNearDialog({
                 <>
                     <p>{trans('wrapNearDialog.description')}</p>
                     <div className={s.token}>
-                        <div className={classnames(s.tokenHeader, s.noMargin)}>
-                            <span>{trans('market.label.youPay')}</span>
-                            <TextButton onClick={handleBalanceClick} className={s.balanceButton}>
-                                {trans('global.balance', {}, true)}: {input.balanceFormatted}
-                            </TextButton>
-                        </div>
-                        <TokenSelect
-                            onTokenSwitch={() => {}}
+                        <LabeledTokenSelect
+                            label={trans('market.label.youPay')}
+                            onTokenSwitch={() => { }}
                             value={formatCollateralToken(formValues.amountIn, input.decimals, decimalsBehindComma)}
                             tokens={[input]}
                             selectedToken={input}
                             onValueChange={(v) => handleInputChange(v)}
                             showPrice={false}
+                            onBalanceClick={handleBalanceClick}
                         />
                     </div>
 
@@ -114,11 +111,9 @@ export default function WrapNearDialog({
                     </div>
 
                     <div className={s.token}>
-                        <div className={s.tokenHeader}>
-                            <span>{trans('market.label.youReceive')}</span>
-                        </div>
-                        <TokenSelect
-                            onTokenSwitch={() => {}}
+                        <LabeledTokenSelect
+                            label={trans('market.label.youReceive')}
+                            onTokenSwitch={() => { }}
                             value={formatCollateralToken(formValues.amountIn, output.decimals, decimalsBehindComma)}
                             tokens={[output]}
                             selectedToken={output}

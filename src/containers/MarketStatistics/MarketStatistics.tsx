@@ -7,8 +7,7 @@ import { PriceHistoryData } from '../../models/PriceHistoryData';
 import ToggleButtons from '../../components/ToggleButtons';
 import trans from '../../translation/trans';
 import { Period } from '../../services/PricesHistoryService';
-import { MarketType, MarketViewModel } from '../../models/Market';
-import market from '../../redux/market/market';
+import { MarketViewModel } from '../../models/Market';
 
 interface Props {
     className?: string;
@@ -22,7 +21,7 @@ export default function MarketStatistics({
     pricesHistory,
     market,
     onPeriodChange,
-    period = Period.All,
+    period = Period.OneDay,
     className = '',
 }: Props): ReactElement {
 

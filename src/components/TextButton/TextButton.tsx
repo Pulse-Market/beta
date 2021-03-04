@@ -7,7 +7,8 @@ import s from './TextButton.module.scss';
 interface Props {
     children: ReactNode;
     className?: string;
-    onClick: () => void;
+    disabled?: boolean;
+    onClick?: () => void;
 }
 
 export default function TextButton({

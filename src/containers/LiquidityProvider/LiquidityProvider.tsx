@@ -12,6 +12,7 @@ import TextButton from '../../components/TextButton';
 import { toCollateralToken } from '../../services/CollateralTokenService';
 import LiquidityOverview from './components/LiquidityOverview/LiquidityOverview';
 import { MarketViewModel } from '../../models/Market';
+import LabeledTokenSelect from '../LabeledTokenSelect';
 
 interface Props {
     market: MarketViewModel;
@@ -56,17 +57,12 @@ export default function LiquidityProvider({
                 })}
             </p>
 
-            <div className={s.header}>
-                <span>{trans('market.label.youPay')}</span>
-                <TextButton onClick={handleBalanceClick} className={s.balanceButton}>
-                    {trans('global.balance', {}, true)}: {market.collateralToken.balanceFormatted}
-                </TextButton>
-            </div>
-
-            <TokenSelect
+            <LabeledTokenSelect
+                label={trans('market.label.youPay')}
+                onBalanceClick={handleBalanceClick}
                 value={formValues.liquidityAmountInFormatted}
                 onValueChange={(v) => handleInChange(v)}
-                onTokenSwitch={() => {}}
+                onTokenSwitch={() => { }}
                 selectedToken={market.collateralToken}
                 tokens={[market.collateralToken]}
                 className={s.tokenSelect}

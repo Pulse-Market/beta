@@ -9,7 +9,7 @@ import Token from '../../components/Token';
 import NonLinkButton from '../../components/NonLinkButton';
 import TokenDropdown from './components/TokenDropdown/TokenDropdown';
 
-interface Props {
+export interface TokenSelectProps {
     className?: string;
     selectedToken: TokenViewModel;
     tokens: TokenViewModel[];
@@ -34,7 +34,7 @@ export default function TokenSelect({
     className = '',
     placeholder = '0',
     disabledInput = false,
-}: Props) {
+}: TokenSelectProps) {
     const [isDropdownOpen, setDropdownOpen] = useState(false);
 
     const handleChangePairClick = useCallback(() => {

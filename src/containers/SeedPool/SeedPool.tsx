@@ -17,6 +17,7 @@ import s from './SeedPool.module.scss';
 import Error from '../../components/Error';
 import TextButton from '../../components/TextButton';
 import { toCollateralToken } from '../../services/CollateralTokenService';
+import LabeledTokenSelect from '../LabeledTokenSelect';
 
 interface Props {
     market: MarketViewModel;
@@ -74,14 +75,10 @@ export default function SeedPool({
                 <p>{trans('seedPool.explanation', { tokenName: mainToken.tokenName })}</p>
 
                 <div className={s.inputWrapper}>
-                    <div className={s.tokenTitles}>
-                        <TextButton onClick={handleBalanceClick} className={s.balanceButton}>
-                            {trans('global.balance', {}, true)}: {mainToken.balanceFormatted}
-                        </TextButton>
-                    </div>
-
-                    <TokenSelect
-                        onTokenSwitch={() => {}}
+                    <LabeledTokenSelect
+                        label=""
+                        onBalanceClick={handleBalanceClick}
+                        onTokenSwitch={() => { }}
                         value={formValues.mainTokenInputFormatted}
                         tokens={[mainToken]}
                         selectedToken={mainToken}

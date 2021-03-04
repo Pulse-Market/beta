@@ -9,6 +9,7 @@ import { MarketViewModel } from '../../models/Market';
 import { getScalarBounds } from '../../services/MarketService';
 import { SeedScalarMarketFormValues } from '../../services/PoolService';
 import trans from '../../translation/trans';
+import LabeledTokenSelect from '../LabeledTokenSelect';
 import TokenSelect from '../TokenSelect';
 
 import s from './SeedScalarMarket.module.scss';
@@ -67,13 +68,9 @@ export default function SeedScalarMarket({
                 </p>
 
                 <div className={s.inputWrapper}>
-                    <div className={s.tokenTitles}>
-                        <TextButton onClick={handleBalanceClick} className={s.balanceButton}>
-                            {trans('global.balance', {}, true)}: {mainToken.balanceFormatted}
-                        </TextButton>
-                    </div>
-
-                    <TokenSelect
+                    <LabeledTokenSelect
+                        label=""
+                        onBalanceClick={handleBalanceClick}
                         onTokenSwitch={() => { }}
                         value={formValues.mainTokenInputFormatted}
                         tokens={[mainToken]}

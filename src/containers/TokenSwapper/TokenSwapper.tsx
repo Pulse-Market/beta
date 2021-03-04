@@ -1,29 +1,27 @@
 import React, { ReactElement, useState } from 'react';
 import classnames from 'classnames';
+import FluxSdk from '@fluxprotocol/amm-sdk';
+import Big from 'big.js';
 
 import Button from '../../components/Button';
 import IconButton from '../../components/IconButton';
 import { TokenViewModel } from '../../models/TokenViewModel';
 import trans from '../../translation/trans';
-import TokenSelect from '../TokenSelect';
 import SwapOverview from './components/SwapOverview/SwapOverview';
-
-import s from './TokenSwapper.module.scss';
 import createDefaultSwapFormValues from './utils/createDefaultSwapFormValues';
 import { SwapFormValues } from '../../services/SwapService';
 import mutateFormValues from './utils/formValuesMutation';
 import { MarketType, MarketViewModel } from '../../models/Market';
 import { toCollateralToken } from '../../services/CollateralTokenService';
 import { BUY, SELL } from '../../config';
-
 import swap from "./../../assets/images/icons/swap.svg";
 import { validateSwapFormValues } from './utils/validateSwapFormValues';
 import Error from '../../components/Error';
-import TextButton from '../../components/TextButton';
 import { getScalarLongShortTokens } from '../../services/MarketService';
 import { SwapType } from '../../services/PriceService';
-import FluxSdk from '@fluxprotocol/amm-sdk';
-import Big from 'big.js';
+import LabeledTokenSelect from '../LabeledTokenSelect';
+
+import s from './TokenSwapper.module.scss';
 
 interface TokenSwapperProps {
     inputs: TokenViewModel[];
@@ -107,32 +105,24 @@ export default function TokenSwapper({
 
     return (
         <form className={classnames(s['token-swapper'], className)}>
-            <div className={s['token-swapper__token']}>
-                <div className={classnames(s.tokenHeader, s.noMargin)}>
-                    <span>{trans('market.label.youPay')}</span>
-                    <TextButton onClick={handleBalanceClick} className={s.balanceButton}>
-                        {trans('global.balance', {}, true)}: {mutation.fromToken.balanceFormatted}
-                    </TextButton>
-                </div>
-                <TokenSelect
-                    onTokenSwitch={handleInputTokenSwitch}
-                    value={mutation.formattedAmountIn}
-                    tokens={inputs}
-                    selectedToken={mutation.fromToken}
-                    onValueChange={(v) => handleAmountInChange(v)}
-                    newPrice={mutation.fromToken.isCollateralToken ? undefined : mutation.newPrices[mutation.fromToken.outcomeId]}
-                />
-            </div>
+            <LabeledTokenSelect
+                label={trans('market.label.youPay')}
+                onBalanceClick={handleBalanceClick}
+                onTokenSwitch={handleInputTokenSwitch}
+                value={mutation.formattedAmountIn}
+                tokens={inputs}
+                selectedToken={mutation.fromToken}
+                onValueChange={(v) => handleAmountInChange(v)}
+                newPrice={mutation.fromToken.isCollateralToken ? undefined : mutation.newPrices[mutation.fromToken.outcomeId]}
+            />
 
             <div className={s['token-swapper__switch-tokens']}>
                 <IconButton onClick={switchTokenPlaces} icon={swap} alt={trans('market.action.switchTokens')} />
             </div>
 
             <div className={s.receiveInputs}>
-                <div className={s.tokenHeader}>
-                    <span>{trans('market.label.youReceive')}</span>
-                </div>
-                <TokenSelect
+                <LabeledTokenSelect
+                    label={trans('market.label.youReceive')}
                     onTokenSwitch={handleOutputTokenSwitch}
                     value={mutation.formattedAmountOut}
                     tokens={outputs}

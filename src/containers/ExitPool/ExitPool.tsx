@@ -6,6 +6,7 @@ import { MarketViewModel } from '../../models/Market';
 import { PoolToken, transformPoolTokenToTokenViewModel } from '../../models/PoolToken';
 import { formatCollateralToken, toCollateralToken } from '../../services/CollateralTokenService';
 import trans from '../../translation/trans';
+import LabeledTokenSelect from '../LabeledTokenSelect';
 import TokenSelect from '../TokenSelect';
 import ExitOverview from './components/ExitOverview/ExitOverview';
 
@@ -54,13 +55,9 @@ export default function ExitPool({
             <p>
                 {trans('exitPool.description')}
             </p>
-            <div className={s.header}>
-                <span>{trans('exitPool.label.lpTokensToRemove')}</span>
-                <TextButton onClick={handleBalanceClick} className={s.balanceButton}>
-                    {trans('global.balance', {}, true)}: {poolToken.balanceFormatted}
-                </TextButton>
-            </div>
-            <TokenSelect
+            <LabeledTokenSelect
+                label={trans('exitPool.label.lpTokensToRemove')}
+                onBalanceClick={handleBalanceClick}
                 value={formValues.amountInFormatted}
                 onValueChange={handleAmountInChange}
                 onTokenSwitch={() => { }}
