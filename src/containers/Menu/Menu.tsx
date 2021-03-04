@@ -13,6 +13,8 @@ import { formatCollateralToken } from "../../services/CollateralTokenService";
 import s from './Menu.module.scss';
 import DarkmodeButton from "../../components/DarkmodeButton";
 import AccountButton from "./components/AccountButton/AccountButton";
+import FluxSdk from "@fluxprotocol/amm-sdk";
+import { TokenViewModel } from "../../models/TokenViewModel";
 
 interface Props {
     className?: string;
@@ -21,6 +23,7 @@ interface Props {
     onProfileClick: () => void;
     onWrapNearClick: () => void;
     account: Account | null;
+    wrappedNear?: TokenViewModel;
 }
 
 export default function Menu({
@@ -29,6 +32,7 @@ export default function Menu({
     onProfileClick,
     onWrapNearClick,
     account,
+    wrappedNear,
     className = ''
 }: Props): ReactElement {
     const [menuAnchorEl, setMenuAnchorEl] = useState<Element | null>(null);
@@ -64,7 +68,6 @@ export default function Menu({
                         <div className={s.menu__logo} />
                     </Link>
                 </div>
-                <div className={s.menu__item} />
                 <div className={classnames(s.menu__item, s['menu__last-item'])}>
                     <DarkmodeButton />
 
@@ -74,6 +77,12 @@ export default function Menu({
 
                     {account && (
                         <>
+                            <Button className={s.wNearBalance} variant="text" onClick={handleWrapNearClick}>
+                                {trans('menu.balance', {
+                                    amount: FluxSdk.utils.formatToken(wrappedNear?.balance ?? '0', 24, 2),
+                                    tokenSymbol: wrappedNear?.tokenSymbol ?? 'wNEAR',
+                                })}
+                            </Button>
                             <AccountButton account={account} onClick={handleMenuClick} />
                             <MuiMenu anchorEl={menuAnchorEl} keepMounted open={Boolean(menuAnchorEl)} onClose={handleMenuClose}>
                                 <MuiMenuItem disabled>{account.accountId}</MuiMenuItem>

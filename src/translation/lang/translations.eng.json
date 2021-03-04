@@ -24,6 +24,7 @@
     "menu.logout": "Logout",
     "menu.profile": "Positions",
     "menu.wrapNear": "Wrap NEAR",
+    "menu.balance": ":amount :tokenSymbol",
 
     "home.title.head": ":appName - Markets",
     "home.title.welcome": "Welcome :username",

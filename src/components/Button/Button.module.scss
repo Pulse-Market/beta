@@ -6,8 +6,10 @@
     font-weight: normal;
     border-radius: 0.5rem;
     text-transform: none;
+    width: auto;
+}
 
-    & :global(.MuiButton-root) {
-        background-color: orange;
-    }
+.button--text {
+    background-color: transparent;
+    color: var(--c-text);
 }

@@ -1,4 +1,5 @@
 import React, { FormEvent, ReactElement, ReactNode } from 'react';
+import classnames from 'classnames';
 import { default as MuiButton } from '@material-ui/core/Button';
 
 import s from './Button.module.scss';
@@ -18,7 +19,11 @@ export default function Button({
     children,
     ...props
 }: ButtonProps) {
+    const classname = classnames(s.button, className, {
+        [s['button--text']]: props.variant === 'text',
+    });
+
     return (
-        <MuiButton {...props} className={`${s.button} ${className}`}>{children}</MuiButton>
+        <MuiButton {...props} className={classname}>{children}</MuiButton>
     );
 }

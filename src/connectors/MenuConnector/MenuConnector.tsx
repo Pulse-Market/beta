@@ -12,6 +12,7 @@ export default function MenuConnector(): ReactElement {
     const dispatch = useDispatch();
     const history = useHistory();
     const accountInfo = useSelector((store: Reducers) => store.account.account);
+    const wrappedNear = useSelector((store: Reducers) => store.account.wrappedNearToken);
 
     useEffect(() => {
         if (!accountInfo) {
@@ -42,6 +43,7 @@ export default function MenuConnector(): ReactElement {
             onProfileClick={handleProfileClick}
             onWrapNearClick={handleWrapNearClick}
             account={accountInfo}
+            wrappedNear={wrappedNear}
         />
     );
 }

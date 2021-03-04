@@ -15,6 +15,7 @@
         width: 100%;
         display: flex;
         align-items: center;
+        justify-content: space-between;
         padding: 0 1.5625rem;
         color: var(--c-text);
 
@@ -25,7 +26,6 @@
     }
 
     &__item {
-        width: 33.33%;
         height: 100%;
     }
 
@@ -47,5 +47,12 @@
         display: flex;
         justify-content: flex-end;
         align-items: center;
+    }
+}
+
+.wNearBalance {
+    display: none;
+    @include for-size($default-bigger-screen-breakpoint) {
+        display: block;
     }
 }
