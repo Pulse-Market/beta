@@ -1,8 +1,6 @@
 import React, { FormEvent } from 'react';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import IconButton from '@material-ui/core/IconButton';
-
-import Button from '../../../../components/Button';
 import { Account } from '../../../../models/Account';
 
 import s from './AccountButton.module.scss';
@@ -20,11 +18,8 @@ export default function AccountButton({
 }: Props) {
     return (
         <div>
-            <Button variant="outlined" endIcon={<AccountCircleIcon />} onClick={onClick} className={s.accountMenuButton}>
-                {account.accountId}
-            </Button>
             <IconButton aria-label="darkmode" onClick={onClick} className={s.iconButton}>
-                <AccountCircleIcon />
+                <MoreHorizIcon />
             </IconButton>
         </div>
     );

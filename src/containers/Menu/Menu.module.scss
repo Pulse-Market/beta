@@ -56,3 +56,22 @@
         display: block;
     }
 }
+
+.accountName {
+    margin-right: 1rem;
+    display: none;
+
+    @include for-size($default-bigger-screen-breakpoint) {
+        display: block;
+    }
+}
+
+.divider {
+    border-right: 1px solid var(--c-text);
+    height: 50%;
+    display: none;
+
+    @include for-size($default-bigger-screen-breakpoint) {
+        display: block;
+    }
+}

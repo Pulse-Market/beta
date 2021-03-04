@@ -1,3 +1,16 @@
+.root {
+    background-color: rgba(var(--c-gray-rgb), 0.3);
+    border-radius: 10px;
+    width: 2.125rem;
+    height: 2.125rem;
+    margin-right: .5rem;
+
+    &:hover {
+        border-radius: 10px;
+    }
+}
+
 .icon {
     color: var(--c-text);
+    height: 1.85rem;
 }

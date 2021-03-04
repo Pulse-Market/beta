@@ -43,7 +43,8 @@ html, body {
 
     --c-red: #{$c-red};
     --c-green: #{$c-green};
-    --c-gray: #{$c-gray};
+    --c-gray: rgb(#{$c-gray-rgb});
+    --c-gray-rgb: #{$c-gray-rgb};
 
     --c-light-purple: #{$c-light-purple};
     --c-pink: #{$c-pink};
@@ -74,7 +75,8 @@ html, body {
 
     --c-red: #{$c-red};
     --c-green: #{$c-green};
-    --c-gray: #{$c-gray};
+    --c-gray: rgb(#{$c-gray-rgb});
+    --c-gray-rgb: #{$c-gray-rgb};
 
     --c-light-purple: #{$c-light-purple};
     --c-pink: #{$c-pink};

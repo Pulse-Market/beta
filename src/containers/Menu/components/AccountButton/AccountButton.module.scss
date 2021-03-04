@@ -12,9 +12,8 @@
 }
 
 .iconButton {
-    color: var(--c-text);
-
-    @include for-size($default-bigger-screen-breakpoint) {
-        display: none;
-    }
+    color: var(--c-white);
+    background-color: var(--c-tertiary);
+    border-radius: 10px;
+    padding: 5px;
 }

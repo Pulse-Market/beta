@@ -22,7 +22,8 @@
     "market.outcomes.short": "SHORT",
 
     "menu.logout": "Logout",
-    "menu.profile": "Positions",
+    "menu.profile": "Profile",
+    "menu.positions": "Positions",
     "menu.wrapNear": "Wrap NEAR",
     "menu.balance": ":amount :tokenSymbol",
 

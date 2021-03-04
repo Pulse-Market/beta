@@ -69,7 +69,9 @@ export default function Menu({
                     </Link>
                 </div>
                 <div className={classnames(s.menu__item, s['menu__last-item'])}>
-                    <DarkmodeButton />
+                    {account === null && (
+                        <DarkmodeButton />
+                    )}
 
                     {account === null && (
                         <Button onClick={onLoginClick}>{trans('auth.login')}</Button>
@@ -77,12 +79,17 @@ export default function Menu({
 
                     {account && (
                         <>
-                            <Button className={s.wNearBalance} variant="text" onClick={handleWrapNearClick}>
-                                {trans('menu.balance', {
-                                    amount: FluxSdk.utils.formatToken(wrappedNear?.balance ?? '0', 24, 2),
-                                    tokenSymbol: wrappedNear?.tokenSymbol ?? 'wNEAR',
-                                })}
-                            </Button>
+                            <span className={s.accountName}>{account.accountId}</span>
+                            <span className={s.divider}></span>
+                            <span>
+                                <Button className={s.wNearBalance} variant="text" onClick={handleWrapNearClick}>
+                                    {trans('menu.balance', {
+                                        amount: FluxSdk.utils.formatToken(wrappedNear?.balance ?? '0', 24, 2),
+                                        tokenSymbol: wrappedNear?.tokenSymbol ?? 'wNEAR',
+                                    })}
+                                </Button>
+                            </span>
+                            <DarkmodeButton />
                             <AccountButton account={account} onClick={handleMenuClick} />
                             <MuiMenu anchorEl={menuAnchorEl} keepMounted open={Boolean(menuAnchorEl)} onClose={handleMenuClose}>
                                 <MuiMenuItem disabled>{account.accountId}</MuiMenuItem>
@@ -93,6 +100,7 @@ export default function Menu({
                             </MuiMenu>
                         </>
                     )}
+
                 </div>
             </div>
         </header>
