@@ -26,6 +26,7 @@ export interface GraphUserBalancesItem {
         finalized: boolean;
         end_time: string;
         payout_numerator: string[] | null;
+        is_scalar: boolean;
         pool: {
             collateral_token_id: string;
             pool_balances: {
@@ -60,6 +61,17 @@ function getMarketStatus(data: GraphUserBalancesItem['market']) {
 }
 
 export function transformToUserBalance(graphData: GraphUserBalancesItem, collateralTokenMetadata: TokenMetadata): UserBalance {
+    const isScalar = graphData.market?.is_scalar;
+    let outcomeTag = graphData.market?.outcome_tags[graphData.outcome_id] ?? '';
+
+    if (isScalar) {
+        if (graphData.outcome_id === 0) {
+            outcomeTag = trans('market.outcomes.short');
+        } else {
+            outcomeTag = trans('market.outcomes.long');
+        }
+    }
+
     return {
         balance: graphData.balance,
         outcomeId: graphData.outcome_id,
@@ -67,7 +79,7 @@ export function transformToUserBalance(graphData: GraphUserBalancesItem, collate
         marketId: graphData.pool_id,
         marketDescription: graphData.market?.description || '',
         marketStatus: getMarketStatus(graphData.market),
-        outcomeTag: graphData.market?.outcome_tags[graphData.outcome_id] || '',
+        outcomeTag,
         collateralTokenMetadata,
         outcomePrice: graphData.market?.pool.pool_balances?.find(pb => pb.outcome_id === graphData.outcome_id)?.price ?? 0,
     }

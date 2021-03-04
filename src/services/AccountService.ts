@@ -58,6 +58,7 @@ export async function getAccountBalancesInfo(accountId: string): Promise<Account
                             balance
                             market {
                                 description
+                                is_scalar
 
                                 pool {
                                     collateral_token_id
@@ -71,6 +72,7 @@ export async function getAccountBalancesInfo(accountId: string): Promise<Account
                             spent
                             market {
                                 description
+                                is_scalar
                                 outcome_tags
                                 end_time
                                 finalized
@@ -141,6 +143,7 @@ export async function getBalancesForMarketByAccount(accountId: string, marketId:
                             spent,
                             market {
                                 outcome_tags
+                                is_scalar
 
                                 pool {
                                     collateral_token_id
@@ -183,6 +186,8 @@ export async function getPoolBalanceForMarketByAccount(accountId: string, market
                             poolId
 
                             market {
+                                is_scalar
+
                                 pool {
                                     collateral_token_id
                                 }
