@@ -77,12 +77,26 @@ export default function Menu({
 
                     {account && (
                         <>
-                            <Button className={s.wNearBalance} variant="text" onClick={handleWrapNearClick}>
-                                {trans('menu.balance', {
-                                    amount: FluxSdk.utils.formatToken(wrappedNear?.balance ?? '0', 24, 2),
-                                    tokenSymbol: wrappedNear?.tokenSymbol ?? 'wNEAR',
-                                })}
-                            </Button>
+                            <div className={s.desktopButtons}>
+                                <span className={s.desktopAccountId}>
+                                    {account.accountId}
+                                </span>
+                                <span className={s.divider} />
+                                <Button className={s.desktopButton} variant="text" onClick={handleWrapNearClick}>
+                                    {trans('menu.balance', {
+                                        amount: FluxSdk.utils.formatToken(wrappedNear?.balance ?? '0', 24, 2),
+                                        tokenSymbol: wrappedNear?.tokenSymbol ?? 'wNEAR',
+                                    })}
+                                </Button>
+                                <span className={s.divider} />
+                                <Button className={s.desktopButton} variant="text" onClick={handleProfileClick}>
+                                    { trans('menu.profile') }
+                                </Button>
+                                <span className={s.divider} />
+                                <Button className={s.desktopButton} variant="text" onClick={handleLogoutClick}>
+                                    {trans('menu.logout')}
+                                </Button>
+                            </div>
                             <AccountButton account={account} onClick={handleMenuClick} />
                             <MuiMenu anchorEl={menuAnchorEl} keepMounted open={Boolean(menuAnchorEl)} onClose={handleMenuClose}>
                                 <MuiMenuItem disabled>{account.accountId}</MuiMenuItem>

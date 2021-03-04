@@ -50,9 +50,19 @@
     }
 }
 
-.wNearBalance {
+.desktopButtons {
     display: none;
+
     @include for-size($default-bigger-screen-breakpoint) {
         display: block;
     }
+}
+
+.desktopAccountId {
+    margin-right: 1rem;
+}
+
+.divider {
+    border-right: 1px solid var(--c-text);
+    height: 100%;
 }
