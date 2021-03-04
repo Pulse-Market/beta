@@ -90,6 +90,7 @@ export async function getWrappedNearToken(): Promise<TokenViewModel> {
 
 export interface WrapNearFormValues {
     amountIn: string;
+    amountInFormatted: string;
     type: 'wrap' | 'unwrap';
 }
 
