@@ -13,3 +13,9 @@
     background-color: transparent;
     color: var(--c-text);
 }
+
+.button--outlined {
+    background-color: transparent;
+    color: var(--c-text);
+    border: 1px solid var(--c-tertiary);
+}

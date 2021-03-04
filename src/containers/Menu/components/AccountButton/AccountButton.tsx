@@ -20,7 +20,7 @@ export default function AccountButton({
 }: Props) {
     return (
         <div>
-            <Button endIcon={<AccountCircleIcon />} onClick={onClick} className={s.accountMenuButton}>
+            <Button variant="outlined" endIcon={<AccountCircleIcon />} onClick={onClick} className={s.accountMenuButton}>
                 {account.accountId}
             </Button>
             <IconButton aria-label="darkmode" onClick={onClick} className={s.iconButton}>

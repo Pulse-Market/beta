@@ -21,6 +21,7 @@ export default function Button({
 }: ButtonProps) {
     const classname = classnames(s.button, className, {
         [s['button--text']]: props.variant === 'text',
+        [s['button--outlined']]: props.variant === 'outlined',
     });
 
     return (
