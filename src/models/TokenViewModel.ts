@@ -90,7 +90,7 @@ export function transformToTokenViewModels(
             price: poolBalance?.price || 0,
             priceSymbol: collateralToken?.tokenSymbol || '$',
             priceSymbolPosition: 'right',
-            tokenSymbol: generateTokenName(outcome),
+            tokenSymbol: type === MarketType.Scalar ? scalarName : generateTokenName(outcome),
             tokenName: type === MarketType.Scalar ? scalarName : outcome,
             poolBalance: poolBalance?.poolBalance || "0",
             poolWeight: poolBalance?.poolWeight || new Big(0),
