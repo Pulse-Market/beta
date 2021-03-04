@@ -140,6 +140,7 @@
     "marketCreation.label.scalarUpperBound": "Upper bound",
     "marketCreation.label.scalarLowerBound": "Lower bound",
     "marketCreation.errors.upperBoundLessThanLowerBound": "Upperbound should be higher than lowerbound",
+    "marketCreation.errors.resolutionDateEarlierThanToday": "Resolution date cannot be in the past",
 
     "marketClosed.description": "This market has ended. Resolution is currently in progress, come back later to claim your earnings.",
 

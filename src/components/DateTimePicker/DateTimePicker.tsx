@@ -7,11 +7,13 @@ interface Props {
     value: Date;
     onChange: (date: Date | null) => void;
     helperText?: string;
+    error?: boolean;
 }
 
 export default function DateTimePicker({
     value,
     helperText,
+    error,
     onChange,
 }: Props): ReactElement {
     return (
@@ -22,6 +24,7 @@ export default function DateTimePicker({
             ampm={false}
             onChange={onChange}
             helperText={helperText}
+            error={error}
         />
     );
 }

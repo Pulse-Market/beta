@@ -17,7 +17,7 @@ import { SelectItem } from '../../components/Select/Select';
 import { TokenMetadata } from '../../models/TokenMetadata';
 import ToggleButtons from '../../components/ToggleButtons';
 import Big from 'big.js';
-import { validateMarketFormValues } from './utils/validateMarkeFormValues';
+import { validateMarketFormValues } from './utils/validateMarketFormValues';
 
 interface Props {
     open: boolean;
@@ -220,7 +220,8 @@ export default function MarketCreationDialog({
                     <DateTimePicker
                         value={formValues.resolutionDate}
                         onChange={handleResolutionDateChange}
-                        helperText={trans('marketCreation.label.helperText.resolutionDate')}
+                        helperText={errors.resolutionDate || trans('marketCreation.label.helperText.resolutionDate')}
+                        error={!!errors.resolutionDate}
                     />
                 </div>
             </form>
