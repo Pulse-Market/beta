@@ -15,11 +15,11 @@ export function signIn() {
     }
 }
 
-export function getEscrowStatus() {
+export function getEscrowStatus(accountId: string) {
     return async (dispatch: Function) => {
         try {
             dispatch(setAccountLoading(true));
-            const escrowStatus = await fetchEscrowStatus();
+            const escrowStatus = await fetchEscrowStatus(accountId);
             dispatch(setEscrowStatus(escrowStatus));
             dispatch(setAccountLoading(false));
 

@@ -37,9 +37,9 @@ export async function getAccountInfo(): Promise<Account | null> {
 }
 
 
-export async function fetchEscrowStatus(): Promise<EscrowStatus[]> {
+export async function fetchEscrowStatus(accountId: string): Promise<EscrowStatus[]> {
     const sdk = await connectSdk();
-    const escrowStatus = await sdk.getEscrowStatus("fluxbux.near");
+    const escrowStatus = await sdk.getEscrowStatus(accountId);
     return transformEscrowStatusViewModel(escrowStatus);
 };
 

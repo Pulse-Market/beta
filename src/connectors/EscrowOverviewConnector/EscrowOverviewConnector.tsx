@@ -14,9 +14,12 @@ export default function EscrowOwerviewConnector({
 }: Props) {
     const dispatch = useDispatch();
     const escrowStatus = useSelector((store: Reducers) => store.account.escrowStatus);
+    const accountId = useSelector((store: Reducers) => store.account.account?.accountId);
 
     useEffect(() => {
-        dispatch(getEscrowStatus())
+        if (accountId) {
+            dispatch(getEscrowStatus(accountId))
+        }
     }, []);
 
     return (
