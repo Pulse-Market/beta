@@ -20,7 +20,6 @@ export default function UserBalancesOverview({
     balances,
     className = '',
 }: Props) {
-    console.log(balances)
     return (
         <section className={classnames(s.root, className)}>
             <header className={s.header}>
