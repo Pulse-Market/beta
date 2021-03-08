@@ -11,6 +11,7 @@ import { TokenMetadata } from '../models/TokenMetadata';
 import { TokenViewModel, transformToMainTokenViewModel, transformToTokenViewModels } from '../models/TokenViewModel';
 import { UserBalance } from '../models/UserBalance';
 import trans from '../translation/trans';
+import cache from '../utils/cache';
 import { getAccountInfo, getBalancesForMarketByAccount } from './AccountService';
 import { createDefaultTokenMetadata, getCollateralTokenMetadata } from './CollateralTokenService';
 import createProtocolContract from './contracts/ProtocolContract';
@@ -299,8 +300,10 @@ export async function burnOutcomeTokensRedeemCollateral(marketId: string, toBurn
 
 export async function getTokenWhiteListWithDefaultMetadata(): Promise<TokenMetadata[]> {
     const sdk = await connectSdk();
-    const whitelist = await sdk.getTokenWhitelist();
-    return whitelist.map(token => createDefaultTokenMetadata(token.tokenId));
+    return cache('token_whitelist', async () => {
+        const whitelist = await sdk.getTokenWhitelist();
+        return whitelist.map(token => createDefaultTokenMetadata(token.tokenId));
+    });
 }
 
 export async function getEscrowStatus(marketId: string, accountId: string): Promise<EscrowStatus[]> {

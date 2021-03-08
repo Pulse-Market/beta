@@ -1,11 +1,12 @@
 import Big from "big.js";
-import { WRAPPED_NEAR_ACCOUNT_ID } from "../config";
+
 import { TokenViewModel } from "../models/TokenViewModel";
 import { formatCollateralToken } from "./CollateralTokenService";
 import { connectSdk } from "./WalletService";
 import wrappedNearIcon from '../assets/images/icons/wrapped-near.svg';
 import nearIcon from '../assets/images/icons/near-icon.png';
 import createWrappedNearContract from "./contracts/WrappedNearContract";
+import cache from "../utils/cache";
 
 export async function getNearToken(): Promise<TokenViewModel> {
     const defaults: TokenViewModel = {
@@ -116,7 +117,9 @@ export async function getWrappedNearStorageBalance(): Promise<{ total: string, a
         }
     }
 
-    return wNearContract.getStorageBalance(accountId);
+    return cache('wrapped_near_storage_balance', async () => {
+        return wNearContract.getStorageBalance(accountId)
+    });
 }
 
 export async function getRequiredWrappedNearStorageDeposit() {
