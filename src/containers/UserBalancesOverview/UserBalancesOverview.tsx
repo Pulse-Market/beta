@@ -48,13 +48,9 @@ export default function UserBalancesOverview({
                                 }
                             };
 
-                            const avgPaidPrice = new Big(info.spent).div(info.balance);
-                            const currentPrice = info.payoutNumerator ? formatCollateralToken(info.payoutNumerator[info.outcomeId], info.collateralTokenMetadata.decimals) : info.outcomePrice;
-                            const profitPercentage = avgPaidPrice.gt("0") ? new Big(currentPrice).minus(avgPaidPrice).div(avgPaidPrice).mul(100).round(2) : new Big("0");
-
                             const profitLinkClassName = classnames(s.link, {
-                                [s.link__green]: profitPercentage.gt("0"),
-                                [s.link__red]: profitPercentage.lt("0")
+                                [s.link__green]: info.profitPercentage.gt("0"),
+                                [s.link__red]: info.profitPercentage.lt("0")
                             });
 
                             return (
@@ -76,7 +72,7 @@ export default function UserBalancesOverview({
                                     </td>
                                     <td>
                                         <Link to={href} className={s.link}>
-                                            {`${avgPaidPrice.round(2).toString()} ${info.collateralTokenMetadata.symbol}`}
+                                            {`${info.avgPaidPrice.round(2).toString()} ${info.collateralTokenMetadata.symbol}`}
                                         </Link>
                                     </td>
                                     <td>
@@ -86,7 +82,7 @@ export default function UserBalancesOverview({
                                     </td>
                                     <td >
                                         <Link to={href} className={profitLinkClassName}>
-                                            {`${profitPercentage.toString()}%`}
+                                            {`${info.profitPercentage.toString()}%`}
                                         </Link>
                                     </td>
                                     <td>

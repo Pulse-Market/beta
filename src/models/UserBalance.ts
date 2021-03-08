@@ -1,3 +1,5 @@
+import Big from "big.js";
+import { formatCollateralToken } from "../services/CollateralTokenService";
 import trans from "../translation/trans";
 import { TokenMetadata } from "./TokenMetadata";
 
@@ -10,6 +12,8 @@ export interface UserBalance {
     outcomeTag: string;
     collateralTokenMetadata: TokenMetadata;
     spent: string;
+    avgPaidPrice: Big;
+    profitPercentage: Big;
     outcomePrice: number;
     payoutNumerator: string[] | null;
 }
@@ -62,6 +66,13 @@ function getMarketStatus(data: GraphUserBalancesItem['market']) {
 export function transformToUserBalance(graphData: GraphUserBalancesItem, collateralTokenMetadata: TokenMetadata): UserBalance {
     const isScalar = graphData.market?.is_scalar;
     let outcomeTag = graphData.market?.outcome_tags[graphData.outcome_id] ?? '';
+    const outcomeId = graphData.outcome_id;
+    const outcomePrice = graphData.market?.pool.pool_balances?.find(pb => pb.outcome_id === graphData.outcome_id)?.price ?? 0;
+    const spent = new Big(graphData.spent ?? '0');
+    const payoutNumerator = graphData.market?.payout_numerator || null;
+    const avgPaidPrice = spent.div(graphData.balance);
+    const currentPrice = payoutNumerator ? formatCollateralToken(payoutNumerator[outcomeId], collateralTokenMetadata.decimals) : outcomePrice.toString();
+    const profitPercentage = avgPaidPrice.gt("0") ? new Big(currentPrice).minus(avgPaidPrice).div(avgPaidPrice).mul(100).round(2) : new Big("0");
 
     if (isScalar) {
         if (graphData.outcome_id === 0) {
@@ -72,15 +83,17 @@ export function transformToUserBalance(graphData: GraphUserBalancesItem, collate
     }
 
     return {
+        avgPaidPrice,
         balance: graphData.balance,
-        outcomeId: graphData.outcome_id,
-        spent: graphData.spent ?? '0',
+        outcomeId,
+        spent: spent.toString(),
         marketId: graphData.pool_id,
         marketDescription: graphData.market?.description || '',
         marketStatus: getMarketStatus(graphData.market),
         outcomeTag,
         collateralTokenMetadata,
-        outcomePrice: graphData.market?.pool.pool_balances?.find(pb => pb.outcome_id === graphData.outcome_id)?.price ?? 0,
-        payoutNumerator: graphData.market?.payout_numerator || null
+        outcomePrice,
+        payoutNumerator,
+        profitPercentage,
     }
 }
