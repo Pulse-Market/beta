@@ -2,7 +2,7 @@ import React, { ReactElement, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Menu from '../../containers/Menu';
-import { getAccount, signIn, signOut } from '../../redux/account/accountActions';
+import { loadAccount, signIn, signOut } from '../../redux/account/accountActions';
 import { setWrappingNearDialogOpen } from '../../redux/dialogs/dialogs';
 import { Reducers } from '../../redux/reducers';
 import { routePaths } from '../../routes';
@@ -16,7 +16,7 @@ export default function MenuConnector(): ReactElement {
 
     useEffect(() => {
         if (!accountInfo) {
-            dispatch(getAccount());
+            dispatch(loadAccount());
         }
     }, [dispatch, accountInfo]);
 

@@ -37,6 +37,7 @@ interface RouterParams {
 export default function MarketPage() {
     const dispatch = useDispatch();
     const account = useSelector((store: Reducers) => store.account.account);
+    const accountLoading = useSelector((store: Reducers) => store.account.loading);
     const market = useSelector((store: Reducers) => store.market.marketDetail);
     const poolToken = useSelector((store: Reducers) => store.market.poolTokenBalance);
     const { marketId } = useParams<RouterParams>();
@@ -106,7 +107,7 @@ export default function MarketPage() {
                             }, {
                                 element: <NotLoggedInConnector />,
                                 label: trans('market.label.notLoggedIn'),
-                                show: account === null,
+                                show: !accountLoading && account === null,
                                 id: '6',
                             }, {
                                 element: <RedeemConnector />,

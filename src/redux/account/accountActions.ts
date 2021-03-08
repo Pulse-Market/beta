@@ -30,7 +30,7 @@ export function getEscrowStatus(accountId: string) {
     }
 }
 
-export function getAccount() {
+export function loadAccount() {
     return async (dispatch: Function) => {
         try {
             dispatch(setAccountLoading(true));
@@ -39,7 +39,7 @@ export function getAccount() {
             dispatch(setAccountLoading(false));
         } catch (error) {
             dispatch(setAccountLoading(false));
-            console.error('[getAccount]', error);
+            console.error('[loadAccount]', error);
         }
     }
 }
