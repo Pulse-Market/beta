@@ -17,6 +17,7 @@ import { TokenViewModel } from "../../models/TokenViewModel";
 
 interface Props {
     className?: string;
+    loading: boolean;
     onLoginClick: () => void;
     onLogoutClick: () => void;
     onProfileClick: () => void;
@@ -31,6 +32,7 @@ export default function Menu({
     onProfileClick,
     onWrapNearClick,
     account,
+    loading,
     wrappedNear,
     className = ''
 }: Props): ReactElement {
@@ -72,7 +74,7 @@ export default function Menu({
                         <DarkmodeButton />
                     )}
 
-                    {account === null && (
+                    {account === null && !loading && (
                         <Button onClick={onLoginClick}>{trans('auth.login')}</Button>
                     )}
 
