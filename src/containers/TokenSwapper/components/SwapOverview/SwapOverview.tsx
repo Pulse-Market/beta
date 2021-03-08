@@ -6,10 +6,8 @@ import Overview from "./../../../../components/Overview";
 import mutateFormValues from './utils/overviewMutation';
 import Big from 'big.js';
 import { formatCollateralToken } from '../../../../services/CollateralTokenService';
-import { MarketType, MarketViewModel } from '../../../../models/Market';
-import { getPricesAfterTrade, SwapType } from '../../../../services/PriceService';
-import FluxSdk from '@fluxprotocol/amm-sdk';
-import { getScalarLongShortTokens } from '../../../../services/MarketService';
+import { MarketViewModel } from '../../../../models/Market';
+import { SwapType } from '../../../../services/PriceService';
 
 interface SwapOverviewProps {
     formValues: SwapFormValues,

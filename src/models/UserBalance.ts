@@ -1,7 +1,5 @@
 import trans from "../translation/trans";
-import { MarketViewModel } from "./Market";
 import { TokenMetadata } from "./TokenMetadata";
-import { TokenViewModel } from "./TokenViewModel";
 
 export interface UserBalance {
     outcomeId: number;

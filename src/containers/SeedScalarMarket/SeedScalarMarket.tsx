@@ -1,20 +1,20 @@
+import React, { useState } from 'react';
+
 import FluxSdk from '@fluxprotocol/amm-sdk';
 import Big from 'big.js';
-import React, { useState } from 'react';
+
 import Button from '../../components/Button';
 import Error from '../../components/Error';
-import TextButton from '../../components/TextButton';
 import LabeledTextInput from '../../compositions/LabeledTextInput';
 import { MarketViewModel } from '../../models/Market';
 import { getScalarBounds } from '../../services/MarketService';
 import { SeedScalarMarketFormValues } from '../../services/PoolService';
 import trans from '../../translation/trans';
 import LabeledTokenSelect from '../LabeledTokenSelect';
-import TokenSelect from '../TokenSelect';
-
-import s from './SeedScalarMarket.module.scss';
 import { createDefaultSeedScalarFormValues } from './utils/createDefaultSeedScalarFormValues';
 import { validateSeedScalarMarket } from './utils/validateSeedScalarMarket';
+
+import s from './SeedScalarMarket.module.scss';
 
 interface Props {
     market: MarketViewModel;

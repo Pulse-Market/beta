@@ -1,7 +1,7 @@
 import BN from "bn.js";
 
 import { Account, Contract } from "near-api-js";
-import { DEFAULT_SLIPPAGE, MAX_GAS, PROTOCOL_ACCOUNT_ID, STORAGE_BASE, STORAGE_DEFAULT } from "../../config";
+import { DEFAULT_SLIPPAGE, MAX_GAS, PROTOCOL_ACCOUNT_ID, STORAGE_DEFAULT } from "../../config";
 import { SwapFormValues } from "../SwapService";
 import { connectWallet } from "../WalletService";
 
@@ -65,7 +65,7 @@ export class TokenContract {
         });
 
         // Each weight is used seperatly in near requiring more storage
-        const storageRequired = new BN('80000000000000000000000').mul(new BN(weightIndication.length));
+        // const storageRequired = new BN('80000000000000000000000').mul(new BN(weightIndication.length));
 
         // @ts-ignore
         return this.contract.ft_transfer_call({

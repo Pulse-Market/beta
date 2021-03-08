@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import Helmet from 'react-helmet';
 import { Route, Switch, useHistory, useLocation } from 'react-router';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 

@@ -4,7 +4,7 @@ import classnames from 'classnames';
 
 import trans from '../../translation/trans';
 import { Link } from 'react-router-dom';
-import { formatCollateralToken, getCollateralTokenMetadata } from '../../services/CollateralTokenService';
+import { formatCollateralToken } from '../../services/CollateralTokenService';
 import { routePaths } from '../../routes';
 import s from './EscrowStatusOverview.module.scss';
 import { EscrowStatus } from '../../models/EscrowStatus';

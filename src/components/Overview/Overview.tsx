@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import trans from '../../translation/trans';
 import s from './Overview.module.scss';
 
 interface KeyValue {

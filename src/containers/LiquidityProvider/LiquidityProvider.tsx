@@ -1,14 +1,11 @@
 import React, { ReactElement, useState } from 'react';
 
 import Button from '../../components/Button';
-import { TokenViewModel } from '../../models/TokenViewModel';
 import trans from '../../translation/trans';
-import TokenSelect from '../TokenSelect';
 import { LiquidityProviderFormValues, validateLiquidityProviderFormValues } from './services/validateLiquidityProviderFormValues';
 
 import s from './LiquidityProvider.module.scss';
 import Error from '../../components/Error';
-import TextButton from '../../components/TextButton';
 import { toCollateralToken } from '../../services/CollateralTokenService';
 import LiquidityOverview from './components/LiquidityOverview/LiquidityOverview';
 import { MarketViewModel } from '../../models/Market';

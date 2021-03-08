@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import Button from '../../components/Button';
 import Error from '../../components/Error';
-import TextButton from '../../components/TextButton';
 import { MarketViewModel } from '../../models/Market';
 import { PoolToken, transformPoolTokenToTokenViewModel } from '../../models/PoolToken';
 import { formatCollateralToken, toCollateralToken } from '../../services/CollateralTokenService';
 import trans from '../../translation/trans';
 import LabeledTokenSelect from '../LabeledTokenSelect';
-import TokenSelect from '../TokenSelect';
 import ExitOverview from './components/ExitOverview/ExitOverview';
 
 import s from './ExitPool.module.scss';

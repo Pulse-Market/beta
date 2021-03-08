@@ -10,12 +10,10 @@ import trans from '../../translation/trans';
 import createDefaultSeedPoolFormValues from './services/createDefaultSeedPoolFormValues';
 import { validateSeedPool } from './services/validateSeedPool';
 import { TokenViewModel } from '../../models/TokenViewModel';
-import TokenSelect from '../TokenSelect';
 import { SeedPoolFormValues } from '../../services/PoolService';
 
 import s from './SeedPool.module.scss';
 import Error from '../../components/Error';
-import TextButton from '../../components/TextButton';
 import { toCollateralToken } from '../../services/CollateralTokenService';
 import LabeledTokenSelect from '../LabeledTokenSelect';
 
@@ -61,10 +59,10 @@ export default function SeedPool({
     }
 
     useEffect(() => {
-        setFormValues({
-            ...formValues,
+        setFormValues((values) => ({
+            ...values,
             outcomePercentages: market.outcomeTokens.map(() => '0')
-        });
+        }));
     }, [market.outcomeTokens]);
 
     const errors = validateSeedPool(formValues, market);

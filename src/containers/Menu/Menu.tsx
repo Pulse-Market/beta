@@ -3,7 +3,6 @@ import classnames from 'classnames';
 import { Link } from "react-router-dom";
 import MuiMenu from '@material-ui/core/Menu';
 import MuiMenuItem from '@material-ui/core/MenuItem';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import Button from "../../components/Button";
 import trans from "../../translation/trans";

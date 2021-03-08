@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import EscrowStatusOverview from '../../containers/EscrowStatusOverview';
-import UserBalancesOverview from '../../containers/UserBalancesOverview';
 import { getEscrowStatus } from '../../redux/account/accountActions';
 import { Reducers } from '../../redux/reducers';
 

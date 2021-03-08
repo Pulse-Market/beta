@@ -32,7 +32,7 @@ const getStoredDarkmode = (): boolean => {
 const checkIfDarkmodeIsActive = (): boolean => {
     const darkmodeInDocumentTheme = document.documentElement.getAttribute(themeAttribute) === 'dark';
     const darkmodeInStorage = getStoredDarkmode();
-    const { userPrefersDark } = userThemePreference();
+    // const { userPrefersDark } = userThemePreference();
 
     return darkmodeInDocumentTheme || darkmodeInStorage || false;
 };
