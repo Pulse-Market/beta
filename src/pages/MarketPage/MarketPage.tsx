@@ -19,9 +19,6 @@ import SeedPoolConnector from '../../connectors/SeedPoolConnector';
 import MarketClosed from '../../containers/MarketClosed';
 import ExitPoolConnector from '../../connectors/ExitPoolConnector';
 import NotLoggedInConnector from '../../connectors/NotLoggedInConnector';
-
-import s from './MarketPage.module.scss';
-import useDisqus from '../../utils/hooks/useDisqus';
 import { setMarketDetail } from '../../redux/market/market';
 import NoWrappedNearCardConnector from '../../connectors/NoWrappedNearCardConnector';
 import { isEligibleForRedeeming } from '../../services/MarketService';
@@ -29,6 +26,9 @@ import RedeemConnector from '../../connectors/RedeemConnector';
 import NotInWhitelistCard from '../../containers/NotInWhitelistCard';
 import { MarketType } from '../../models/Market';
 import SeedScalarMarketConnector from '../../connectors/SeedScalarMarketConnector';
+import MarketCommentsConnector from '../../connectors/MarketCommentsConnector';
+
+import s from './MarketPage.module.scss';
 
 interface RouterParams {
     marketId: string;
@@ -40,7 +40,6 @@ export default function MarketPage() {
     const market = useSelector((store: Reducers) => store.market.marketDetail);
     const poolToken = useSelector((store: Reducers) => store.market.poolTokenBalance);
     const { marketId } = useParams<RouterParams>();
-    useDisqus('marketId', market?.description);
 
     const hasMarketLiquidity = market?.poolTokenInfo.totalSupply !== '0';
     const isExpired = market?.resolutionDate ? market.resolutionDate <= new Date() : false;
@@ -131,7 +130,7 @@ export default function MarketPage() {
             </div>
             <div className={s.comments}>
                 <h2>{trans('global.comments')}</h2>
-                <div id="disqus_thread"></div>
+                <MarketCommentsConnector />
             </div>
         </Page>
     );
