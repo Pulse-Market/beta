@@ -121,7 +121,7 @@ export default function WrapNearDialog({
                 <>
                     <p>{trans('wrapNearDialog.requiredDeposit.description', { amount: FluxSdk.utils.formatToken(requiredDeposit, 24, 5) })}</p>
                     <div className={s.depositButtons}>
-                        <Button className={s.depositCancelButton} onClick={onDepositClick}>{trans('global.action.cancel')}</Button>
+                        <Button className={s.depositCancelButton} onClick={onRequestClose}>{trans('global.action.cancel')}</Button>
                         <Button onClick={onDepositClick}>{trans('wrapNearDialog.requiredDeposit.submit', { amount: FluxSdk.utils.formatToken(requiredDeposit, 24, 5) })}</Button>
                     </div>
                 </>
