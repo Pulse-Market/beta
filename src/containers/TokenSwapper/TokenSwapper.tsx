@@ -13,7 +13,7 @@ import { SwapFormValues } from '../../services/SwapService';
 import mutateFormValues from './utils/formValuesMutation';
 import { MarketType, MarketViewModel } from '../../models/Market';
 import { toCollateralToken } from '../../services/CollateralTokenService';
-import { BUY, SELL } from '../../config';
+import { BUY, SELECTED_OUTCOME_TOKEN_STORAGE_KEY, SELL } from '../../config';
 import swap from "./../../assets/images/icons/swap.svg";
 import { validateSwapFormValues } from './utils/validateSwapFormValues';
 import Error from '../../components/Error';
@@ -22,6 +22,7 @@ import { SwapType } from '../../services/PriceService';
 import LabeledTokenSelect from '../LabeledTokenSelect';
 
 import s from './TokenSwapper.module.scss';
+import { getNumberFromStorage } from '../../utils/storage';
 
 interface TokenSwapperProps {
     inputs: TokenViewModel[];
@@ -40,7 +41,8 @@ export default function TokenSwapper({
     onRequestSwitchPairs,
     className = '',
 }: TokenSwapperProps): ReactElement {
-    const [formValues, setFormValues] = useState(createDefaultSwapFormValues(inputs[0], outputs[0]));
+    const rememberedOutcome = getNumberFromStorage(sessionStorage, `${SELECTED_OUTCOME_TOKEN_STORAGE_KEY}${market.id}`) ?? 0;
+    const [formValues, setFormValues] = useState(createDefaultSwapFormValues(inputs[0], outputs[rememberedOutcome]));
     const collateralToken = inputs.length === 1 ? inputs[0] : outputs[0];
 
     function handleSubmit(mutatedValues: SwapFormValues) {
@@ -48,6 +50,10 @@ export default function TokenSwapper({
     }
 
     function handleInputTokenSwitch(token: TokenViewModel) {
+        if (!token.isCollateralToken) {
+            sessionStorage.setItem(`${SELECTED_OUTCOME_TOKEN_STORAGE_KEY}${market.id}`, token.outcomeId.toString());
+        }
+
         setFormValues({
             ...formValues,
             fromToken: token
@@ -55,6 +61,10 @@ export default function TokenSwapper({
     }
 
     function handleOutputTokenSwitch(token: TokenViewModel) {
+        if (!token.isCollateralToken) {
+            sessionStorage.setItem(`${SELECTED_OUTCOME_TOKEN_STORAGE_KEY}${market.id}`, token.outcomeId.toString());
+        }
+
         setFormValues({
             ...formValues,
             toToken: token
