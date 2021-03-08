@@ -123,6 +123,10 @@ export async function getAccountBalancesInfo(accountId: string): Promise<Account
         const marketBalances = accountBalances.balances.map((data) => {
             const tokenMetadata = tokensMetadata.find(metadata => metadata.collateralTokenId === data.market?.pool.collateral_token_id);
             return transformToUserBalance(data, tokenMetadata!);
+        }).sort((a, b) => {
+            if (a.profitPercentage.gt(b.profitPercentage)) return -1;
+            if (a.profitPercentage.eq(b.profitPercentage)) return 0;
+            return 1;
         });
 
         return {
