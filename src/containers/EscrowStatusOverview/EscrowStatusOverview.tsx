@@ -44,11 +44,11 @@ export default function EscrowStatusOverview({
                                     canGoBack: true,
                                 }
                             };
-                            
+
                             return (
                                 <tr className={s.tableRow} key={`${info.marketId}_${info.type}`}>
-                                    <td className={s.marketDescription}>
-                                        <Link to={href} className={s.link}>
+                                    <td className={s.marketDescriptionCell}>
+                                        <Link to={href} className={classnames(s.link, s.marketDescription)}>
                                             {info.marketDescription}
                                         </Link>
                                     </td>

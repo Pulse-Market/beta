@@ -44,8 +44,8 @@ export default function FeesEarnedOverview({
 
                             return (
                                 <tr className={s.tableRow} key={`${poolToken.marketId}_${poolToken.outcomeId}`}>
-                                    <td className={s.description}>
-                                        <Link to={href} className={s.link}>
+                                    <td className={s.descriptionCell}>
+                                        <Link to={href} className={classnames(s.link, s.description)}>
                                             {poolToken.marketDescription}
                                         </Link>
                                     </td>

@@ -56,11 +56,11 @@ export default function UserBalancesOverview({
                                 [s.link__green]: profitPercentage.gt("0"),
                                 [s.link__red]: profitPercentage.lt("0")
                             });
-                            
+
                             return (
                                 <tr className={s.tableRow} key={`${info.marketId}_${info.outcomeId}`}>
-                                    <td className={s.marketDescription}>
-                                        <Link to={href} className={s.link}>
+                                    <td className={s.marketDescriptionCell}>
+                                        <Link to={href} className={classnames(s.link, s.marketDescription)}>
                                             {info.marketDescription}
                                         </Link>
                                     </td>

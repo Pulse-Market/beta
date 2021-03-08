@@ -60,6 +60,12 @@
     }
 }
 
+.marketDescriptionCell {
+    max-width: 15rem;
+}
+
 .marketDescription {
     text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
