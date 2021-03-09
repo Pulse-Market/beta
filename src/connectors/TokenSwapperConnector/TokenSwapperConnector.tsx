@@ -8,6 +8,7 @@ import { reloadTokens } from '../../redux/market/marketActions';
 import { Reducers } from '../../redux/reducers';
 import createProtocolContract from '../../services/contracts/ProtocolContract';
 import createTokenContract from '../../services/contracts/TokenContract';
+import { buyShares, sellShares } from '../../services/MarketService';
 import { SwapFormValues } from '../../services/SwapService';
 
 const TOKEN_FETCH_INTERVAL_MS = 5000;
@@ -51,11 +52,9 @@ export default function TokenSwapperConnector({
         if (!market) throw new Error("Market is undefined");
 
         if (values.type === BUY) {
-            const token = await createTokenContract(values.fromToken.tokenAccountId || '');
-            return token.buy(market.id, values);
+            buyShares(market, values);
         } else {
-            const protocol = await createProtocolContract();
-            return protocol.sell(market.id, values);
+            sellShares(market, values);
         }
     }
 

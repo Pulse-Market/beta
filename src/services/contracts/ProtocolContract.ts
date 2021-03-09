@@ -11,7 +11,7 @@ class ProtocolContract {
     constructor(account: Account) {
         this.contract = new Contract(account, PROTOCOL_ACCOUNT_ID, {
             viewMethods: [],
-            changeMethods: ['create_market', 'sell', 'exit_pool', 'claim_earnings'],
+            changeMethods: ['create_market', 'exit_pool', 'claim_earnings'],
         });
     }
 
@@ -24,20 +24,6 @@ class ProtocolContract {
             market_id: marketId,
             total_in: totalIn,
         }, MAX_GAS, STORAGE_BASE);
-    }
-
-    async sell(
-        marketId: string,
-        values: SwapFormValues
-    ): Promise<void> {
-        // @ts-ignore
-        this.contract.sell({
-            market_id: marketId,
-            collateral_out: values.amountOut,
-            outcome_target: values.fromToken.outcomeId,
-            max_shares_in: new BN(values.amountIn).mul(new BN("100").add(new BN(DEFAULT_SLIPPAGE))).div(new BN("100")).toString()
-        // }, MAX_GAS, STORAGE_BASE.mul(new BN(2)));
-        }, MAX_GAS, '1');
     }
 
     async claimEarnings(

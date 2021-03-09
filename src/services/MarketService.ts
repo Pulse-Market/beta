@@ -88,6 +88,22 @@ export async function buyShares(market: MarketViewModel, values: SwapFormValues)
     });
 }
 
+export async function sellShares(market: MarketViewModel, values: SwapFormValues) {
+    const sdk = await connectSdk();
+
+    sdk.sell({
+        marketId: market.id,
+        // THIS DOES SLIPPAGE
+        amountIn: values.amountIn,
+        amountOut: values.amountOut,
+        outcomeId: values.fromToken.outcomeId,
+        slippage: DEFAULT_SLIPPAGE,
+    }, {
+        // can be removed once fees aren't funded
+        value: '1',
+    });
+}
+
 export async function getMarketById(marketId: string): Promise<MarketViewModel | null> {
     try {
         const account = await getAccountInfo();

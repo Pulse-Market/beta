@@ -29,31 +29,6 @@ export class TokenContract {
         // @ts-ignore
         return this.contract.ft_balance_of({account_id: accountId});
     }
-
-    async buy(
-        marketId: string,
-        values: SwapFormValues
-    ): Promise<void> {
-        let msg = JSON.stringify({
-            function: "buy",
-            args: {
-                market_id: marketId,
-                outcome_target: values.toToken.outcomeId,
-                min_shares_out: new BN(values.amountOut).mul(new BN("100").sub(new BN(DEFAULT_SLIPPAGE))).div(new BN("100")).toString() // TODO: add default slippage check to amountOut and make it expectedAmountOut
-            }
-        });
-
-        // @ts-ignore
-        return this.contract.ft_transfer_call({
-                receiver_id: PROTOCOL_ACCOUNT_ID,
-                amount: values.amountIn,
-                msg,
-            },
-            MAX_GAS,
-            new BN(1),
-            // STORAGE_BASE.mul(new BN(2)),
-        );
-    }
 }
 
 let tokenInstances: Map<string, TokenContract> = new Map();
