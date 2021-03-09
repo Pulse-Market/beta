@@ -43,7 +43,7 @@ export interface GraphMarketResponse {
             balance: string;
             price: number;
         }[];
-        tokens_info: {
+        tokens_info?: {
             is_pool_token: boolean;
             total_supply: string;
         }[];

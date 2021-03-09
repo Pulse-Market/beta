@@ -176,46 +176,9 @@ export interface MarketFilters {
 
 export async function getMarkets(filters: MarketFilters): Promise<MarketViewModel[]> {
     try {
-        const result = await graphqlClient.query<any>({
-            query: gql`
-                query Markets($expired: Boolean, $categories: [String], $limit: Int, $offset: Int, $finalized: Boolean) {
-                    market: getMarkets(filters: { expired: $expired, categories: $categories, limit: $limit, offset: $offset, finalized: $finalized }) {
-                        items {
-                            pool {
-                                owner
-                                collateral_token_id
-                                pool_balances {
-                                    weight
-                                    outcome_id
-                                    balance
-                                    price
-                                    odds
-                                }
-                            }
-                            description
-                            outcome_tags
-                            end_time
-                            extra_info
-                            finalized
-                            id
-                            volume
-                            categories
-                            is_scalar
-                        }
-                        total
-                    }
-                }
-            `,
-            variables: {
-                expired: filters.expired,
-                categories: filters.categories,
-                limit: filters.limit,
-                offset: filters.offset,
-                finalized: filters.finalized,
-            }
-        });
-
-        const marketsPromises = result.data.market.items.map(async (market: GraphMarketResponse) => {
+        const sdk = await connectSdk();
+        const markets = await sdk.getMarkets(filters);
+        const marketsPromises = markets.items.map(async (market) => {
             const collateralToken = await transformToMainTokenViewModel(market.pool.collateral_token_id);
             return transformToMarketViewModel(market, collateralToken);
         });
