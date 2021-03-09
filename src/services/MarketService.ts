@@ -14,7 +14,6 @@ import trans from '../translation/trans';
 import cache from '../utils/cache';
 import { getAccountInfo, getBalancesForMarketByAccount } from './AccountService';
 import { createDefaultTokenMetadata, getCollateralTokenMetadata } from './CollateralTokenService';
-import createProtocolContract from './contracts/ProtocolContract';
 import { graphqlClient } from './GraphQLService';
 import { SwapFormValues } from './SwapService';
 import { connectSdk } from './WalletService';
@@ -289,8 +288,8 @@ export async function getResolutingMarkets(): Promise<MarketViewModel[]> {
 }
 
 export async function claimEarningsForMarket(marketId: string) {
-    const protocol = await createProtocolContract();
-    protocol.claimEarnings(marketId);
+    const sdk = await connectSdk();
+    sdk.claimEarnings(marketId);
 }
 
 export function formatResolutionDate(resolutionDate: Date): string {

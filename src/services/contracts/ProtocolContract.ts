@@ -8,7 +8,7 @@ class ProtocolContract {
     constructor(account: Account) {
         this.contract = new Contract(account, PROTOCOL_ACCOUNT_ID, {
             viewMethods: [],
-            changeMethods: ['create_market', 'exit_pool', 'claim_earnings'],
+            changeMethods: ['create_market', 'exit_pool'],
         });
     }
 
@@ -21,15 +21,6 @@ class ProtocolContract {
             market_id: marketId,
             total_in: totalIn,
         }, MAX_GAS, STORAGE_BASE);
-    }
-
-    async claimEarnings(
-        marketId: string,
-    ): Promise<void> {
-        // @ts-ignore
-        this.contract.claim_earnings({
-            market_id: marketId,
-        }, MAX_GAS, STORAGE_BASE)
     }
 }
 
