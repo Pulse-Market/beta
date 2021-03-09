@@ -105,51 +105,14 @@ export async function sellShares(market: MarketViewModel, values: SwapFormValues
 
 export async function getMarketById(marketId: string): Promise<MarketViewModel | null> {
     try {
-        const account = await getAccountInfo();
-        const accountId = account?.accountId;
-        const result = await graphqlClient.query({
-            query: gql`
-                query Market($id: String!, $accountId: String) {
-                    market: getMarket(marketId: $id) {
-                        pool {
-                            owner
-                            collateral_token_id
-                            pool_balances {
-                                weight
-                                outcome_id
-                                balance
-                                price
-                                odds
-                            }
-                            tokens_info {
-                                is_pool_token
-                                total_supply
-                            }
-                        }
-                        description
-                        outcome_tags
-                        end_time
-                        extra_info
-                        finalized
-                        id
-                        volume
-                        categories
-                        creation_date
-                        payout_numerator
-                        is_scalar
-                        claimed_earnings(accountId: $accountId) {
-                            payout
-                        }
-                    }
-                }
-            `,
-            variables: {
-                id: marketId,
-                accountId,
-            }
-        });
+        const sdk = await connectSdk();
+        let accountId: string | undefined = undefined;
 
-        const market: GraphMarketResponse = result.data.market;
+        if (sdk.isSignedIn()) {
+            accountId = sdk.getAccountId();
+        }
+
+        const market = await sdk.getMarketById(marketId, accountId);
         let balances: UserBalance[] = [];
 
         if (accountId) {
@@ -157,7 +120,6 @@ export async function getMarketById(marketId: string): Promise<MarketViewModel |
         }
 
         const collateralToken = await transformToMainTokenViewModel(market.pool.collateral_token_id, accountId);
-
         return transformToMarketViewModel(market, collateralToken, balances);
     } catch (error) {
         console.error('[getMarketById]', error);
