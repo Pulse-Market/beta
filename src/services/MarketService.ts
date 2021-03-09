@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 import FluxSdk from '@fluxprotocol/amm-sdk';
 import Big from 'big.js';
 import { format } from 'date-fns';
-import { DEFAULT_FEE } from '../config';
+import { DEFAULT_FEE, DEFAULT_SLIPPAGE } from '../config';
 import { Account } from '../models/Account';
 import { EscrowStatus, transformEscrowStatusViewModel } from "../models/EscrowStatus";
 
@@ -16,6 +16,7 @@ import { getAccountInfo, getBalancesForMarketByAccount } from './AccountService'
 import { createDefaultTokenMetadata, getCollateralTokenMetadata } from './CollateralTokenService';
 import createProtocolContract from './contracts/ProtocolContract';
 import { graphqlClient } from './GraphQLService';
+import { SwapFormValues } from './SwapService';
 import { connectSdk } from './WalletService';
 
 export interface MarketFormValues {
@@ -69,6 +70,22 @@ export async function createMarket(values: MarketFormValues): Promise<void> {
     } catch (error) {
         console.error('[createMarket]', error);
     }
+}
+
+export async function buyShares(market: MarketViewModel, values: SwapFormValues): Promise<void> {
+    const sdk = await connectSdk();
+
+    sdk.buy({
+        marketId: market.id,
+        collateralTokenId: market.collateralTokenId,
+        outcomeId: values.toToken.outcomeId,
+        amountIn: values.amountIn,
+        amountOut: values.amountOut,
+        slippage: DEFAULT_SLIPPAGE,
+    }, {
+        // can be removed once fees aren't funded
+        value: '1'
+    });
 }
 
 export async function getMarketById(marketId: string): Promise<MarketViewModel | null> {
