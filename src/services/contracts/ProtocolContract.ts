@@ -1,8 +1,5 @@
-import BN from "bn.js";
-
 import { Account, Contract } from "near-api-js";
-import { DEFAULT_SLIPPAGE, MAX_GAS, PROTOCOL_ACCOUNT_ID, STORAGE_BASE } from "../../config";
-import { SwapFormValues } from "../SwapService";
+import { MAX_GAS, PROTOCOL_ACCOUNT_ID, STORAGE_BASE } from "../../config";
 import { connectWallet } from "../WalletService";
 
 class ProtocolContract {

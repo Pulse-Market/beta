@@ -6,8 +6,6 @@ import TokenSwapperLoader from '../../containers/TokenSwapper/TokenSwapperLoader
 import { TokenViewModel } from '../../models/TokenViewModel';
 import { reloadTokens } from '../../redux/market/marketActions';
 import { Reducers } from '../../redux/reducers';
-import createProtocolContract from '../../services/contracts/ProtocolContract';
-import createTokenContract from '../../services/contracts/TokenContract';
 import { buyShares, sellShares } from '../../services/MarketService';
 import { SwapFormValues } from '../../services/SwapService';
 

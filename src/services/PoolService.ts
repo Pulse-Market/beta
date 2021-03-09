@@ -1,9 +1,7 @@
 import FluxSdk from "@fluxprotocol/amm-sdk";
 import Big from "big.js";
 import { MarketViewModel } from "../models/Market";
-import { calcDistributionHint } from "../utils/calcDistributionHint";
 import createProtocolContract from "./contracts/ProtocolContract";
-import createTokenContract from "./contracts/TokenContract";
 import { getScalarBounds } from "./MarketService";
 import { connectSdk } from "./WalletService";
 
