@@ -51,21 +51,21 @@ function createOutcomes(values: MarketFormValues): string[] {
 
 export async function createMarket(values: MarketFormValues): Promise<void> {
     try {
-        const protocol = await createProtocolContract();
+        const sdk = await connectSdk();
         const outcomes = createOutcomes(values);
         const tokenMetadata = await getCollateralTokenMetadata(values.collateralTokenId);
         const formattedFee = 100 / DEFAULT_FEE;
 
-        protocol.createMarket(
-            values.description,
+        sdk.createMarket({
+            description: values.description,
+            endDate: values.resolutionDate,
+            extraInfo: values.extraInfo,
             outcomes,
-            values.categories,
-            values.resolutionDate,
-            new Big(`1e${tokenMetadata.decimals}`).div(formattedFee).toString(),
-            values.collateralTokenId,
-            values.extraInfo,
-            values.type === MarketType.Scalar,
-        );
+            categories: values.categories,
+            collateralTokenId: values.collateralTokenId,
+            isScalar: values.type === MarketType.Scalar,
+            swapFee: new Big(`1e${tokenMetadata.decimals}`).div(formattedFee).toString(),
+        });
     } catch (error) {
         console.error('[createMarket]', error);
     }

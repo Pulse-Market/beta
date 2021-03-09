@@ -15,33 +15,6 @@ class ProtocolContract {
         });
     }
 
-    async createMarket(
-        description: string,
-        outcomes: string[],
-        categories: string[],
-        endDate: Date,
-        swapFee: string,
-        collateralTokenId: string,
-        extraInfo: string,
-        isScalar: boolean,
-    ): Promise<void> {
-        // Each outcome is stored seperatly in near requiring more storage
-        const storageRequired = STORAGE_BASE.mul(new BN(outcomes.length));
-
-        // @ts-ignore
-        this.contract.create_market({
-            description,
-            extra_info: extraInfo,
-            outcomes: outcomes.length,
-            outcome_tags: outcomes,
-            end_time: endDate.getTime().toString(),
-            collateral_token_id: collateralTokenId,
-            categories,
-            swap_fee: swapFee,
-            is_scalar: isScalar,
-        }, MAX_GAS, storageRequired);
-    }
-
     async exitPool(
         marketId: string,
         totalIn: string,
