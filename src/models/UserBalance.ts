@@ -70,7 +70,7 @@ export function transformToUserBalance(graphData: GraphUserBalancesItem, collate
     const outcomePrice = graphData.market?.pool.pool_balances?.find(pb => pb.outcome_id === graphData.outcome_id)?.price ?? 0;
     const spent = new Big(graphData.spent ?? '0');
     const payoutNumerator = graphData.market?.payout_numerator || null;
-    const avgPaidPrice = spent.div(graphData.balance);
+    const avgPaidPrice = graphData.balance === '0' ? new Big(0) : spent.div(graphData.balance);
     const currentPrice = payoutNumerator ? formatCollateralToken(payoutNumerator[outcomeId], collateralTokenMetadata.decimals) : outcomePrice.toString();
     const profitPercentage = avgPaidPrice.gt("0") ? new Big(currentPrice).minus(avgPaidPrice).div(avgPaidPrice).mul(100).round(2) : new Big("0");
 
