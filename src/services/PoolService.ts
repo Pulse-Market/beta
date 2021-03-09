@@ -1,7 +1,6 @@
 import FluxSdk from "@fluxprotocol/amm-sdk";
 import Big from "big.js";
 import { MarketViewModel } from "../models/Market";
-import createProtocolContract from "./contracts/ProtocolContract";
 import { getScalarBounds } from "./MarketService";
 import { connectSdk } from "./WalletService";
 
@@ -42,7 +41,6 @@ export async function joinPool(marketId: string, amountIn: string, tokenId: stri
 }
 
 export async function exitPool(marketId: string, amountIn: string) {
-    const token = await createProtocolContract();
-
-    token.exitPool(marketId, amountIn);
+    const sdk = await connectSdk();
+    sdk.exitPool(marketId, amountIn);
 }
