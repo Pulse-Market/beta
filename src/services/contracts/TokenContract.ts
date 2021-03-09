@@ -54,30 +54,6 @@ export class TokenContract {
             // STORAGE_BASE.mul(new BN(2)),
         );
     }
-
-    async addLiquidity(marketId: string, amountIn: string, weightIndication: string[] = []) {
-        let msg = JSON.stringify({
-            function: "add_liquidity",
-            args: {
-                market_id: marketId,
-                weight_indication: weightIndication.length ? weightIndication : null,
-            }
-        });
-
-        // Each weight is used seperatly in near requiring more storage
-        // const storageRequired = new BN('80000000000000000000000').mul(new BN(weightIndication.length));
-
-        // @ts-ignore
-        return this.contract.ft_transfer_call({
-            receiver_id: PROTOCOL_ACCOUNT_ID,
-            amount: amountIn,
-            msg
-        },
-            MAX_GAS,
-            new BN(1),
-            // storageRequired,
-        );
-    }
 }
 
 let tokenInstances: Map<string, TokenContract> = new Map();

@@ -5,6 +5,7 @@ import { calcDistributionHint } from "../utils/calcDistributionHint";
 import createProtocolContract from "./contracts/ProtocolContract";
 import createTokenContract from "./contracts/TokenContract";
 import { getScalarBounds } from "./MarketService";
+import { connectSdk } from "./WalletService";
 
 export interface SeedPoolFormValues {
     outcomePercentages: string[];
@@ -19,27 +20,27 @@ export interface SeedScalarMarketFormValues {
 }
 
 export async function seedPool(marketId: string, tokenId: string, values: SeedPoolFormValues) {
-    const token = await createTokenContract(tokenId);
-    const weights = calcDistributionHint(values.outcomePercentages.map(p => Number(p)));
+    const sdk = await connectSdk();
 
-    token.addLiquidity(
-        marketId,
-        values.mainTokenInput,
-        weights.map(outcome => outcome.toString())
-    );
+    sdk.addLiquidity(tokenId, marketId, values.mainTokenInput, values.outcomePercentages.map(p => Number(p)), {
+        value: '1',
+    });
 }
 
 export async function seedScalarMarket(market: MarketViewModel, values: SeedScalarMarketFormValues) {
-    const token = await createTokenContract(market.collateralTokenId);
+    const sdk = await connectSdk();
     const bounds = getScalarBounds(market.outcomeTokens.map(token => token.bound));
     const weightsInPercentages = FluxSdk.utils.calcScalarDistributionPercentages(values.initialValue, bounds.lowerBound, bounds.upperBound);
-    const weights = FluxSdk.utils.calcDistributionHint(weightsInPercentages).map(v => v.toString());
-    return token.addLiquidity(market.id, values.mainTokenInput, weights);
+    return sdk.addLiquidity(market.collateralTokenId, market.id, values.mainTokenInput, weightsInPercentages, {
+        value: '1',
+    });
 }
 
 export async function joinPool(marketId: string, amountIn: string, tokenId: string) {
-    const token = await createTokenContract(tokenId);
-    token.addLiquidity(marketId, amountIn);
+    const sdk = await connectSdk();
+    sdk.addLiquidity(tokenId, marketId, amountIn, undefined, {
+        value: '1',
+    });
 }
 
 export async function exitPool(marketId: string, amountIn: string) {
