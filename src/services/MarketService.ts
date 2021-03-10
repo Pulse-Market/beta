@@ -1,4 +1,3 @@
-import { gql } from '@apollo/client';
 import FluxSdk from '@fluxprotocol/amm-sdk';
 import Big from 'big.js';
 import { format } from 'date-fns';
@@ -6,15 +5,14 @@ import { DEFAULT_FEE, DEFAULT_SLIPPAGE } from '../config';
 import { Account } from '../models/Account';
 import { EscrowStatus, transformEscrowStatusViewModel } from "../models/EscrowStatus";
 
-import { GraphMarketResponse, MarketCategory, MarketType, MarketViewModel, transformToMarketViewModel } from '../models/Market';
+import { MarketCategory, MarketType, MarketViewModel, transformToMarketViewModel } from '../models/Market';
 import { TokenMetadata } from '../models/TokenMetadata';
 import { TokenViewModel, transformToMainTokenViewModel, transformToTokenViewModels } from '../models/TokenViewModel';
 import { UserBalance } from '../models/UserBalance';
 import trans from '../translation/trans';
 import cache from '../utils/cache';
-import { getAccountInfo, getBalancesForMarketByAccount } from './AccountService';
+import { getBalancesForMarketByAccount } from './AccountService';
 import { createDefaultTokenMetadata, getCollateralTokenMetadata } from './CollateralTokenService';
-import { graphqlClient } from './GraphQLService';
 import { SwapFormValues } from './SwapService';
 import { connectSdk } from './WalletService';
 
@@ -92,7 +90,6 @@ export async function sellShares(market: MarketViewModel, values: SwapFormValues
 
     sdk.sell({
         marketId: market.id,
-        // THIS DOES SLIPPAGE
         amountIn: values.amountIn,
         amountOut: values.amountOut,
         outcomeId: values.fromToken.outcomeId,
@@ -154,31 +151,8 @@ export async function getMarkets(filters: MarketFilters): Promise<MarketViewMode
 
 export async function getMarketOutcomeTokens(marketId: string, collateralToken?: TokenViewModel, account?: Account): Promise<TokenViewModel[]> {
     try {
-        const result = await graphqlClient.query({
-            fetchPolicy: 'network-only',
-            query: gql`
-                query MarketOutcomeTokens($id: String!) {
-                    market: getMarket(marketId: $id) {
-                        pool {
-                            pool_balances {
-                                weight
-                                outcome_id
-                                balance
-                                price
-                                odds
-                            }
-                        }
-                        outcome_tags
-                        is_scalar
-                    }
-                }
-            `,
-            variables: {
-                id: marketId,
-            }
-        });
-
-        const market: GraphMarketResponse = result.data.market;
+        const sdk = await connectSdk();
+        const result = await sdk.getMarketPoolBalances(marketId);
         const accountId = account?.accountId;
         let balances: UserBalance[] = [];
 
@@ -187,10 +161,10 @@ export async function getMarketOutcomeTokens(marketId: string, collateralToken?:
         }
 
         return transformToTokenViewModels(
-            market.outcome_tags,
-            market.pool.pool_balances as any,
+            result.outcome_tags,
+            result.pool.pool_balances as any,
             balances,
-            market.is_scalar ? MarketType.Scalar : MarketType.Categorical,
+            result.is_scalar ? MarketType.Scalar : MarketType.Categorical,
             false,
             collateralToken,
         );
