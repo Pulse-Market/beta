@@ -12,6 +12,11 @@ export async function signUserIn() {
     sdk.signIn();
 }
 
+export async function getAccountId(): Promise<string | null> {
+    const sdk = await connectSdk();
+    return sdk.getAccountId() ?? null;
+}
+
 export async function getAccountInfo(): Promise<Account | null> {
     const sdk = await connectSdk();
 

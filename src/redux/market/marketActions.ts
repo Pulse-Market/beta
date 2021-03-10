@@ -1,6 +1,6 @@
 import { MarketViewModel } from "../../models/Market";
 import { TokenViewModel } from "../../models/TokenViewModel";
-import { getPoolBalanceForMarketByAccount } from "../../services/AccountService";
+import { getAccountId, getPoolBalanceForMarketByAccount } from "../../services/AccountService";
 import { getCollateralTokenMetadata } from "../../services/CollateralTokenService";
 import { createMarket, getEscrowStatus, getMarketById, getMarketOutcomeTokens, getMarkets, getTokenWhiteListWithDefaultMetadata, MarketFilters, MarketFormValues } from "../../services/MarketService";
 import { seedPool, exitPool, SeedPoolFormValues, seedScalarMarket, SeedScalarMarketFormValues } from "../../services/PoolService";
@@ -23,26 +23,24 @@ export function createNewMarket(values: MarketFormValues) {
 }
 
 export function loadMarket(id: string) {
-    return async (dispatch: Function, getState: () => Reducers) => {
+    return async (dispatch: Function) => {
         try {
-            const store = getState();
             dispatch(setMarketLoading(true));
             dispatch(setMarketDetail(undefined));
             dispatch(setMarketPoolTokenBalance(undefined));
             dispatch(setMarketEscrowStatus([]));
 
             const market = await getMarketById(id);
+            const accountId = await getAccountId();
 
             if (!market) {
                 dispatch(setMarketErrors(['Could not find market']));
                 return;
             }
 
-            const account = store.account.account;
-
-            if (account) {
-                const escrowStatusRequest = getEscrowStatus(id, account.accountId);
-                const token = await getPoolBalanceForMarketByAccount(account.accountId, id);
+            if (accountId) {
+                const escrowStatusRequest = getEscrowStatus(id, accountId);
+                const token = await getPoolBalanceForMarketByAccount(accountId, id);
                 const escrowStatus = await escrowStatusRequest;
 
                 dispatch(setMarketEscrowStatus(escrowStatus));
