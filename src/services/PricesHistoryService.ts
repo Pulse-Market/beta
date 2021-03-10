@@ -1,9 +1,7 @@
-import { gql } from '@apollo/client';
 import { DateMetric } from '@fluxprotocol/amm-sdk';
 import { subDays, subMonths, subWeeks, differenceInDays } from 'date-fns';
 import { MarketViewModel } from '../models/Market';
 import { PriceHistoryData } from '../models/PriceHistoryData';
-import { graphqlClient } from './GraphQLService';
 import { connectSdk } from './WalletService';
 
 export enum Period {

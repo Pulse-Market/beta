@@ -1,10 +1,8 @@
-import { gql } from "@apollo/client";
 import { Account } from "../models/Account";
-import { EarnedFeesGraphData, PoolToken, transformToPoolToken } from "../models/PoolToken";
+import { PoolToken, transformToPoolToken } from "../models/PoolToken";
 import { transformToUserBalance, UserBalance } from "../models/UserBalance";
 import { getCollateralTokenMetadata } from "./CollateralTokenService";
 import createAuthContract from "./contracts/AuthContract";
-import { graphqlClient } from "./GraphQLService";
 import { connectSdk } from "./WalletService";
 import { ENABLE_WHITELIST } from "../config";
 import { EscrowStatus, transformEscrowStatusViewModel } from "../models/EscrowStatus";
@@ -117,42 +115,15 @@ export async function getBalancesForMarketByAccount(accountId: string, marketId:
 
 export async function getPoolBalanceForMarketByAccount(accountId: string, marketId: string): Promise<PoolToken | null> {
     try {
-        const result = await graphqlClient.query({
-            query: gql`
-                query AccountMarketPoolBalances($accountId: String!, $marketId: String) {
-                    account: getAccount(accountId: $accountId) {
-                        earned_fees(poolId: $marketId) {
-                            balance
-                            fees
-                            outcomeId
-                            poolId
+        const sdk = await connectSdk();
+        const data = await sdk.getPoolTokenBalance(accountId, marketId);
 
-                            market {
-                                is_scalar
-
-                                pool {
-                                    collateral_token_id
-                                }
-                            }
-                        }
-                    }
-                }
-            `,
-            variables: {
-                accountId,
-                marketId,
-            }
-        });
-
-        const data: EarnedFeesGraphData[] = result.data.account.earned_fees;
-
-        if (!data.length) {
+        if (!data) {
             return null;
         }
 
-        const collateralTokenMetadata = await getCollateralTokenMetadata(data[0].market?.pool.collateral_token_id || '');
-
-        return transformToPoolToken(data[0], collateralTokenMetadata);
+        const collateralTokenMetadata = await getCollateralTokenMetadata(data.market?.pool.collateral_token_id || '');
+        return transformToPoolToken(data, collateralTokenMetadata);
     } catch (error) {
         console.error('[getBalancesForMarketByAccount]', error);
         return null;
