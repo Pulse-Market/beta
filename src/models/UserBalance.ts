@@ -32,7 +32,7 @@ export interface GraphUserBalancesItem {
         is_scalar: boolean;
         pool: {
             collateral_token_id: string;
-            pool_balances: {
+            pool_balances?: {
                 outcome_id: number,
                 price: number
             }[];

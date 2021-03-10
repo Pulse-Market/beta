@@ -1,8 +1,10 @@
 import { gql } from '@apollo/client';
+import { DateMetric } from '@fluxprotocol/amm-sdk';
 import { subDays, subMonths, subWeeks, differenceInDays } from 'date-fns';
 import { MarketViewModel } from '../models/Market';
 import { PriceHistoryData } from '../models/PriceHistoryData';
 import { graphqlClient } from './GraphQLService';
+import { connectSdk } from './WalletService';
 
 export enum Period {
     OneDay = '1d',
@@ -12,44 +14,44 @@ export enum Period {
     All = 'all',
 }
 
-export function getAllHistoryMetric(creationDate: Date, endDate: Date): string {
+export function getAllHistoryMetric(creationDate: Date, endDate: Date): DateMetric {
     const diffDays = differenceInDays(endDate, creationDate);
 
     // Market takes longer than 4 weeks
     if (diffDays > 28) {
-        return 'week';
+        return DateMetric.week;
     }
 
     // Market takes less than 7 days but more than 1 day
     if (diffDays <= 7 && diffDays > 1) {
-        return 'day';
+        return DateMetric.day;
     }
 
-    return 'hour';
+    return DateMetric.hour;
 }
 
 export async function getPricesHistoryByMarketId(market: MarketViewModel, period: Period): Promise<PriceHistoryData[]> {
     try {
         const now = new Date();
         let chosenPeriondDate = new Date();
-        let metric = 'month';
+        let metric = DateMetric.month;
 
         switch(period) {
             case Period.OneDay:
                 chosenPeriondDate = subDays(now, 1);
-                metric = 'hour'
+                metric = DateMetric.hour;
                 break;
             case Period.OneWeek:
                 chosenPeriondDate = subWeeks(now, 1);
-                metric = 'day';
+                metric = DateMetric.day;
                 break;
             case Period.ThreeWeeks:
                 chosenPeriondDate = subWeeks(now, 3);
-                metric = 'day';
+                metric = DateMetric.day;
                 break;
             case Period.OneMonth:
                 chosenPeriondDate = subMonths(now, 1);
-                metric = 'day';
+                metric = DateMetric.day;
                 break;
             case Period.All:
                 chosenPeriondDate = new Date(0);
@@ -57,29 +59,15 @@ export async function getPricesHistoryByMarketId(market: MarketViewModel, period
                 break;
         }
 
-        const result = await graphqlClient.query({
-            fetchPolicy: 'network-only',
-            query: gql`
-                query MarketPriceHistory($marketId: String!, $beginTimestamp: String!, $dateMetric: DateMetric) {
-                    history: getPriceHistory(poolId: $marketId, beginTimestamp: $beginTimestamp, dateMetric: $dateMetric) {
-                        pointKey
-                        dataPoints {
-                            outcome
-                            price
-                        }
-                    }
-                }
-            `,
-            variables: {
-                marketId: market.id,
-                beginTimestamp: chosenPeriondDate.getTime().toString(),
-                dateMetric: metric,
-            }
+        const sdk = await connectSdk();
+        const history = await sdk.getPriceHistoryByMarketId(market.id, {
+            beginDate: chosenPeriondDate,
+            metric,
         });
 
-        return result.data.history;
+        return history;
     } catch (error) {
-        console.error('[getMarketById]', error);
+        console.error('[getPricesHistoryByMarketId]', error);
         return [];
     }
 }

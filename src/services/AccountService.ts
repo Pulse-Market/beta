@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { Account } from "../models/Account";
-import { EarnedFeesGraphData, GraphAcountBalancesResponse, PoolToken, transformToPoolToken } from "../models/PoolToken";
-import { GraphUserBalanceResponse, transformToUserBalance, UserBalance } from "../models/UserBalance";
+import { EarnedFeesGraphData, PoolToken, transformToPoolToken } from "../models/PoolToken";
+import { transformToUserBalance, UserBalance } from "../models/UserBalance";
 import { getCollateralTokenMetadata } from "./CollateralTokenService";
 import createAuthContract from "./contracts/AuthContract";
 import { graphqlClient } from "./GraphQLService";
@@ -100,38 +100,12 @@ export async function getAccountBalancesInfo(accountId: string): Promise<Account
 
 export async function getBalancesForMarketByAccount(accountId: string, marketId: string): Promise<UserBalance[]> {
     try {
-        const result = await graphqlClient.query({
-            query: gql`
-                query AccountMarketBalances($accountId: String!, $marketId: String) {
-                    account: getAccount(accountId: $accountId) {
-                        balances(poolId: $marketId) {
-                            balance
-                            outcome_id
-                            pool_id,
-                            spent,
-                            market {
-                                outcome_tags
-                                is_scalar
-
-                                pool {
-                                    collateral_token_id
-                                }
-                            }
-                        }
-                    }
-                }
-            `,
-            variables: {
-                accountId,
-                marketId,
-            }
-        });
-
-        const data: GraphUserBalanceResponse = result.data.account;
-        const colletaralTokenIds = data.balances.map(item => item.market?.pool.collateral_token_id || '').filter(x => x);
+        const sdk = await connectSdk();
+        const balances = await sdk.getAccountBalancesForMarket(marketId, accountId);
+        const colletaralTokenIds = balances.map(item => item.market?.pool.collateral_token_id || '').filter(x => x);
         const tokenMetadata = await Promise.all(colletaralTokenIds.map(id => getCollateralTokenMetadata(id)));
 
-        return data.balances.map((balance) => {
+        return balances.map((balance) => {
             const metadata = tokenMetadata.find(metadata => metadata.collateralTokenId === balance.market?.pool.collateral_token_id);
             return transformToUserBalance(balance, metadata!)
         });
