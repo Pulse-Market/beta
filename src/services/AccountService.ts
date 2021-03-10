@@ -55,55 +55,11 @@ interface AccountBalancesInfo {
 
 export async function getAccountBalancesInfo(accountId: string): Promise<AccountBalancesInfo> {
     try {
-        const result = await graphqlClient.query({
-            query: gql`
-                query Account($accountId: String!) {
-                    account: getAccount(accountId: $accountId) {
-                        earned_fees(removeZeroBalances: true, removeClaimedBalances: true) {
-                            fees
-                            outcomeId
-                            poolId
-                            balance
-                            market {
-                                description
-                                is_scalar
-
-                                pool {
-                                    collateral_token_id
-                                }
-                            }
-                        }
-                        balances(removeZeroBalances: true, removeClaimedBalances: true) {
-                            balance
-                            outcome_id
-                            pool_id
-                            spent
-                            market {
-                                description
-                                is_scalar
-                                outcome_tags
-                                end_time
-                                finalized
-                                payout_numerator
-
-                                pool {
-                                    collateral_token_id
-                                    pool_balances{
-                                        price
-                                        outcome_id
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            `,
-            variables: {
-                accountId,
-            }
+        const sdk = await connectSdk();
+        const accountBalances = await sdk.getAccountInfo(accountId, {
+            removeClaimedBalances: true,
+            removeZeroBalances: true,
         });
-
-        const accountBalances: GraphAcountBalancesResponse = result.data.account;
 
         // Find all collateral tokens
         let allCollateralTokenIds: string[] = accountBalances.earned_fees.map(item => item.market?.pool.collateral_token_id || '');
