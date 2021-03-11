@@ -25,13 +25,15 @@ export function getPricesAfterTrade({
     amountIn,
     amountOut,
 }: GetPricesAfterTradeParams): number[] {
+    const formattedFee = 100 / DEFAULT_FEE;
+
     if (type === SwapType.Buy) {
         const newPoolBalances = FluxSdk.utils.computeBalanceAfterSharePurchase(
             market.outcomeTokens.map(t => new Big(t.poolBalance)),
             outcomeToken.outcomeId,
             amountIn,
             amountOut,
-            DEFAULT_FEE,
+            formattedFee,
         );
 
         return FluxSdk.utils.calcPrice(newPoolBalances.map(b => b.toString()));
@@ -42,7 +44,7 @@ export function getPricesAfterTrade({
         outcomeToken.outcomeId,
         amountOut,
         amountIn,
-        DEFAULT_FEE,
+        formattedFee,
     );
 
     return FluxSdk.utils.calcPrice(newPoolBalances.map(b => b.toString()));
