@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/fluxprotocol/flux-app-amm/compare/v0.1.1...v0.1.2) (2021-03-11)
+
+
+### Features
+
+* **positions:** Sort balances based on profit ([8f00d19](https://github.com/fluxprotocol/flux-app-amm/commit/8f00d19bf9cf68c31e7907ff7fd3f72067748737))
+* **scalar:** Pretty format all the scalar values with , ([389a179](https://github.com/fluxprotocol/flux-app-amm/commit/389a1797ee3cda3a3aba6f6f6b7086c985cbfe8d))
+
+
+### Bug Fixes
+
+* **market:** Fix issue where login button was showing when data was not loaded yet ([4675b03](https://github.com/fluxprotocol/flux-app-amm/commit/4675b03c190914ec80e5df804288a1f73864cec6))
+* **market:** Fix issue where pool tokens would not load ([0121c1a](https://github.com/fluxprotocol/flux-app-amm/commit/0121c1a433e435ec72ec8248cd7245b1f2380011))
+* **menu:** Fix issue where login button was not showing while account was still loading ([c997332](https://github.com/fluxprotocol/flux-app-amm/commit/c99733263f1149cf4698b837e25589a2a1d0b550))
+* **priceChart:** Fix issue where price chart wasn't showing up ([b63d05f](https://github.com/fluxprotocol/flux-app-amm/commit/b63d05fd6b4a087c4dd0183c00c176ce926c5417))
+* **profile:** Fix issue where market description would push out the other cells ([1007274](https://github.com/fluxprotocol/flux-app-amm/commit/1007274a100c14b5ca4b49fa8383af2b4481395e))
+* **scalar:** Fix issue where setting an initial value would not match after market creation ([68946b2](https://github.com/fluxprotocol/flux-app-amm/commit/68946b23c1f7efcd7e0af421ae3eb1f758bb4c7f))
+* **userBalance:** Fix issue where div by 0 errors would occur ([15f7677](https://github.com/fluxprotocol/flux-app-amm/commit/15f76771651c99fb4d9c688478e79a31837f109b))
+* Fix issue where clicking on cancel button would redirect you back to the wallet ([e0d2c11](https://github.com/fluxprotocol/flux-app-amm/commit/e0d2c11c766b944afea19918ee9005be83af1eda))
+* Fix issue where Disqus was trying to insert itself on the home page ([f015580](https://github.com/fluxprotocol/flux-app-amm/commit/f0155800f35d61a96780548115eb9d81500a5009))
+
 ### 0.1.1 (2021-03-08)
 
 
