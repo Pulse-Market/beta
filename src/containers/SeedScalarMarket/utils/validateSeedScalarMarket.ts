@@ -1,3 +1,4 @@
+import Big from "big.js";
 import { MarketViewModel } from "../../../models/Market";
 import { getScalarBounds } from "../../../services/MarketService";
 import { SeedScalarMarketFormValues } from "../../../services/PoolService";
@@ -17,6 +18,7 @@ export function validateSeedScalarMarket(formValues: SeedScalarMarketFormValues,
         mainTokenInput: '',
         initialValue: '',
     };
+
     const bounds = getScalarBounds(market.outcomeTokens.map(token => token.bound));
 
     if (formValues.initialValue.lt(bounds.lowerBound)) {
@@ -27,6 +29,14 @@ export function validateSeedScalarMarket(formValues: SeedScalarMarketFormValues,
     if (formValues.initialValue.gt(bounds.upperBound)) {
         errors.canSubmit = false;
         errors.initialValue = trans('seedScalarMarket.errors.initialValue.gtUpperBound');
+    }
+
+    if (formValues.mainTokenInput) {
+        const amountIn = new Big(formValues.mainTokenInput);
+
+        if (amountIn.lte(0)) {
+            errors.canSubmit = false;
+        }
     }
 
     return errors;

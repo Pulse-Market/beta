@@ -15,6 +15,7 @@ import { createDefaultSeedScalarFormValues } from './utils/createDefaultSeedScal
 import { validateSeedScalarMarket } from './utils/validateSeedScalarMarket';
 
 import s from './SeedScalarMarket.module.scss';
+import { prettyFormatNumber } from '../../utils/prettyFormatNumber';
 
 interface Props {
     market: MarketViewModel;
@@ -83,8 +84,8 @@ export default function SeedScalarMarket({
 
                 <div className={s.inputWrapper}>
                     <div className={s.bounds}>
-                        <span>{trans('seedScalarMarket.label.lowerBound', { amount: bounds.lowerBound.toString() })}</span>
-                        <span>{trans('seedScalarMarket.label.upperBound', { amount: bounds.upperBound.toString() })}</span>
+                        <span>{trans('seedScalarMarket.label.lowerBound', { amount: prettyFormatNumber(bounds.lowerBound.toString()) })}</span>
+                        <span>{trans('seedScalarMarket.label.upperBound', { amount: prettyFormatNumber(bounds.upperBound.toString()) })}</span>
                     </div>
                     <LabeledTextInput
                         type="number"

@@ -28,12 +28,12 @@ export default function ScalarOpinionCard({
             </h2>
             <div className={s.rangeWrapper}>
                 <span>{trans('market.label.scalarRange')}</span>
-                <span>{bounds.lowerBound.toString()} - {bounds.upperBound.toString()}</span>
+                <span>{prettyFormatNumber(bounds.lowerBound.toString())} - {prettyFormatNumber(bounds.upperBound.toString())}</span>
             </div>
             <div className={s.estimateWrapper}>
                 <span>{trans('market.label.currentEstimate')}</span>
                 <span>
-                    {FluxSdk.utils.formatToken(scalarValue.toString(), 0, SCALAR_VALUE_DECIMALS)}
+                    {prettyFormatNumber(FluxSdk.utils.formatToken(scalarValue.toString(), 0, SCALAR_VALUE_DECIMALS))}
                 </span>
             </div>
             <div className={s.volumeWrapper}>

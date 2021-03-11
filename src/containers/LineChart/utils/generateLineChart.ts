@@ -7,6 +7,7 @@ import { getScalarBounds, getScalarLongShortTokens } from '../../../services/Mar
 import trans from '../../../translation/trans';
 import { getColorForOutcome } from '../../../utils/getColorForOutcome';
 import getCssVariableValue from '../../../utils/getCssVariableValue';
+import { prettyFormatNumber } from '../../../utils/prettyFormatNumber';
 
 function generateScalarChartData(priceHistoryData: PriceHistoryData[], market: MarketViewModel): Chart.ChartDataSets[] {
     const dataSets: Chart.ChartDataSets[] = [];
@@ -150,11 +151,11 @@ export default function generateLineChart(canvas: HTMLCanvasElement, market: Mar
                         min,
                         max,
                         maxTicksLimit: 6,
-                        stepSize: max / 4,
+                        stepSize: (max - min) / 4,
                         padding: 10,
                         callback: (value) => {
                             if (market.type === MarketType.Scalar) {
-                                return value;
+                                return prettyFormatNumber(value.toString());
                             }
 
                             return (Number(value) / 100).toFixed(2)

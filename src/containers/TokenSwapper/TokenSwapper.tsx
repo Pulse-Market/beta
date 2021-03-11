@@ -23,6 +23,7 @@ import LabeledTokenSelect from '../LabeledTokenSelect';
 
 import s from './TokenSwapper.module.scss';
 import { getNumberFromStorage } from '../../utils/storage';
+import { prettyFormatNumber } from '../../utils/prettyFormatNumber';
 
 interface TokenSwapperProps {
     inputs: TokenViewModel[];
@@ -150,7 +151,7 @@ export default function TokenSwapper({
                             trans('market.overview.estimateLessAfterTrade')
                         }
                     </span>
-                    <span>{newEstimate.toFixed(2)}</span>
+                    <span>{prettyFormatNumber(newEstimate.toFixed(2))}</span>
                 </div>
             )}
 
