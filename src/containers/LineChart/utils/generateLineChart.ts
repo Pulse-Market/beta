@@ -36,7 +36,6 @@ function generateScalarChartData(priceHistoryData: PriceHistoryData[], market: M
 export function generateChartData(priceHistoryData: PriceHistoryData[], market: MarketViewModel): Chart.ChartData {
     const outcomeData: Map<number, number[]> = new Map();
     const isScalar = market.type === MarketType.Scalar;
-    const scalarTokens = getScalarLongShortTokens(market.outcomeTokens);
     const dataSets: Chart.ChartDataSets[] = isScalar ? generateScalarChartData(priceHistoryData, market) : [];
 
     priceHistoryData.forEach((historyData) => {
@@ -52,19 +51,14 @@ export function generateChartData(priceHistoryData: PriceHistoryData[], market: 
     });
 
     outcomeData.forEach((data, outcomeId) => {
-        let label: string | undefined = undefined;
-
-        if (isScalar && scalarTokens.longToken.outcomeId === outcomeId) {
-            label = trans('market.outcomes.long')
-        } else if (isScalar && scalarTokens.shortToken.outcomeId === outcomeId) {
-            label = trans('market.outcomes.short')
-        }
+        const outcomeToken = market.outcomeTokens.find(token => token.outcomeId === outcomeId);
 
         dataSets.push({
             data,
-            label,
+            label: outcomeToken?.tokenName,
             fill: false,
             showLine: !isScalar,
+            hidden: isScalar,
             pointRadius: isScalar ? 0 : undefined,
             borderWidth: 2,
             borderColor: `${getCssVariableValue(getColorForOutcome(outcomeId, isScalar))}`,
@@ -110,12 +104,11 @@ export default function generateLineChart(canvas: HTMLCanvasElement, market: Mar
         max = bounds.upperBound.toNumber();
     }
 
-    const chart = new Chart(context, {
+    const chartConfig: Chart.ChartConfiguration = {
         type: 'line',
 
         options: {
             responsive: true,
-
             legend: {
                 display: false,
             },
@@ -124,18 +117,25 @@ export default function generateLineChart(canvas: HTMLCanvasElement, market: Mar
                 duration: 0,
             },
 
-            elements:{
+            elements: {
                 line: {
                     tension: 0,
                 },
-                point: {
-                    // radius: 0,
-                }
             },
 
             tooltips: {
                 mode: market.type === MarketType.Scalar ? 'index' : 'point',
                 intersect: false,
+                callbacks: {
+                    label: (tooltipItem, data) => {
+                        const dataSets = data.datasets ?? [];
+                        const dataSet = dataSets[tooltipItem.datasetIndex ?? 0];
+                        const dataSetData = dataSet.data ?? []
+                        const price = dataSetData[tooltipItem.index ?? 0] as number / 100;
+
+                        return `${dataSet.label}: ${price.toFixed(3)} ${market.collateralToken.tokenSymbol}`;
+                    },
+                }
             },
 
             scales: {
@@ -175,8 +175,35 @@ export default function generateLineChart(canvas: HTMLCanvasElement, market: Mar
                 }],
             },
         },
-    });
+    };
 
-    return chart;
+    if (market.type === MarketType.Scalar) {
+        // For filtering labels with prices
+        const outcomeTokenNames = market.outcomeTokens.map(t => t.tokenName);
+
+        // Typescript check....
+        if (chartConfig.options?.tooltips?.callbacks) {
+
+            // Combining the price and estimated value into 1 tooltip
+            chartConfig.options.tooltips.callbacks.label = (tooltipItem, data) => {
+                const itemsData = data.datasets?.map(item => {
+                    const itemData = item.data ?? [];
+                    const itemValue = itemData[tooltipItem.index ?? 0] ?? 0;
+
+                    // The label is a outcome token so we can format it as price
+                    if (outcomeTokenNames.includes(item.label ?? '')) {
+                        const price = itemValue as number / 100
+                        return `${item.label}: ${price.toFixed(3)} ${market.collateralToken.tokenSymbol}`;
+                    }
+
+                    return `${item.label}: ${itemValue}`;
+                });
+
+                return itemsData ?? [];
+            }
+        }
+    }
+
+    return new Chart(context, chartConfig);
 }
 
