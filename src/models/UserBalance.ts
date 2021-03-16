@@ -71,7 +71,8 @@ export function transformToUserBalance(graphData: GraphUserBalancesItem, collate
     const spent = new Big(graphData.spent ?? '0');
     const payoutNumerator = graphData.market?.payout_numerator || null;
     const avgPaidPrice = graphData.balance === '0' ? new Big(0) : spent.div(graphData.balance);
-    const currentPrice = payoutNumerator ? formatCollateralToken(payoutNumerator[outcomeId], collateralTokenMetadata.decimals) : outcomePrice.toString();
+    const payoutNumeratorForOutcome = payoutNumerator && payoutNumerator[outcomeId] ? payoutNumerator[outcomeId] : '0';
+    const currentPrice = payoutNumerator ? formatCollateralToken(payoutNumeratorForOutcome, collateralTokenMetadata.decimals) : outcomePrice.toString();
     const profitPercentage = avgPaidPrice.gt("0") ? new Big(currentPrice).minus(avgPaidPrice).div(avgPaidPrice).mul(100).round(2) : new Big("0");
 
     if (isScalar) {
