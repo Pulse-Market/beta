@@ -21,9 +21,17 @@
     }
 }
 
-.icon {
+.cardImage {
     width: 1.3125rem;
     height: 1.3125rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon {
+    max-width: 75%;
 }
 
 .title {

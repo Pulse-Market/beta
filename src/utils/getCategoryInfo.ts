@@ -1,13 +1,13 @@
 import circleCrypto from '../assets/images/circle-crypto.png';
-import cardCrypto from '../assets/images/card-crypto.svg';
+import cardCrypto from '../assets/images/card-crypto.png';
 import iconCrypto from '../assets/images/icons/icon-crypto.png';
 
 import circleEsports from '../assets/images/circle-esports.png';
-import cardEsports from '../assets/images/card-esports.svg';
+import cardEsports from '../assets/images/card-esports.png';
 import iconEsports from '../assets/images/icons/icon-esports.png';
 
 import circleMeme from '../assets/images/circle-meme.png';
-import cardMeme from '../assets/images/card-meme.svg';
+import cardMeme from '../assets/images/card-meme.png';
 import iconMeme from '../assets/images/icons/icon-meme.png';
 
 import circlePolitics from '../assets/images/circle-politics.png';
@@ -15,24 +15,20 @@ import cardPolitics from '../assets/images/card-politics.svg';
 import iconPolitics from '../assets/images/icons/icon-politics.png';
 
 import circleSports from '../assets/images/circle-sports.png';
-import cardSports from '../assets/images/card-sports.svg';
+import cardSports from '../assets/images/card-sports.png';
 import iconSports from '../assets/images/icons/icon-sports.png';
 
 import circleStartups from '../assets/images/circle-startups.png';
-import cardStartups from '../assets/images/card-startups.svg';
+import cardStartups from '../assets/images/card-startups.png';
 import iconStartups from '../assets/images/icons/icon-startups.png';
 
 import circleStocks from '../assets/images/circle-stocks.png';
-import cardStocks from '../assets/images/card-stockmarket.svg';
+import cardStocks from '../assets/images/card-stockmarket.png';
 import iconStocks from '../assets/images/icons/icon-stockmarket.png';
 
 import circleViral from '../assets/images/circle-viral.png';
-import cardViral from '../assets/images/card-viral.svg';
+import cardViral from '../assets/images/card-viral.png';
 import iconViral from '../assets/images/icons/icon-viral.png';
-
-import cardBeer from '../assets/images/card-beer.svg';
-import circleBeer from '../assets/images/circle-beer.png';
-import iconBeer from '../assets/images/icons/icon-beer.svg';
 
 import { MarketCategory } from "../models/Market";
 import trans from '../translation/trans';
@@ -119,15 +115,6 @@ export default function getCategoryInfo(category?: MarketCategory | string): Cat
                 icon: iconViral,
                 title: trans('market.category.viral'),
                 color: '#56CFE1',
-            };
-        case MarketCategory.Beer:
-            return {
-                circleIcon: circleBeer,
-                category,
-                cardIcon: cardBeer,
-                icon: iconBeer,
-                title: trans('market.category.beer'),
-                color: '#47A8BD',
             };
         default:
             return {

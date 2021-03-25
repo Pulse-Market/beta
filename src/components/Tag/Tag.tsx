@@ -32,7 +32,9 @@ export default function Tag({
         return (
             <Button onClick={onClick} className={rootClassName}>
                 <span className={s.title}>{categoryInfo.title}</span>
-                <img src={categoryInfo.icon} alt={categoryInfo.title} className={s.icon} />
+                <div className={s.cardImage} style={{ backgroundColor: categoryInfo.color }}>
+                    <img src={categoryInfo.cardIcon} alt={categoryInfo.title} className={s.icon} />
+                </div>
             </Button>
         );
     }
@@ -40,7 +42,9 @@ export default function Tag({
     return (
         <div className={rootClassName}>
             <span className={s.title}>{categoryInfo.title}</span>
-            <img src={categoryInfo.icon} alt={categoryInfo.title} className={s.icon} />
+            <div className={s.cardImage} style={{ backgroundColor: categoryInfo.color }}>
+                <img src={categoryInfo.cardIcon} alt={categoryInfo.title} className={s.icon} />
+            </div>
         </div>
     );
 }
