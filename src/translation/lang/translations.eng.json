@@ -1,5 +1,5 @@
 {
-    "global.appName": "Flux",
+    "global.appName": "Pulse",
     "global.yes": "Yes",
     "global.no": "No",
     "global.none": "None",
@@ -35,11 +35,11 @@
     "home.title.latestTrends": "These are the latest trends",
 
     "disclaimer.title": "Disclaimer",
-    "disclaimer.description": "This is a community deployed open-source version of Flux Protocol and is unaudited. You are acknowledging this software is provided as is with no warranty or guarantee.",
+    "disclaimer.description": "This is a community deployed open-source version of Pulse Protocol and is unaudited. You are acknowledging this software is provided as is with no warranty or guarantee.",
     "disclaimer.action.accept": "Accept",
 
     "wrapNearDialog.title": "Wrap NEAR",
-    "wrapNearDialog.description": "Wrapping NEAR allows you to trade on Flux. Make sure to leave 1 NEAR for gas fees to unwrap your NEAR.",
+    "wrapNearDialog.description": "Wrapping NEAR allows you to trade on Pulse. Make sure to leave 1 NEAR for gas fees to unwrap your NEAR.",
     "wrapNearDialog.errors.amountIn.exactBalance": "Please leave some balance for transaction fees",
     "wrapNearDialog.errors.amountIn.notEnoughBalance": "Not enough balance",
     "wrapNearDialog.requiredDeposit.description": "A small deposit of :amount NEAR is required in order to swap NEAR for wNEAR due to storage costs.",
@@ -124,7 +124,7 @@
     "market.category.viral": "Viral",
     "market.category.beer": "Beer",
 
-    "notLoggedIn.title": "Welcome to Flux!",
+    "notLoggedIn.title": "Welcome to Pulse!",
     "notLoggedIn.description": "To start trading on markets, you have to be logged in.",
     "notLoggedIn.action.login": "Login",
 
