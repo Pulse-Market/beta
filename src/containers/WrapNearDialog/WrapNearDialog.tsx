@@ -7,13 +7,13 @@ import Dialog from '../../compositions/Dialog';
 import { TokenViewModel } from '../../models/TokenViewModel';
 import { WrapNearFormValues } from '../../services/NearService';
 import trans from '../../translation/trans';
-import swap from "./../../assets/images/icons/swap.svg";
 import createDefaultWrapNearFormValues from './utils/createDefaultWrapNearFormValues';
 import validateWrapNearFormValues from './utils/validateWrapNearFormValues';
 import Button from '../../components/Button';
 import LabeledTokenSelect from '../LabeledTokenSelect';
 
 import s from './WrapNearDialog.module.scss';
+import Icon from '../../components/Icon';
 
 interface Props {
     open: boolean;
@@ -100,7 +100,11 @@ export default function WrapNearDialog({
                     </div>
 
                     <div className={s.switchTokens}>
-                        <IconButton onClick={handleSwitchTokenPlaces} icon={swap} alt={trans('market.action.switchTokens')} />
+                        <IconButton
+                            onClick={handleSwitchTokenPlaces}
+                            iconComponent={<Icon className={s.swapIcon} name="swap" />}
+                            alt={trans('market.action.switchTokens')}
+                        />
                     </div>
 
                     <div className={s.token}>

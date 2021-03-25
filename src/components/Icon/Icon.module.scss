@@ -1,0 +1,15 @@
+.icon {
+  height: 1rem;
+
+  circle,
+  path,
+  polygon,
+  rect {
+    fill: currentColor;
+  }
+
+  .stroke {
+    fill: none;
+    stroke: currentColor;
+  }
+}

@@ -68,6 +68,8 @@ html, body {
     --i-circle-background: url('../assets/images/circle-background-dark.png');
 
     --filter-icon: brightness(1);
+
+    --swap-icon-color: #{$c-option-1};
 }
 
 @mixin lightmode-variables {
@@ -111,6 +113,8 @@ html, body {
     --i-circle-background: url('../assets/images/circle-background-light.png');
 
     --filter-icon: brightness(0);
+
+    --swap-icon-color: #{$c-black};
 }
 
 html {

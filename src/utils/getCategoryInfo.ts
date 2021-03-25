@@ -11,7 +11,7 @@ import cardMeme from '../assets/images/card-meme.png';
 import iconMeme from '../assets/images/icons/icon-meme.png';
 
 import circlePolitics from '../assets/images/circle-politics.png';
-import cardPolitics from '../assets/images/card-politics.svg';
+import cardPolitics from '../assets/images/card-politics.png';
 import iconPolitics from '../assets/images/icons/icon-politics.png';
 
 import circleSports from '../assets/images/circle-sports.png';

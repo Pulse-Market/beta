@@ -5,7 +5,8 @@ import classnames from 'classnames';
 import s from './IconButton.module.scss';
 
 interface Props {
-    icon: string;
+    icon?: string;
+    iconComponent?: ReactElement;
     alt: string;
     onClick: () => void;
     className?: string;
@@ -14,13 +15,15 @@ interface Props {
 
 export default function IconButton({
     icon,
+    iconComponent,
     alt,
     onClick,
     className = '',
 }: Props): ReactElement {
     return (
         <MuiIconButton onClick={onClick} className={classnames(s['icon-button'], className)}>
-            <img src={icon} alt={alt} />
+            {icon && (<img src={icon} alt={alt} />)}
+            {iconComponent}
         </MuiIconButton>
     );
 }

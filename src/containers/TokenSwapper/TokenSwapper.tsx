@@ -14,7 +14,6 @@ import mutateFormValues from './utils/formValuesMutation';
 import { MarketType, MarketViewModel } from '../../models/Market';
 import { toCollateralToken } from '../../services/CollateralTokenService';
 import { BUY, SELECTED_OUTCOME_TOKEN_STORAGE_KEY, SELL } from '../../config';
-import swap from "./../../assets/images/icons/swap.svg";
 import { validateSwapFormValues } from './utils/validateSwapFormValues';
 import Error from '../../components/Error';
 import { getScalarLongShortTokens } from '../../services/MarketService';
@@ -24,6 +23,7 @@ import LabeledTokenSelect from '../LabeledTokenSelect';
 import s from './TokenSwapper.module.scss';
 import { getNumberFromStorage } from '../../utils/storage';
 import { prettyFormatNumber } from '../../utils/prettyFormatNumber';
+import Icon from '../../components/Icon';
 
 interface TokenSwapperProps {
     inputs: TokenViewModel[];
@@ -128,7 +128,11 @@ export default function TokenSwapper({
             />
 
             <div className={s['token-swapper__switch-tokens']}>
-                <IconButton onClick={switchTokenPlaces} icon={swap} alt={trans('market.action.switchTokens')} />
+                <IconButton
+                    onClick={switchTokenPlaces}
+                    iconComponent={<Icon className={s.swapIcon} name="swap" />}
+                    alt={trans('market.action.switchTokens')}
+                />
             </div>
 
             <div className={s.receiveInputs}>
