@@ -55,7 +55,9 @@ export default function MarketHeader({
                 <div className={classnames(s.headerItem, s.opinionCardWrapper)}>
                     <MarketOpinionCard market={market} />
                 </div>
-                <div className={s['bubble']} style={{ backgroundImage: `url(${getCategoryInfo(market.category[0]).circleIcon})` }} />
+                <div className={s.bubble}>
+                    <img className={s.bubbleIcon} src={getCategoryInfo(market.category[0]).cardIcon} alt="icon" />
+                </div>
             </div>
         </header>
     );

@@ -1,6 +1,6 @@
 .button {
     padding: 0.2rem 1rem;
-    background-color: var(--c-tertiary);
+    background: var(--c-confirm-button);
     color: var(--c-white);
     font-size: 1rem;
     font-weight: normal;
@@ -10,12 +10,12 @@
 }
 
 .button--text {
-    background-color: transparent;
+    background: transparent;
     color: var(--c-text);
 }
 
 .button--outlined {
-    background-color: transparent;
+    background: transparent;
     color: var(--c-text);
     border: 1px solid var(--c-tertiary);
 }

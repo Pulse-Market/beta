@@ -3,6 +3,10 @@
 
 .root {
     background-color: var(--c-secondary);
+    background: var(--i-market-header-background);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     min-height: 16.125rem;
     padding: 1.375rem;
     color: var(--c-text);
@@ -56,17 +60,28 @@
 }
 
 .bubble {
+    display: none;
+
     @include for-size($default-bigger-screen-breakpoint) {
+        display: block;
         height: 29.375rem;
         width: 29.375rem;
         transform: translate(200%, -25%);
 
         position: absolute;
+        background: var(--i-circle-background);
         background-color: var(--c-primary-dark);
         background-repeat: no-repeat;
         background-size: cover;
         border-radius: 50%;
     }
+}
+
+.bubbleIcon {
+    width: 35%;
+    position: relative;
+    left: 9.8rem;
+    top: 15.2rem;
 }
 
 .opinionCardWrapper {
@@ -80,7 +95,7 @@
 
 .market-header {
     &__back-button {
-        background-color: var(--c-tertiary);
+        background: var(--c-confirm-button);
         color: var(--c-white);
         margin-bottom: 1rem;
         padding: 0 1rem;

@@ -1,36 +1,36 @@
 import circleCrypto from '../assets/images/circle-crypto.png';
-import cardCrypto from '../assets/images/card-crypto.png';
+import cardCrypto from '../assets/images/card-crypto.svg';
 import iconCrypto from '../assets/images/icons/icon-crypto.png';
 
 import circleEsports from '../assets/images/circle-esports.png';
-import cardEsports from '../assets/images/card-esports.png';
+import cardEsports from '../assets/images/card-esports.svg';
 import iconEsports from '../assets/images/icons/icon-esports.png';
 
 import circleMeme from '../assets/images/circle-meme.png';
-import cardMeme from '../assets/images/card-meme.png';
+import cardMeme from '../assets/images/card-meme.svg';
 import iconMeme from '../assets/images/icons/icon-meme.png';
 
 import circlePolitics from '../assets/images/circle-politics.png';
-import cardPolitics from '../assets/images/card-politics.png';
+import cardPolitics from '../assets/images/card-politics.svg';
 import iconPolitics from '../assets/images/icons/icon-politics.png';
 
 import circleSports from '../assets/images/circle-sports.png';
-import cardSports from '../assets/images/card-sports.png';
+import cardSports from '../assets/images/card-sports.svg';
 import iconSports from '../assets/images/icons/icon-sports.png';
 
 import circleStartups from '../assets/images/circle-startups.png';
-import cardStartups from '../assets/images/card-startups.png';
+import cardStartups from '../assets/images/card-startups.svg';
 import iconStartups from '../assets/images/icons/icon-startups.png';
 
 import circleStocks from '../assets/images/circle-stocks.png';
-import cardStocks from '../assets/images/card-stockmarket.png';
+import cardStocks from '../assets/images/card-stockmarket.svg';
 import iconStocks from '../assets/images/icons/icon-stockmarket.png';
 
 import circleViral from '../assets/images/circle-viral.png';
-import cardViral from '../assets/images/card-viral.png';
+import cardViral from '../assets/images/card-viral.svg';
 import iconViral from '../assets/images/icons/icon-viral.png';
 
-import cardBeer from '../assets/images/card-beer.png';
+import cardBeer from '../assets/images/card-beer.svg';
 import circleBeer from '../assets/images/circle-beer.png';
 import iconBeer from '../assets/images/icons/icon-beer.svg';
 
@@ -55,7 +55,7 @@ export default function getCategoryInfo(category?: MarketCategory | string): Cat
                 cardIcon: cardCrypto,
                 icon: iconCrypto,
                 title: trans('market.category.crypto'),
-                color: '#5400FF',
+                color: '#5E60CE',
             };
         case MarketCategory.Esports:
             return {
@@ -64,7 +64,7 @@ export default function getCategoryInfo(category?: MarketCategory | string): Cat
                 cardIcon: cardEsports,
                 icon: iconEsports,
                 title: trans('market.category.esports'),
-                color: '#4C6BF5',
+                color: '#8E00E0',
             };
         case MarketCategory.Meme:
             return {
@@ -73,7 +73,7 @@ export default function getCategoryInfo(category?: MarketCategory | string): Cat
                 cardIcon: cardMeme,
                 icon: iconMeme,
                 title: trans('market.category.meme'),
-                color: '#FF00FD',
+                color: '#48BFE3',
             };
         case MarketCategory.Politics:
             return {
@@ -82,7 +82,7 @@ export default function getCategoryInfo(category?: MarketCategory | string): Cat
                 cardIcon: cardPolitics,
                 icon: iconPolitics,
                 title: trans('market.category.politics'),
-                color: '#0004FF',
+                color: '#6930C3',
             };
         case MarketCategory.Sports:
             return {
@@ -91,7 +91,7 @@ export default function getCategoryInfo(category?: MarketCategory | string): Cat
                 cardIcon: cardSports,
                 icon: iconSports,
                 title: trans('market.category.sports'),
-                color: '#FF1958',
+                color: '#7DEECE',
             };
         case MarketCategory.Startups:
             return {
@@ -100,7 +100,7 @@ export default function getCategoryInfo(category?: MarketCategory | string): Cat
                 cardIcon: cardStartups,
                 icon: iconStartups,
                 title: trans('market.category.startups'),
-                color: '#7400DA',
+                color: '#5390D9',
             };
         case MarketCategory.Stocks:
             return {
@@ -109,7 +109,7 @@ export default function getCategoryInfo(category?: MarketCategory | string): Cat
                 cardIcon: cardStocks,
                 icon: iconStocks,
                 title: trans('market.category.stocks'),
-                color: '#C45DFF',
+                color: '#4EA8DE',
             };
         case MarketCategory.Viral:
             return {
@@ -118,7 +118,7 @@ export default function getCategoryInfo(category?: MarketCategory | string): Cat
                 cardIcon: cardViral,
                 icon: iconViral,
                 title: trans('market.category.viral'),
-                color: '#FF009C',
+                color: '#56CFE1',
             };
         case MarketCategory.Beer:
             return {
@@ -136,7 +136,7 @@ export default function getCategoryInfo(category?: MarketCategory | string): Cat
                 cardIcon: cardStocks,
                 icon: iconStocks,
                 title: category,
-                color: '#C45DFF',
+                color: '#4EA8DE',
             };
     }
 }

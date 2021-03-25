@@ -53,8 +53,10 @@ html, body {
     --c-medium-blue: #{$c-medium-blue};
     --c-dark-purple: #{$c-dark-purple};
 
-    --i-background-wave: url('../assets/images/background-wave-dark.svg');
-    --i-logo: url('../assets/images/flux-logo-white.png');
+    --i-background-wave: url('../assets/images/background-dark.png');
+    --i-logo: url('../assets/images/logo-white.svg');
+    --i-market-header-background: url('../assets/images/market-header-background-dark.png');
+    --i-circle-background: url('../assets/images/circle-background-dark.png');
 
     --filter-icon: brightness(1);
 }
@@ -85,8 +87,10 @@ html, body {
     --c-medium-blue: #{$c-medium-blue};
     --c-dark-purple: #{$c-dark-purple};
 
-    --i-background-wave: url('../assets/images/background-wave-light.svg');
-    --i-logo: url('../assets/images/flux-logo-black.png');
+    --i-background-wave: url('../assets/images/background-light.png');
+    --i-logo: url('../assets/images/logo-black.svg');
+    --i-market-header-background: url('../assets/images/market-header-background-light.png');
+    --i-circle-background: url('../assets/images/circle-background-light.png');
 
     --filter-icon: brightness(0);
 }

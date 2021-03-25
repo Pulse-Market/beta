@@ -1,8 +1,9 @@
 .background-wave {
     background-image: var(--i-background-wave);
     background-color: var(--c-background);
+    background-size: cover;
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-position: center;
 
     z-index: -1;
     display: block;

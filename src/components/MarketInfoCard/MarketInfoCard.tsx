@@ -25,7 +25,9 @@ export default function MarketInfoCard({
                 <span className={s.categoryTitle}>{categoryInfo.map(info => info.title).join(' | ')}</span>
                 <h2 className={s.title}>{market.description}</h2>
             </div>
-            <img className={s.bubble} src={categoryInfo[0].cardIcon} alt={market.category[0]} />
+            <div className={s.bubble}>
+                <img className={s.bubbleIcon} src={categoryInfo[0].cardIcon} alt={market.category[0]} />
+            </div>
             <div className={s.resolutionInfo}>
                 <span>{trans('market.resolutionDate')} <strong>{formatResolutionDate(market.resolutionDate)}</strong></span>
             </div>
