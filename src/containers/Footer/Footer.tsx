@@ -12,10 +12,10 @@ export default function Footer() {
             <div className={s.wrapper}>
                 <div className={s.logo} />
                 <div className={s.socials}>
-                    <a href="https://twitter.com/fluxprotocol" className={s.social} rel="noopener noreferrer" target="_blank" >
+                    <a href="https://twitter.com/pulsemarkets" className={s.social} rel="noopener noreferrer" target="_blank" >
                         <img src={twitterLogo} alt="Twitter page" />
                     </a>
-                    <a href="https://t.me/fluxprotocol" className={s.social} rel="noopener noreferrer" target="_blank" >
+                    <a href="https://t.me/pulsemarkets" className={s.social} rel="noopener noreferrer" target="_blank" >
                         <img src={telegramLogo} alt="Telegram group" />
                     </a>
                 </div>
