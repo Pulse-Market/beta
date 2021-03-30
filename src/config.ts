@@ -7,6 +7,7 @@ export const PROTOCOL_ACCOUNT_ID = process.env.REACT_APP_PROTOCOL_ACCOUNT_ID || 
 export const FUNGIBLE_TOKEN_ACCOUNT_ID = process.env.REACT_APP_FUNGIBLE_TOKEN_ACCOUNT_ID || 'ft.flux-dev';
 export const WRAPPED_NEAR_ACCOUNT_ID = process.env.REACT_APP_WRAPPED_NEAR_ACCOUNT_ID || 'wrap.near';
 export const BANANAS_NEAR_ACCOUNT_ID = process.env.REACT_APP_BANANAS_ACCOUNT_ID || 'berryclub.ek.near';
+export const DAI_NEAR_ACCOUNT_ID = process.env.REACT_APP_DAI_ACCOUNT_ID || '6b175474e89094c44da98b954eedeac495271d0f.factory.bridge.near';
 export const AUTH_ACCOUNT_ID = process.env.REACT_APP_AUTH_ACCOUNT_ID || '';
 export const ENABLE_WHITELIST = process.env.REACT_APP_ENABLE_WHITELIST === 'true';
 export const DUST_AMOUNT = 10000000000;

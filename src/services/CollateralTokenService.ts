@@ -1,7 +1,7 @@
 // import { utils } from 'near-api-js';
 import Big from 'big.js';
 
-import { BANANAS_NEAR_ACCOUNT_ID, WRAPPED_NEAR_ACCOUNT_ID } from "../config";
+import { BANANAS_NEAR_ACCOUNT_ID, WRAPPED_NEAR_ACCOUNT_ID, DAI_NEAR_ACCOUNT_ID } from "../config";
 import { isFetchResultSuccesful } from "../models/FetchResult";
 import { TokenMetadata } from '../models/TokenMetadata';
 import cache from '../utils/cache';
@@ -9,6 +9,7 @@ import { getTokenPriceByTicker } from "./TokenPriceService";
 import { connectSdk } from "./WalletService";
 import wrappedNearIcon from '../assets/images/icons/wrapped-near.svg';
 import bananaTokenIcon from '../assets/images/icons/banana-token.svg';
+import daiTokenIcon from '../assets/images/icons/dai-token.svg';
 
 export function formatCollateralToken(amount: string, decimals: number, dp = 2): string {
     const denominator = new Big(10).pow(decimals);
@@ -54,6 +55,8 @@ export function getTokenImageByCollateralAccountId(collateralTokenId: string): s
         return wrappedNearIcon;
     } else if (collateralTokenId === BANANAS_NEAR_ACCOUNT_ID) {
         return bananaTokenIcon;
+    } else if (collateralTokenId === DAI_NEAR_ACCOUNT_ID) {
+        return daiTokenIcon;
     }
 
     return undefined;
