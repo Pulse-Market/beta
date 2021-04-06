@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/Pulse-Market/beta/compare/v0.1.2...v0.1.3) (2021-04-06)
+
+
+### Features
+
+* Add DAI icon ([f0d8cf1](https://github.com/Pulse-Market/beta/commit/f0d8cf1050aa861633d65a9e99d7a52c4aaf0937))
+* Add support for getting tokens when the person doesn't have any tokens ([131419e](https://github.com/Pulse-Market/beta/commit/131419e98c4f58cabaf73afbd0dfbb0d62990f8b))
+* Add transactions overview to profile page ([030e05d](https://github.com/Pulse-Market/beta/commit/030e05d2976e7ecff256cdb9e450df25b240c931))
+* New pulse theme ([1021e76](https://github.com/Pulse-Market/beta/commit/1021e765ddd9b78ba4f1f696a41eaf82daf4a8c7))
+* Updated SDK & near-api-js to the latest versions ([524b867](https://github.com/Pulse-Market/beta/commit/524b867a7f506ba2185f15964980b12ef29369b3))
+* **profile:** Add participated markets overview ([4a4caad](https://github.com/Pulse-Market/beta/commit/4a4caadfe53e462e11339d7e18620f90e4a6c427))
+* **profile:** Remove unactive escrows ([3b8a168](https://github.com/Pulse-Market/beta/commit/3b8a1686105867d579ade12ad98b0184ee887c8d))
+* **transactionsOverview:** Add support for infinite scrolling ([79ab9fa](https://github.com/Pulse-Market/beta/commit/79ab9fa55240b9b670f9940174579a66d556b593))
+
+
+### Bug Fixes
+
+* **math:** Fix maths.... ([13a3f55](https://github.com/Pulse-Market/beta/commit/13a3f55ed5b98e073fff64ea8a509261e84a5f99))
+* Fix issue where valid escrow would show up as invalid ([7181fb8](https://github.com/Pulse-Market/beta/commit/7181fb8266f69ec3c6435c32c61d3e120c27d389))
+* **userBalance:** Fix issue where balances could crash due an issue with pool tokens ([e3b9916](https://github.com/Pulse-Market/beta/commit/e3b9916e4bd9b7d36a1f10a6896a7eacdb129474))
+* Fix issue where default fee was not formatted ([1d51e84](https://github.com/Pulse-Market/beta/commit/1d51e842d1688125fc4d7eccc4c6521a9cad8ec7))
+* Fix issue where social was hardcoded ([593851f](https://github.com/Pulse-Market/beta/commit/593851f83f94e1007dd5fdea2e3677c7b17f7571))
+
 ### [0.1.2](https://github.com/fluxprotocol/flux-app-amm/compare/v0.1.1...v0.1.2) (2021-03-11)
 
 
