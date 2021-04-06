@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/Pulse-Market/beta/compare/v0.1.3...v0.1.4) (2021-04-06)
+
+
+### Features
+
+* **menu:** Remove the wNEAR amount ([a9f50df](https://github.com/Pulse-Market/beta/commit/a9f50df483a956c1b58711dfe8fa104035aa2f3d))
+
 ### [0.1.3](https://github.com/Pulse-Market/beta/compare/v0.1.2...v0.1.3) (2021-04-06)
 
 
