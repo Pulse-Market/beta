@@ -1,13 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TokenViewModel } from '../../models/TokenViewModel';
+
+interface NoBalanceDialogProps {
+    open: boolean;
+    token?: TokenViewModel;
+}
 
 export type DialogsState = Readonly<{
     isMarketCreationOpen: boolean;
     isWrappingNearOpen: boolean;
+    noBalanceDialog: NoBalanceDialogProps;
 }>;
 
 const initialState: DialogsState = {
     isMarketCreationOpen: false,
     isWrappingNearOpen: false,
+    noBalanceDialog: {
+        open: false,
+    },
 };
 
 const dialogsSlice = createSlice({
@@ -25,6 +35,12 @@ const dialogsSlice = createSlice({
                 ...state,
                 isWrappingNearOpen: action.payload,
             });
+        },
+        setNoBalanceDialog(state: DialogsState, action: PayloadAction<NoBalanceDialogProps>): DialogsState {
+            return ({
+                ...state,
+                noBalanceDialog: action.payload,
+            });
         }
     },
 });
@@ -32,6 +48,7 @@ const dialogsSlice = createSlice({
 export const {
     setMarketCreationDialogOpen,
     setWrappingNearDialogOpen,
+    setNoBalanceDialog,
 } = dialogsSlice.actions;
 
 export default dialogsSlice.reducer;

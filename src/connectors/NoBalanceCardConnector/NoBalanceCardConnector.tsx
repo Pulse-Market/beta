@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import NoWrappedNearCard from '../../containers/NoWrappedNearCard';
-import { setWrappingNearDialogOpen } from '../../redux/dialogs/dialogs';
+import { WRAPPED_NEAR_ACCOUNT_ID } from '../../config';
+import NoWrappedNearCard from '../../containers/NoBalanceCard';
+import { setWrappingNearDialogOpen, setNoBalanceDialog } from '../../redux/dialogs/dialogs';
 import { Reducers } from '../../redux/reducers';
 
 
@@ -11,8 +12,15 @@ export default function NoWrappedNearCardConnector() {
     const account = useSelector((store: Reducers) => store.account.account);
 
     const handleOpenDialogClick = useCallback(() => {
-        dispatch(setWrappingNearDialogOpen(true));
-    }, [dispatch]);
+        if (market?.collateralTokenId === WRAPPED_NEAR_ACCOUNT_ID) {
+            dispatch(setWrappingNearDialogOpen(true));
+        } else {
+            dispatch(setNoBalanceDialog({
+                open: true,
+                token: market?.collateralToken,
+            }));
+        }
+    }, [dispatch, market]);
 
     if (!market) return null;
 

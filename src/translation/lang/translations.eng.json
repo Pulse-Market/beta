@@ -9,8 +9,12 @@
     "global.poolToken": "Liquidity Provider Token",
 
     "global.action.cancel": "Cancel",
+    "global.action.close": "Close",
     "global.action.submit": "Submit",
     "global.actions.createMarket": "Create Market",
+
+    "global.link.refFinance": "Ref Finance",
+    "global.link.rainbowBridge": "Rainbow bridge",
 
     "pages.marketOverview": "Trade",
     "pages.resoluteOverview": "Finalized",
@@ -47,6 +51,11 @@
 
     "noWrappedNear.description": "Looks like you don't have any wNEAR. You can swap your NEAR with wNEAR by going to :accountId ➔ Wrap NEAR",
     "noWrappedNear.action.openDialog": "Take me there",
+    "noBalanceCard.description": "Looks like you don't have any :tokenName. This market requires :tokenName in order to trade.",
+    "noBalanceCard.action.openDialog": "Get :tokenName",
+
+    "noBalanceDialog.title": "No :tokenName balance",
+    "noBalanceDialog.description": "Looks like you have no :tokenName balance. You can get some :tokenName at the following places:",
 
     "redeem.description": "If you have shares in every outcome, you can redeem them for collateral. You are eligible for :amount :tokenSymbol",
     "redeem.action.submit": "Redeem",

@@ -13,6 +13,7 @@ import trans from '../../translation/trans';
 interface Props {
     title: string;
     open: boolean;
+    isInfoDialog?: boolean;
     onRequestClose: () => void;
     onSubmitClick: () => void;
     canSubmit?: boolean;
@@ -24,6 +25,7 @@ export default function Dialog({
     title,
     children,
     open,
+    isInfoDialog = false,
     onRequestClose,
     onSubmitClick,
     canSubmit = true,
@@ -38,6 +40,14 @@ export default function Dialog({
             <DialogContent className={s.content}>
                 {children}
             </DialogContent>
+            {isInfoDialog && (
+                <DialogActions>
+                    <Button className={s.cancelButton} onClick={onRequestClose}>
+                        {trans('global.action.close')}
+                    </Button>
+                </DialogActions>
+            )}
+
             {!hideButtons && (
                 <DialogActions>
                     <Button className={s.cancelButton} onClick={onRequestClose}>

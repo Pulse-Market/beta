@@ -9,6 +9,8 @@
 }
 
 .content {
+    padding: 0.5rem;
+
     @include for-size($default-bigger-screen-breakpoint) {
         width: 70%;
         margin-left: 30%;

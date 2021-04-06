@@ -1,7 +1,7 @@
 import FluxSdk from '@fluxprotocol/amm-sdk';
 import Big from 'big.js';
 import { format } from 'date-fns';
-import { DEFAULT_FEE, DEFAULT_SLIPPAGE } from '../config';
+import { DEFAULT_FEE, DEFAULT_SLIPPAGE, DAI_NEAR_ACCOUNT_ID } from '../config';
 import { Account } from '../models/Account';
 import { EscrowStatus, transformEscrowStatusViewModel } from "../models/EscrowStatus";
 

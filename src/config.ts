@@ -23,6 +23,8 @@ export const NODE_ENV = process.env.NODE_ENV;
 export const NETWORK: 'testnet' | 'mainnet' | 'custom' = process.env.REACT_APP_NETWORK as any || 'testnet';
 export const SCALAR_VALUE_DECIMALS = 2;
 export const SELECTED_OUTCOME_TOKEN_STORAGE_KEY = `flux_selected_outcome_${NETWORK}_`;
+export const REF_FINANCE_LINK = 'https://app.ref.finance/';
+export const RAINBOW_BRIDGE_LINK = 'https://ethereum.bridgetonear.org/';
 
 
 export const DEFAULT_LIMIT = 100;

@@ -20,7 +20,7 @@ import MarketClosed from '../../containers/MarketClosed';
 import ExitPoolConnector from '../../connectors/ExitPoolConnector';
 import NotLoggedInConnector from '../../connectors/NotLoggedInConnector';
 import { setMarketDetail } from '../../redux/market/market';
-import NoWrappedNearCardConnector from '../../connectors/NoWrappedNearCardConnector';
+import NoBalanceCardConnector from '../../connectors/NoBalanceCardConnector';
 import { isEligibleForRedeeming } from '../../services/MarketService';
 import RedeemConnector from '../../connectors/RedeemConnector';
 import NotInWhitelistCard from '../../containers/NotInWhitelistCard';
@@ -29,6 +29,7 @@ import SeedScalarMarketConnector from '../../connectors/SeedScalarMarketConnecto
 import MarketCommentsConnector from '../../connectors/MarketCommentsConnector';
 
 import s from './MarketPage.module.scss';
+import NoBalanceDialogconnector from '../../connectors/NoBalanceDialogConnector';
 
 interface RouterParams {
     marketId: string;
@@ -56,6 +57,7 @@ export default function MarketPage() {
 
     return (
         <Page hasNavigation size="unrestricted" className={s.root}>
+            <NoBalanceDialogconnector />
             <Helmet>
                 <title>
                     {trans('market.title.head', {
@@ -71,7 +73,7 @@ export default function MarketPage() {
                     <MarketResolutionInfoConenctor />
                 </div>
                 <div className={s.actionsWrapper}>
-                    {account?.canUseApp && (<NoWrappedNearCardConnector />)}
+                    {account?.canUseApp && (<NoBalanceCardConnector />)}
                     <ActionsCard>
                         <TabbedView
                             items={[{
