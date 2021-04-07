@@ -32,10 +32,11 @@ html, body {
     --c-primary: #{$c-primary};
     --c-secondary: rgb(#{$c-secondary-rgb});
     --c-secondary-rgb: #{$c-secondary-rgb};
-    --c-black: #{$c-black};
+    --c-black: rgb(#{$c-black-rgb});
     --c-white: rgb(#{$c-white-rgb});
     --c-white-rgb: #{$c-white-rgb};
-    --c-text: #{$c-text};
+    --c-text: rgb(#{$c-white-rgb});
+    --c-text-rgb: #{$c-white-rgb};
     --c-primary-dark: #{$c-primary-dark};
     --c-tertiary: #{$c-tertiary};
     --c-background: #{$c-background};
@@ -77,10 +78,11 @@ html, body {
     --c-primary: #{$c-primary};
     --c-secondary: #EEF4F6;
     --c-secondary-rgb: 238,244,246;
-    --c-black: #{$c-black};
+    --c-black: rgb(#{$c-black-rgb});
     --c-white: rgb(#{$c-white-rgb});
     --c-white-rgb: #{$c-white-rgb};
-    --c-text: #{$c-black};
+    --c-text: rgb(#{$c-black-rgb});
+    --c-text-rgb: #{$c-black-rgb};
     --c-primary-dark: rgb(#{$c-white-rgb});
     --c-tertiary: #{$c-tertiary};
     --c-background: rgb(#{$c-white-rgb});

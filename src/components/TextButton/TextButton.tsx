@@ -16,7 +16,11 @@ export default function TextButton({
     className = '',
     ...props
 }: Props) {
+    const buttonClassName = classnames(s.root, className, {
+        [s.disabled]: props.disabled,
+    });
+
     return (
-        <Button {...props} className={classnames(s.root, className)}>{children}</Button>
+        <Button {...props} className={buttonClassName}>{children}</Button>
     );
 }

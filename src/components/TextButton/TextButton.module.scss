@@ -1,3 +1,7 @@
 .root {
     text-transform: none;
 }
+
+.disabled {
+    color: rgba(var(--c-text-rgb), 0.7) !important;
+}
