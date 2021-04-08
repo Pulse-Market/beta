@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/Pulse-Market/beta/compare/v0.1.4...v0.1.5) (2021-04-08)
+
+
+### Features
+
+* Add liquidity viewing ([1026fb4](https://github.com/Pulse-Market/beta/commit/1026fb43f1a336b81a3183734cfb5e437871c40e))
+
+
+### Bug Fixes
+
+* **tokenSwapper:** Fix issue where disabled input was not visible in darkmode ([fd44bc1](https://github.com/Pulse-Market/beta/commit/fd44bc12d21ba5798d6de50563db879047a2b148))
+
 ### [0.1.4](https://github.com/Pulse-Market/beta/compare/v0.1.3...v0.1.4) (2021-04-06)
 
 
