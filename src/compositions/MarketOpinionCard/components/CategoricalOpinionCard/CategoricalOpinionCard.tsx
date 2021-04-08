@@ -9,10 +9,12 @@ import s from './CategoricalOpinionCard.module.scss';
 
 interface Props {
     market: MarketViewModel;
+    showAllInfo: boolean;
 }
 
 export default function CategoricalOpinionCard({
     market,
+    showAllInfo,
 }: Props) {
     return (
         <>
@@ -31,12 +33,34 @@ export default function CategoricalOpinionCard({
                     </div>
                 ))}
             </div>
-            <div className={s['volume-wrapper']}>
+            <div className={s.volumeWrapper}>
                 <span>{trans('market.label.totalVolume')}</span>
                 <span>
                     {prettyFormatNumber(formatCollateralToken(market.volume, market.collateralToken.decimals))} {market.collateralToken.tokenSymbol}
                 </span>
             </div>
+            {showAllInfo && (
+                <div className={s.volumeWrapper}>
+                    <span>{trans('market.label.totalVolumeInUSD')}</span>
+                    <span>
+                        $ {Number(market.volumeInMoney).toFixed(2)}
+                    </span>
+                </div>
+            )}
+            <div className={s.volumeWrapper}>
+                <span>{trans('market.label.totalLiquidity')}</span>
+                <span>
+                    {prettyFormatNumber(formatCollateralToken(market.liquidity, market.collateralToken.decimals))} {market.collateralToken.tokenSymbol}
+                </span>
+            </div>
+            {showAllInfo && (
+                <div className={s.volumeWrapper}>
+                    <span>{trans('market.label.totalLiquidityInUSD')}</span>
+                    <span>
+                        $ {Number(market.liquidityInMoney).toFixed(2)}
+                    </span>
+                </div>
+            )}
         </>
     );
 }

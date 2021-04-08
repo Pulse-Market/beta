@@ -12,7 +12,6 @@ import { formatCollateralToken } from "../../services/CollateralTokenService";
 import s from './Menu.module.scss';
 import DarkmodeButton from "../../components/DarkmodeButton";
 import AccountButton from "./components/AccountButton/AccountButton";
-import FluxSdk from "@fluxprotocol/amm-sdk";
 import { TokenViewModel } from "../../models/TokenViewModel";
 
 interface Props {

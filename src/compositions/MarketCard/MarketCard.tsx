@@ -12,17 +12,19 @@ interface Props {
     market: MarketViewModel;
     className?: string;
     href: string;
+    showAllInfo: boolean;
 }
 
 export default function MarketCard({
     market,
     href,
+    showAllInfo,
     className = '',
 }: Props) {
     return (
         <Link to={{ pathname: href, state: { canGoBack: true } }} className={classnames(s.root, className)}>
             <MarketInfoCard market={market} className={s.infoCard} />
-            <MarketOpinionCard market={market} />
+            <MarketOpinionCard market={market} showAllInfo={showAllInfo} />
         </Link>
     );
 }

@@ -1,3 +1,5 @@
+import FluxSdk from "@fluxprotocol/amm-sdk";
+import Big from "big.js";
 import trans from "../translation/trans";
 import { ClaimViewModel, GraphClaimResponse, transformToClaimViewModel } from "./Claim";
 import { TokenViewModel, transformToTokenViewModels } from "./TokenViewModel";
@@ -30,6 +32,7 @@ export interface GraphMarketResponse {
     finalized: boolean;
     id: string;
     volume: string;
+    liquidity: string | null;
     categories: string[];
     payout_numerator?: string[] | null;
     claimed_earnings?: GraphClaimResponse;
@@ -58,6 +61,9 @@ export interface MarketViewModel {
     description: string;
     resolutionDate: Date;
     volume: string;
+    volumeInMoney: string;
+    liquidity: string;
+    liquidityInMoney: string;
     category: (MarketCategory | string)[];
     extraInfo: string;
     collateralTokenId: string;
@@ -82,6 +88,11 @@ export async function transformToMarketViewModel(
     const payoutNumerator = graphResponse.payout_numerator ? graphResponse.payout_numerator : null;
     const marketType = graphResponse.is_scalar ? MarketType.Scalar : MarketType.Categorical;
 
+    const formattedVolume = FluxSdk.utils.formatToken(graphResponse.volume, collateralToken.decimals);
+    const volumeInMoney = new Big(formattedVolume).mul(collateralToken.price).toString();
+    const formattedLiquidity = FluxSdk.utils.formatToken(graphResponse.liquidity ?? '0', collateralToken.decimals);
+    const liquidityInMoney = new Big(formattedLiquidity).mul(collateralToken.price).toString();
+
     return {
         id: graphResponse.id,
         type: marketType,
@@ -93,6 +104,9 @@ export async function transformToMarketViewModel(
         owner: graphResponse.pool.owner,
         resolutionDate: new Date(parseInt(graphResponse.end_time)),
         volume: graphResponse.volume,
+        volumeInMoney,
+        liquidity: graphResponse.liquidity ?? '0',
+        liquidityInMoney,
         collateralTokenId: graphResponse.pool.collateral_token_id,
         collateralToken,
         invalid: graphResponse.finalized && payoutNumerator === null,

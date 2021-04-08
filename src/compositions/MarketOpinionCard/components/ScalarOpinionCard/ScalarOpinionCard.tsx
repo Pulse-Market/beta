@@ -11,11 +11,13 @@ import { prettyFormatNumber } from '../../../../utils/prettyFormatNumber';
 import s from './ScalarOpinionCard.module.scss';
 
 interface Props {
-    market: MarketViewModel
+    market: MarketViewModel;
+    showAllInfo: boolean;
 }
 
 export default function ScalarOpinionCard({
-    market
+    market,
+    showAllInfo,
 }: Props) {
     const bounds = getScalarBounds(market.outcomeTokens.map(t => t.bound));
     const scalarTokens = getScalarLongShortTokens(market.outcomeTokens);
@@ -42,6 +44,28 @@ export default function ScalarOpinionCard({
                     {prettyFormatNumber(formatCollateralToken(market.volume, market.collateralToken.decimals))} {market.collateralToken.tokenSymbol}
                 </span>
             </div>
+            {showAllInfo && (
+                <div className={s.volumeWrapper}>
+                    <span>{trans('market.label.totalVolumeInUSD')}</span>
+                    <span>
+                        $ {Number(market.volumeInMoney).toFixed(2)}
+                    </span>
+                </div>
+            )}
+            <div className={s.volumeWrapper}>
+                <span>{trans('market.label.totalLiquidity')}</span>
+                <span>
+                    {prettyFormatNumber(formatCollateralToken(market.liquidity, market.collateralToken.decimals))} {market.collateralToken.tokenSymbol}
+                </span>
+            </div>
+            {showAllInfo && (
+                <div className={s.volumeWrapper}>
+                    <span>{trans('market.label.totalLiquidityInUSD')}</span>
+                    <span>
+                        $ {Number(market.liquidityInMoney).toFixed(2)}
+                    </span>
+                </div>
+            )}
         </>
     );
 }
