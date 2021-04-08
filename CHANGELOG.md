@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/Pulse-Market/beta/compare/v0.1.5...v0.1.6) (2021-04-08)
+
+
+### Features
+
+* Add DAI price fetching ([b58d125](https://github.com/Pulse-Market/beta/commit/b58d125420491c1ef812e1204a69733f95bdecc3))
+
 ### [0.1.5](https://github.com/Pulse-Market/beta/compare/v0.1.4...v0.1.5) (2021-04-08)
 
 
