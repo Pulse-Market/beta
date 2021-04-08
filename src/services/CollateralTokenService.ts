@@ -49,6 +49,16 @@ export async function getCollateralTokenPrice(tokenAccountId: string): Promise<n
 
             return 0;
         }, PRICING_CACHE_TTL);
+    } else if (tokenAccountId === DAI_NEAR_ACCOUNT_ID) {
+        return cache(`${tokenAccountId}_price`, async () => {
+            const response = await getTokenPriceByTicker('dai');
+
+            if (isFetchResultSuccesful(response)) {
+                return response.data;
+            }
+
+            return 0;
+        }, PRICING_CACHE_TTL);
     }
 
     return 0;
