@@ -1,7 +1,7 @@
 // import { utils } from 'near-api-js';
 import Big from 'big.js';
 
-import { BANANAS_NEAR_ACCOUNT_ID, WRAPPED_NEAR_ACCOUNT_ID, DAI_NEAR_ACCOUNT_ID } from "../config";
+import { BANANAS_NEAR_ACCOUNT_ID, WRAPPED_NEAR_ACCOUNT_ID, DAI_NEAR_ACCOUNT_ID, PRICING_CACHE_TTL } from "../config";
 import { isFetchResultSuccesful } from "../models/FetchResult";
 import { TokenMetadata } from '../models/TokenMetadata';
 import cache from '../utils/cache';
@@ -40,11 +40,15 @@ export async function getCollateralTokenBalance(tokenAccountId: string, accountI
 
 export async function getCollateralTokenPrice(tokenAccountId: string): Promise<number> {
     if (tokenAccountId === WRAPPED_NEAR_ACCOUNT_ID) {
-        const response = await getTokenPriceByTicker('near');
+        return cache(`${tokenAccountId}_price`, async () => {
+            const response = await getTokenPriceByTicker('near');
 
-        if (isFetchResultSuccesful(response)) {
-            return response.data;
-        }
+            if (isFetchResultSuccesful(response)) {
+                return response.data;
+            }
+
+            return 0;
+        }, PRICING_CACHE_TTL);
     }
 
     return 0;

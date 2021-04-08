@@ -11,7 +11,7 @@ const creationPromises = new Map<string, Promise<any>>();
  * @param {() => Promise<T>} createCallback
  * @return {Promise<T>}
  */
-export default async function cache<T>(id: string, createCallback: () => Promise<T>): Promise<T> {
+export default async function cache<T>(id: string, createCallback: () => Promise<T>, ttl?: number): Promise<T> {
     const item = cacheStorage.get(id);
     if (item) return item;
 
@@ -28,6 +28,13 @@ export default async function cache<T>(id: string, createCallback: () => Promise
     try {
         const createdItem = await createRequest;
         cacheStorage.set(id, createdItem);
+
+        if (ttl) {
+            setTimeout(() => {
+                cacheStorage.delete(id);
+            }, ttl);
+        }
+
         return createdItem;
     } catch (error) {
         throw error;

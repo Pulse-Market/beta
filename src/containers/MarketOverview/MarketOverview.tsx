@@ -70,6 +70,7 @@ export default function MarketOverview({
                         key={market.id}
                         href={routePaths.marketDetail(market.id)}
                         className={s.market}
+                        showAllInfo={false}
                         market={market}
                     />
                 ))}

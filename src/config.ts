@@ -11,6 +11,7 @@ export const DAI_NEAR_ACCOUNT_ID = process.env.REACT_APP_DAI_ACCOUNT_ID || '6b17
 export const AUTH_ACCOUNT_ID = process.env.REACT_APP_AUTH_ACCOUNT_ID || '';
 export const ENABLE_WHITELIST = process.env.REACT_APP_ENABLE_WHITELIST === 'true';
 export const DUST_AMOUNT = 10000000000;
+export const PRICING_CACHE_TTL = 5000;
 export const MAX_GAS = new BN("200000000000000");
 export const STORAGE_DEFAULT = new BN("300800000000000000000000");
 export const STORAGE_BASE = new BN('30000000000000000000000');

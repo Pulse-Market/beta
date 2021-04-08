@@ -53,7 +53,7 @@ export default function MarketHeader({
                     </div>
                 </div>
                 <div className={classnames(s.headerItem, s.opinionCardWrapper)}>
-                    <MarketOpinionCard market={market} />
+                    <MarketOpinionCard market={market} showAllInfo />
                 </div>
                 <div className={s.bubble}>
                     <img className={s.bubbleIcon} src={getCategoryInfo(market.category[0]).cardIcon} alt="icon" />
