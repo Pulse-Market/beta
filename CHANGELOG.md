@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/Pulse-Market/beta/compare/v0.1.6...v0.1.7) (2021-04-13)
+
+
+### Features
+
+* Remove Google Analytics ([0e906c1](https://github.com/Pulse-Market/beta/commit/0e906c1b961a2a02e8e3b6f5faf9c02a3bd9b1b8))
+
 ### [0.1.6](https://github.com/Pulse-Market/beta/compare/v0.1.5...v0.1.6) (2021-04-08)
 
 
