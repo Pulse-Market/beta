@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8](https://github.com/Pulse-Market/beta/compare/v0.1.7...v0.1.8) (2021-04-19)
+
+
+### Features
+
+* Update SDK version to v1.27.0 ([fccdf4c](https://github.com/Pulse-Market/beta/commit/fccdf4c7b0e90fb8ebe563e44759914f54fffbd2))
+
 ### [0.1.7](https://github.com/Pulse-Market/beta/compare/v0.1.6...v0.1.7) (2021-04-13)
 
 
