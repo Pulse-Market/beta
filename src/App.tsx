@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 
-import { Route, Switch, useHistory } from 'react-router';
+import { Route, Switch } from 'react-router';
 
 import { routes } from './routes';
 
