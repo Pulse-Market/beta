@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.9](https://github.com/Pulse-Market/beta/compare/v0.1.8...v0.1.9) (2021-04-24)
+
+
+### Bug Fixes
+
+* Fix issue where wrapping was not possible due storage upgrades in contract ([26c20b9](https://github.com/Pulse-Market/beta/commit/26c20b95d9a4260b420d3ec60f5dbd0b04fab7d3))
+
 ### [0.1.8](https://github.com/Pulse-Market/beta/compare/v0.1.7...v0.1.8) (2021-04-19)
 
 
