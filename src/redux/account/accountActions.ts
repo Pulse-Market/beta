@@ -5,7 +5,6 @@ import {
     setAccountPoolTokenLoading,
     setAccountPoolTokens,
     setNearToken,
-    setRequiredWrappedNearDeposit,
     setWrappedNearToken,
     setEscrowStatus,
     setAccountTransactions,
@@ -16,7 +15,7 @@ import {
     setAccountParticipatedMarkets,
 } from "./account";
 import { signUserIn, getAccountInfo, signUserOut, getAccountBalancesInfo, fetchEscrowStatus, getParticipatedMarkets } from '../../services/AccountService';
-import { getNearToken, getRequiredWrappedNearStorageDeposit, getWrappedNearStorageBalance, getWrappedNearToken } from "../../services/NearService";
+import { getNearToken, getWrappedNearToken } from "../../services/NearService";
 import { getTransactionsForAccount } from '../../services/TransactionService';
 import { Reducers } from "../reducers";
 
@@ -66,16 +65,6 @@ export function loadNearBalances() {
     return async (dispatch: Function) => {
         const nearTokenRequest = getNearToken();
         const wrappedNeartokenRequest = getWrappedNearToken();
-
-        let accountInfo = await getAccountInfo();
-        if (accountInfo !== null) {
-            const storageUsage = await getWrappedNearStorageBalance();
-
-            if (storageUsage.total === '0') {
-                const requiredDeposit = await getRequiredWrappedNearStorageDeposit();
-                dispatch(setRequiredWrappedNearDeposit(requiredDeposit));
-            }
-        }
 
         const nearToken = await nearTokenRequest;
         const wrappedNearToken = await wrappedNeartokenRequest;

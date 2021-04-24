@@ -117,9 +117,18 @@ export async function getWrappedNearStorageBalance(): Promise<{ total: string, a
         }
     }
 
-    return cache('wrapped_near_storage_balance', async () => {
+    const result = await cache('wrapped_near_storage_balance', async () => {
         return wNearContract.getStorageBalance(accountId)
     });
+
+    if (!result) {
+        return {
+            total: '0',
+            available: '0',
+        };
+    }
+
+    return result;
 }
 
 export async function getRequiredWrappedNearStorageDeposit() {
