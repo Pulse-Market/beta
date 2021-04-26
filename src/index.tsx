@@ -8,6 +8,7 @@ import DateFnsUtils from '@date-io/date-fns';
 
 import App from './App';
 import configureStore from './redux/store';
+import packageJson from '../package.json';
 
 import './styles/global.module.scss';
 
@@ -24,6 +25,8 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('root')
 );
+
+console.log(`📈 Running Pulse v${packageJson.version}`);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
