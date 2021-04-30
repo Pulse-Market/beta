@@ -114,7 +114,7 @@ export default function MarketPage() {
                             }, {
                                 element: <RedeemConnector />,
                                 label: trans('market.label.redeem'),
-                                show: account !== null && hasMarketLiquidity && market?.finalized === false && canRedeem && account.canUseApp,
+                                show: account !== null && market?.finalized === false && canRedeem && account.canUseApp,
                                 id: '7',
                             }, {
                                 element: <SeedScalarMarketConnector />,
