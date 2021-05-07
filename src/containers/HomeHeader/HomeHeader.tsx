@@ -18,13 +18,18 @@ export default function HomeHeader({
         <div className={s.root}>
             <div className={s.titleWrapper}>
                 <h1 className={s.title}>
-                    {trans('home.title.welcome', {
-                        username: account?.accountId || '',
-                    })}
+                    { account === null
+                        ? trans('home.title.welcome.loggedOut')
+                        : trans('home.title.welcome.loggedIn', { username: account?.accountId || '' })
+                    }
                 </h1>
-                <span className={s.subTitle}>{trans('home.title.latestTrends')}</span>
+                <span className={s.subTitle}>
+                    { account === null
+                        ? trans('home.title.subtitle.loggedOut')
+                        : trans('home.title.subtitle.loggedIn')
+                    }
+                </span>
             </div>
-
             {process.env.REACT_APP_NETWORK !== "mainnet" && <Button onClick={onCreateMarketClick}>{trans('global.actions.createMarket')}</Button>}
         </div>
     );

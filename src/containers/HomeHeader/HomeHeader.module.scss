@@ -11,7 +11,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        margin-top: 8rem;
+        margin-top: 5rem;
         padding: 0;
     }
 }
@@ -22,6 +22,7 @@
 
 .title {
     font-size: 1.5rem;
+    font-family: monospace;
     color: var(--c-text);
 }
 
