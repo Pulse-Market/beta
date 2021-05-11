@@ -28,6 +28,7 @@ export interface GraphMarketResponse {
     description: string;
     outcome_tags: string[];
     end_time: string;
+    resolution_time: string | null;
     extra_info: string;
     finalized: boolean;
     id: string;
@@ -59,6 +60,7 @@ export interface MarketViewModel {
     creationDate?: Date;
     owner: string;
     description: string;
+    closeDate: Date;
     resolutionDate: Date;
     volume: string;
     volumeInMoney: string;
@@ -102,7 +104,9 @@ export async function transformToMarketViewModel(
         extraInfo: graphResponse.extra_info,
         finalized: graphResponse.finalized,
         owner: graphResponse.pool.owner,
-        resolutionDate: new Date(parseInt(graphResponse.end_time)),
+        // Old markets use the end_time as resolution time
+        resolutionDate: new Date(parseInt(graphResponse.resolution_time ?? graphResponse.end_time)),
+        closeDate: new Date(parseInt(graphResponse.end_time)),
         volume: graphResponse.volume,
         volumeInMoney,
         liquidity: graphResponse.liquidity ?? '0',

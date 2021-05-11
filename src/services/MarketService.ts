@@ -21,6 +21,7 @@ export interface MarketFormValues {
     isCategoricalMarket: boolean;
     categories: MarketCategory[];
     resolutionDate: Date;
+    closeDate: Date;
     description: string;
     outcomes: string[];
     extraInfo: string;
@@ -56,7 +57,9 @@ export async function createMarket(values: MarketFormValues): Promise<void> {
 
         sdk.createMarket({
             description: values.description,
-            endDate: values.resolutionDate,
+            endDate: values.closeDate,
+            // TODO: Add this to the SDK
+            // resolutionDate: values.resolutionDate,
             extraInfo: values.extraInfo,
             outcomes,
             categories: values.categories,
@@ -117,7 +120,10 @@ export async function getMarketById(marketId: string): Promise<MarketViewModel |
         }
 
         const collateralToken = await transformToMainTokenViewModel(market.pool.collateral_token_id, accountId);
-        return transformToMarketViewModel(market, collateralToken, balances);
+        return transformToMarketViewModel({
+            resolution_time: null,
+            ...market,
+        }, collateralToken, balances);
     } catch (error) {
         console.error('[getMarketById]', error);
         return null;
@@ -139,7 +145,10 @@ export async function getMarkets(filters: MarketFilters): Promise<MarketViewMode
         const markets = await sdk.getMarkets(filters);
         const marketsPromises = markets.items.map(async (market) => {
             const collateralToken = await transformToMainTokenViewModel(market.pool.collateral_token_id);
-            return transformToMarketViewModel(market, collateralToken);
+            return transformToMarketViewModel({
+                resolution_time: null,
+                ...market,
+            }, collateralToken);
         });
 
         return Promise.all(marketsPromises);

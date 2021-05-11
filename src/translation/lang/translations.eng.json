@@ -79,6 +79,7 @@
     "market.extraInfo": "Extra Info",
     "market.startDate": "Market started",
     "market.resolutionDate": "Resolution date",
+    "market.closeDate": "Market close",
     "market.action.confirmSwap": "Confirm Swap",
     "market.action.confirmLiquidity": "Add Liquidity",
     "market.action.switchTokens": "Switch Tokens",
@@ -153,8 +154,10 @@
     "marketCreation.label.binary": "Binary",
     "marketCreation.label.categorical": "Categorical",
     "marketCreation.label.scalar": "Scalar",
-    "marketCreation.label.resolutionDate": "When does this market end?",
+    "marketCreation.label.resolutionDate": "When can the market be resolved?",
     "marketCreation.label.helperText.resolutionDate": "Resolution date is in your time",
+    "marketCreation.label.marketClose": "When should the market close for trading?",
+    "marketCreation.label.helperText.marketClose": "Market close is in your time",
     "marketCreation.label.outcomes": "Outcomes",
     "marketCreation.label.outcome": "Outcome :number",
     "marketCreation.label.addMoreOutcomes": "Add more outcomes",
@@ -163,6 +166,8 @@
     "marketCreation.label.scalarLowerBound": "Lower bound",
     "marketCreation.errors.upperBoundLessThanLowerBound": "Upperbound should be higher than lowerbound",
     "marketCreation.errors.resolutionDateEarlierThanToday": "Resolution date cannot be in the past",
+    "marketCreation.errors.closeDateEarlierThanToday": "Market close date cannot be in the past",
+    "marketCreation.errors.closeDateLaterThanResolution": "Market close can't be later than resolution date",
 
     "marketClosed.description": "This market has ended. Resolution is currently in progress, come back later to claim your earnings.",
 

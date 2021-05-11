@@ -6,6 +6,7 @@ export interface MarketFormErrors {
     canSubmit: boolean;
     upperBound: string;
     resolutionDate: string;
+    closeDate: string;
 }
 
 export function validateMarketFormValues(formValues: MarketFormValues): MarketFormErrors {
@@ -13,6 +14,7 @@ export function validateMarketFormValues(formValues: MarketFormValues): MarketFo
         canSubmit: true,
         upperBound: '',
         resolutionDate: '',
+        closeDate: '',
     };
 
     if (formValues.type === MarketType.Scalar) {
@@ -36,6 +38,20 @@ export function validateMarketFormValues(formValues: MarketFormValues): MarketFo
         if (now.getTime() >= formValues.resolutionDate.getTime()) {
             errors.canSubmit = false;
             errors.resolutionDate = trans('marketCreation.errors.resolutionDateEarlierThanToday');
+        }
+    }
+
+    if (formValues.closeDate) {
+        const now = new Date();
+
+        if (now.getTime() >= formValues.closeDate.getTime()) {
+            errors.canSubmit = false;
+            errors.closeDate = trans('marketCreation.errors.closeDateEarlierThanToday');
+        }
+
+        if (formValues.closeDate.getTime() > formValues.resolutionDate.getTime()) {
+            errors.canSubmit = false;
+            errors.closeDate = trans('marketCreation.errors.closeDateLaterThanResolution');
         }
     }
 

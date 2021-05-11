@@ -18,3 +18,9 @@
         color: var(--c-text);
     }
 }
+
+.error {
+    :global(.MuiFormHelperText-root) {
+        color: var(--c-red);
+    }
+}

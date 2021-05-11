@@ -53,7 +53,7 @@ export async function getPricesHistoryByMarketId(market: MarketViewModel, period
                 break;
             case Period.All:
                 chosenPeriondDate = new Date(0);
-                metric = getAllHistoryMetric(market.creationDate ?? new Date(0), market.resolutionDate);
+                metric = getAllHistoryMetric(market.creationDate ?? new Date(0), market.closeDate);
                 break;
         }
 

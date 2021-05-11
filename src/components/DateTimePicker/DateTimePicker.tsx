@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import classnames from 'classnames';
 import { DateTimePicker as MuiDateTimePicker } from "@material-ui/pickers";
 
 import s from './DateTimePicker.module.scss';
@@ -13,14 +14,18 @@ interface Props {
 export default function DateTimePicker({
     value,
     helperText,
-    error,
+    error = false,
     onChange,
 }: Props): ReactElement {
+    const className = classnames(s.root, {
+        [s.error]: error,
+    });
+
     return (
         <MuiDateTimePicker
             inputVariant="outlined"
             value={value}
-            className={s.root}
+            className={className}
             ampm={false}
             onChange={onChange}
             helperText={helperText}

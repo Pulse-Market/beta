@@ -29,7 +29,7 @@ export default function MarketInfoCard({
                 <img className={s.bubbleIcon} src={categoryInfo[0].cardIcon} alt={market.category[0]} />
             </div>
             <div className={s.resolutionInfo}>
-                <span>{trans('market.resolutionDate')} <strong>{formatResolutionDate(market.resolutionDate)}</strong></span>
+                <span>{trans('market.closeDate')} <strong>{formatResolutionDate(market.closeDate)}</strong></span>
             </div>
         </div>
     );

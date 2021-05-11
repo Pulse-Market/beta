@@ -44,7 +44,7 @@ export default function MarketPage() {
     const { marketId } = useParams<RouterParams>();
 
     const hasMarketLiquidity = market?.poolTokenInfo.totalSupply !== '0';
-    const isExpired = market?.resolutionDate ? market.resolutionDate <= new Date() : false;
+    const isExpired = market?.closeDate ? market.closeDate <= new Date() : false;
     const canRedeem = isEligibleForRedeeming(market?.outcomeTokens || []);
 
     useEffect(() => {

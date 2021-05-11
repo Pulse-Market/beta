@@ -45,6 +45,15 @@ export default function MarketHeader({
 
                     <div className={s.resolutionDate}>
                         <span className={s['market-header__resolution-date-title']}>
+                            {trans('market.closeDate')} —&nbsp;
+                        </span>
+                        <span className={s['market-header__resolution-date-stamp']}>
+                            {formatResolutionDate(market.closeDate)}
+                        </span>
+                    </div>
+
+                    <div className={s.resolutionDate}>
+                        <span className={s['market-header__resolution-date-title']}>
                             {trans('market.resolutionDate')} —&nbsp;
                         </span>
                         <span className={s['market-header__resolution-date-stamp']}>

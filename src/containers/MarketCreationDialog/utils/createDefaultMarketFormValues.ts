@@ -8,6 +8,7 @@ export default function createDefaultMarketFormValues(): MarketFormValues {
     return {
         type: MarketType.Binary,
         resolutionDate: addDays(new Date(), 1),
+        closeDate: addDays(new Date(), 1),
         categories: [],
         isCategoricalMarket: false,
         outcomes: [''],

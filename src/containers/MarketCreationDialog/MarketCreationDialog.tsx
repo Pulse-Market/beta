@@ -64,6 +64,15 @@ export default function MarketCreationDialog({
         });
     }
 
+    function handleCloseDateChange(date: Date | null) {
+        if (!date) return;
+
+        setFormValues({
+            ...formValues,
+            closeDate: date,
+        });
+    }
+
     function handleOutcomesChange(outcomes: string[]) {
         setFormValues({
             ...formValues,
@@ -211,6 +220,19 @@ export default function MarketCreationDialog({
                         </div>
                     </>
                 )}
+
+                <div className={s.inputsWrapper}>
+                    <label className={s.label}>
+                        {trans('marketCreation.label.marketClose')}
+                    </label>
+
+                    <DateTimePicker
+                        value={formValues.closeDate}
+                        onChange={handleCloseDateChange}
+                        helperText={errors.closeDate || trans('marketCreation.label.helperText.marketClose')}
+                        error={!!errors.closeDate}
+                    />
+                </div>
 
                 <div className={s.inputsWrapper}>
                     <label className={s.label}>
