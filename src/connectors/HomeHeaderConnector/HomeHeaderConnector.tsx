@@ -11,6 +11,7 @@ export default function HomeHeaderConnector(): ReactElement {
     const unrealizedPnl = useSelector((store: Reducers) => store.account.accountSummary.unrealizedPnl);
     const totalSpent = useSelector((store: Reducers) => store.account.accountSummary.totalSpent);
     const outcomeTokenBalance = useSelector((store: Reducers) => store.account.accountSummary.outcomeTokenBalance);
+    const collateralTokenMetadata = useSelector((store: Reducers) => store.account.accountSummary.collateralTokenMetadata);
 
     const handleCreateMarketClick = useCallback(() => {
         dispatch(setMarketCreationDialogOpen(true));
@@ -23,6 +24,7 @@ export default function HomeHeaderConnector(): ReactElement {
             unrealizedPnl={unrealizedPnl}
             totalSpent={totalSpent}
             outcomeTokenBalance={outcomeTokenBalance}
+            collateralTokenMetadata={collateralTokenMetadata}
         />
     );
 }

@@ -10,6 +10,7 @@ import {
     setUnrealizedPnl,
     setTotalSpent,
     setOutcomeTokenBalance,
+    setCollateralTokenMetadata,
     setAccountTransactions,
     setTotalAccountTransactions,
     setAccountTransactionsLoading,
@@ -108,6 +109,7 @@ export function loadAccountBalancesSummary(accountId: string) {
             dispatch(setUnrealizedPnl(accountBalancesSummary.unrealizedPnl));
             dispatch(setTotalSpent(accountBalancesSummary.totalSpent));
             dispatch(setOutcomeTokenBalance(accountBalancesSummary.outcomeTokenBalance));
+            dispatch(setCollateralTokenMetadata(accountBalancesSummary.collateralTokenMetadata));
             dispatch(setAccountPoolTokenLoading(false));
         } catch (error) {
             dispatch(setAccountPoolTokenLoading(false));
