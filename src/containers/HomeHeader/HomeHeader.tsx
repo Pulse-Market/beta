@@ -3,6 +3,7 @@ import Big from "big.js";
 
 import Button from '../../components/Button';
 import { Account } from '../../models/Account';
+import { TokenMetadata } from "../../models/TokenMetadata";
 import trans from '../../translation/trans';
 import { formatCollateralToken } from '../../services/CollateralTokenService';
 
@@ -14,6 +15,7 @@ interface Props {
     unrealizedPnl: Big | null;
     totalSpent: string | null;
     outcomeTokenBalance: string | null;
+    collateralTokenMetadata: TokenMetadata | null;
 }
 
 export default function HomeHeader({
@@ -21,15 +23,16 @@ export default function HomeHeader({
     account,
     unrealizedPnl,
     totalSpent,
-    outcomeTokenBalance
+    outcomeTokenBalance,
+    collateralTokenMetadata
 }: Props): ReactElement {
 
     return (
         <div className={s.root}>
-            <div className={s.titleWrapper}>
-                <h1 className={s.title}>
-                    { account === null
-                      ? trans('home.title.welcome.loggedOut')
+        <div className={s.titleWrapper}>
+        <h1 className={s.title}>
+        { account === null
+        ? trans('home.title.welcome.loggedOut')
                       : trans('home.title.welcome.loggedIn', { username: account?.accountId || '' })
                     }
                 </h1>
@@ -51,17 +54,17 @@ export default function HomeHeader({
                     </>
                 }
                 {
-                    totalSpent !== null &&
+                    (totalSpent !== null && collateralTokenMetadata !== null) &&
                     <>
                         <label>Total spent</label>
-                        <p>{formatCollateralToken(totalSpent, 18)} nDAI</p>
+                        <p>{formatCollateralToken(totalSpent, collateralTokenMetadata!.decimals)} {collateralTokenMetadata?.symbol}</p>
                     </>
                 }
                 {
-                    outcomeTokenBalance !== null &&
+                    (outcomeTokenBalance !== null && collateralTokenMetadata !== null) &&
                     <>
                         <label>Total outcome tokens</label>
-                        <p>{formatCollateralToken(outcomeTokenBalance, 18)}</p>
+                        <p>{formatCollateralToken(outcomeTokenBalance, collateralTokenMetadata!.decimals)}</p>
                     </>
                 }
             </div>

@@ -1,5 +1,6 @@
 import Big from "big.js";
 import { Account } from "../models/Account";
+import { TokenMetadata } from "../models/TokenMetadata";
 import { PoolToken, transformToPoolToken } from "../models/PoolToken";
 import { transformToUserBalance, UserBalance } from "../models/UserBalance";
 import { getCollateralTokenMetadata } from "./CollateralTokenService";
@@ -67,6 +68,7 @@ interface AccountBalancesSummary {
     unrealizedPnl: Big;
     totalSpent: string;
     outcomeTokenBalance: string;
+    collateralTokenMetadata: TokenMetadata;
 }
 
 export async function getAccountBalancesInfo(accountId: string): Promise<AccountBalancesInfo> {
@@ -122,6 +124,7 @@ export async function getAccountBalancesSummary(accountId: string): Promise<Acco
     let totalOutcomePrice = 0;
     let spent = 0;
     let outcomeTokens = 0;
+
     for (let i = 0; i < accountBalancesInfo.marketBalances.length; i++) {
         totalAvgPaidPrice = accountBalancesInfo.marketBalances[i].avgPaidPrice.add(totalAvgPaidPrice);
         totalOutcomePrice += accountBalancesInfo.marketBalances[i].outcomePrice;
@@ -132,11 +135,15 @@ export async function getAccountBalancesSummary(accountId: string): Promise<Acco
     const unrealizedPnl = totalAvgPaidPrice.gt("0") ? new Big(totalOutcomePrice).minus(totalAvgPaidPrice).div(totalAvgPaidPrice).mul(100).round(2) : new Big("0");
     const totalSpent = String(spent);
     const outcomeTokenBalance = String(outcomeTokens);
+    // assume all collateral tokens are the same as the first for master balance
+    // TODO: account for multiple collateral tokens in total balance??
+    const collateralTokenMetadata = accountBalancesInfo.marketBalances[0].collateralTokenMetadata;
 
     return {
         unrealizedPnl,
         totalSpent,
-        outcomeTokenBalance
+        outcomeTokenBalance,
+        collateralTokenMetadata
     };
 }
 
