@@ -47,23 +47,23 @@ export default function HomeHeader({
                 {
                     unrealizedPnl !== null &&
                     <>
-                        <label>Unrealized PnL</label>
+                        <label>{trans('home.title.summary.pnl')}</label>
                         <p className={unrealizedPnl.gt("0") ? s.link__green : s.link__red }>
                             {unrealizedPnl.toString()}%
                         </p>
                     </>
                 }
-                {
+        {
                     (totalSpent !== null && collateralTokenMetadata !== null) &&
                     <>
-                        <label>Total spent</label>
+                        <label>{trans('home.title.summary.totalSpent')}</label>
                         <p>{formatCollateralToken(totalSpent, collateralTokenMetadata!.decimals)} {collateralTokenMetadata?.symbol}</p>
                     </>
                 }
                 {
                     (outcomeTokenBalance !== null && collateralTokenMetadata !== null) &&
                     <>
-                        <label>Total outcome tokens</label>
+                        <label>{trans('home.title.summary.totalBalance')}</label>
                         <p>{formatCollateralToken(outcomeTokenBalance, collateralTokenMetadata!.decimals)}</p>
                     </>
                 }
