@@ -1,3 +1,4 @@
+import Big from "big.js";
 import { Account } from "../models/Account";
 import { PoolToken, transformToPoolToken } from "../models/PoolToken";
 import { transformToUserBalance, UserBalance } from "../models/UserBalance";
@@ -105,6 +106,22 @@ export async function getAccountBalancesInfo(accountId: string): Promise<Account
              marketBalances: [],
         };
     }
+}
+
+export async function getAccountUnrealizedPnl(accountId: string): Promise<Big> {
+    let accountBalancesInfo = await getAccountBalancesInfo(accountId);
+    console.log(accountBalancesInfo);
+
+    let totalAvgPaidPrice = new Big("0");
+    let totalOutcomePrice = 0;
+    for (let i = 0; i < accountBalancesInfo.marketBalances.length; i++) {
+        totalAvgPaidPrice = accountBalancesInfo.marketBalances[i].avgPaidPrice.add(totalAvgPaidPrice);
+        totalOutcomePrice = accountBalancesInfo.marketBalances[i].outcomePrice + totalOutcomePrice;
+    }
+    // const unrealizedPnl = avgPaidPrice.gt("0") ? new Big(currentPrice).minus(avgPaidPrice).div(avgPaidPrice).mul(100).round(2) : new Big("0")
+    const unrealizedPnl = totalAvgPaidPrice.gt("0") ? new Big(totalOutcomePrice).minus(totalAvgPaidPrice).div(totalAvgPaidPrice).mul(100).round(2) : new Big("0")
+
+    return unrealizedPnl;
 }
 
 export async function getBalancesForMarketByAccount(accountId: string, marketId: string): Promise<UserBalance[]> {

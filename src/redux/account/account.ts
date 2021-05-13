@@ -1,3 +1,4 @@
+import Big from "big.js";
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Account } from '../../models/Account';
 import { EscrowStatus } from '../../models/EscrowStatus';
@@ -18,6 +19,7 @@ export type AccountState = Readonly<{
     requiredWrappedNearDeposit?: string;
     errors: string[];
     escrowStatus: EscrowStatus[];
+    unrealizedPnl: Big;
     accountTransactions: {
         loading: boolean;
         transactions: Transaction[];
@@ -38,6 +40,7 @@ const initialState: AccountState = {
     errors: [],
     balances: [],
     escrowStatus: [],
+    unrealizedPnl: new Big("0"),
     accountTransactions: {
         loading: false,
         transactions: [],
@@ -106,6 +109,12 @@ const accountSlice = createSlice({
             return ({
                 ...state,
                 escrowStatus: action.payload,
+            });
+        },
+        setUnrealizedPnl(state: AccountState, action: PayloadAction<Big>): AccountState {
+            return ({
+                ...state,
+                unrealizedPnl: action.payload,
             });
         },
         setAccountErrors(state: AccountState, action: PayloadAction<string[]>): AccountState {
@@ -182,6 +191,7 @@ export const {
     setWrappedNearToken,
     setRequiredWrappedNearDeposit,
     setEscrowStatus,
+    setUnrealizedPnl,
     setAccountTransactions,
     setTotalAccountTransactions,
     setAccountTransactionsLoading,
