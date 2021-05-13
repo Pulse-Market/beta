@@ -8,6 +8,8 @@ import {
     setWrappedNearToken,
     setEscrowStatus,
     setUnrealizedPnl,
+    setTotalSpent,
+    setOutcomeTokenBalance,
     setAccountTransactions,
     setTotalAccountTransactions,
     setAccountTransactionsLoading,
@@ -20,7 +22,7 @@ import {
     getAccountInfo,
     signUserOut,
     getAccountBalancesInfo,
-    getAccountUnrealizedPnl,
+    getAccountBalancesSummary,
     fetchEscrowStatus,
     getParticipatedMarkets
 } from '../../services/AccountService';
@@ -98,12 +100,14 @@ export function loadAccountBalanceInfo(accountId: string) {
     }
 }
 
-export function loadAccountUnrealizedPnl(accountId: string) {
+export function loadAccountBalancesSummary(accountId: string) {
     return async (dispatch: Function) => {
         try {
             dispatch(setAccountPoolTokenLoading(true));
-            const unrealizedPnl = await getAccountUnrealizedPnl(accountId);
-            dispatch(setUnrealizedPnl(unrealizedPnl));
+            const accountBalancesSummary = await getAccountBalancesSummary(accountId);
+            dispatch(setUnrealizedPnl(accountBalancesSummary.unrealizedPnl));
+            dispatch(setTotalSpent(accountBalancesSummary.totalSpent));
+            dispatch(setOutcomeTokenBalance(accountBalancesSummary.outcomeTokenBalance));
             dispatch(setAccountPoolTokenLoading(false));
         } catch (error) {
             dispatch(setAccountPoolTokenLoading(false));

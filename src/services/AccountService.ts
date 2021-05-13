@@ -63,6 +63,12 @@ interface AccountBalancesInfo {
     marketBalances: UserBalance[];
 }
 
+interface AccountBalancesSummary {
+    unrealizedPnl: Big;
+    totalSpent: string;
+    outcomeTokenBalance: string;
+}
+
 export async function getAccountBalancesInfo(accountId: string): Promise<AccountBalancesInfo> {
     try {
         const sdk = await connectSdk();
@@ -108,20 +114,30 @@ export async function getAccountBalancesInfo(accountId: string): Promise<Account
     }
 }
 
-export async function getAccountUnrealizedPnl(accountId: string): Promise<Big> {
+export async function getAccountBalancesSummary(accountId: string): Promise<AccountBalancesSummary> {
     let accountBalancesInfo = await getAccountBalancesInfo(accountId);
     console.log(accountBalancesInfo);
 
     let totalAvgPaidPrice = new Big("0");
     let totalOutcomePrice = 0;
+    let spent = 0;
+    let outcomeTokens = 0;
     for (let i = 0; i < accountBalancesInfo.marketBalances.length; i++) {
         totalAvgPaidPrice = accountBalancesInfo.marketBalances[i].avgPaidPrice.add(totalAvgPaidPrice);
-        totalOutcomePrice = accountBalancesInfo.marketBalances[i].outcomePrice + totalOutcomePrice;
+        totalOutcomePrice += accountBalancesInfo.marketBalances[i].outcomePrice;
+        spent += Number(accountBalancesInfo.marketBalances[i].spent);
+        outcomeTokens += Number(accountBalancesInfo.marketBalances[i].balance);
     }
-    // const unrealizedPnl = avgPaidPrice.gt("0") ? new Big(currentPrice).minus(avgPaidPrice).div(avgPaidPrice).mul(100).round(2) : new Big("0")
-    const unrealizedPnl = totalAvgPaidPrice.gt("0") ? new Big(totalOutcomePrice).minus(totalAvgPaidPrice).div(totalAvgPaidPrice).mul(100).round(2) : new Big("0")
 
-    return unrealizedPnl;
+    const unrealizedPnl = totalAvgPaidPrice.gt("0") ? new Big(totalOutcomePrice).minus(totalAvgPaidPrice).div(totalAvgPaidPrice).mul(100).round(2) : new Big("0");
+    const totalSpent = String(spent);
+    const outcomeTokenBalance = String(outcomeTokens);
+
+    return {
+        unrealizedPnl,
+        totalSpent,
+        outcomeTokenBalance
+    };
 }
 
 export async function getBalancesForMarketByAccount(accountId: string, marketId: string): Promise<UserBalance[]> {
