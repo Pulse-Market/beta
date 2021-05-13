@@ -40,7 +40,7 @@ const initialState: AccountState = {
     errors: [],
     balances: [],
     escrowStatus: [],
-    unrealizedPnl: new Big("0"),
+    unrealizedPnl: new Big("-99999"),
     accountTransactions: {
         loading: false,
         transactions: [],
