@@ -19,7 +19,11 @@ export type AccountState = Readonly<{
     requiredWrappedNearDeposit?: string;
     errors: string[];
     escrowStatus: EscrowStatus[];
-    unrealizedPnl: Big;
+    accountSummary: {
+        unrealizedPnl: Big | null;
+        totalSpent: string | null;
+        outcomeTokenBalance: string | null;
+    };
     accountTransactions: {
         loading: boolean;
         transactions: Transaction[];
@@ -40,7 +44,11 @@ const initialState: AccountState = {
     errors: [],
     balances: [],
     escrowStatus: [],
-    unrealizedPnl: new Big("-99999"),
+    accountSummary: {
+        unrealizedPnl: null,
+        totalSpent: null,
+        outcomeTokenBalance: null,
+    },
     accountTransactions: {
         loading: false,
         transactions: [],
@@ -114,7 +122,28 @@ const accountSlice = createSlice({
         setUnrealizedPnl(state: AccountState, action: PayloadAction<Big>): AccountState {
             return ({
                 ...state,
-                unrealizedPnl: action.payload,
+                accountSummary: {
+                    ...state.accountSummary,
+                    unrealizedPnl: action.payload,
+                }
+            });
+        },
+        setTotalSpent(state: AccountState, action: PayloadAction<string>): AccountState {
+            return ({
+                ...state,
+                accountSummary: {
+                    ...state.accountSummary,
+                    totalSpent: action.payload,
+                }
+            });
+        },
+        setOutcomeTokenBalance(state: AccountState, action: PayloadAction<string>): AccountState {
+            return ({
+                ...state,
+                accountSummary: {
+                    ...state.accountSummary,
+                    outcomeTokenBalance: action.payload,
+                }
             });
         },
         setAccountErrors(state: AccountState, action: PayloadAction<string[]>): AccountState {
@@ -192,6 +221,8 @@ export const {
     setRequiredWrappedNearDeposit,
     setEscrowStatus,
     setUnrealizedPnl,
+    setTotalSpent,
+    setOutcomeTokenBalance,
     setAccountTransactions,
     setTotalAccountTransactions,
     setAccountTransactionsLoading,

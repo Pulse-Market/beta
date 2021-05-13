@@ -4,7 +4,7 @@ import { Reducers } from '../../redux/reducers';
 import { Route, Switch, useHistory, useLocation } from 'react-router';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import { loadAccountUnrealizedPnl } from '../../redux/account/accountActions';
+import { loadAccountBalancesSummary } from '../../redux/account/accountActions';
 
 import BackgroundWave from '../../components/BackgroundWave';
 import TabBar from '../../containers/TabBar';
@@ -34,7 +34,7 @@ export default function HomePage() {
 
     useEffect(() => {
         if (!account) return;
-        dispatch(loadAccountUnrealizedPnl(account.accountId));
+        dispatch(loadAccountBalancesSummary(account.accountId));
     }, [dispatch, account]);
 
     return (
