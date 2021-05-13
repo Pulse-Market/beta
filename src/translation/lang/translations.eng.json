@@ -40,6 +40,10 @@
     "home.title.welcome.loggedOut": "i know the future 🤫",
     "home.title.subtitle.loggedOut": "Pulse is a fair launch open-source app for prediction markets",
 
+    "home.title.summary.pnl": "Unrealized PnL",
+    "home.title.summary.totalSpent": "Total spent",
+    "home.title.summary.totalBalance": "Total outcome tokens",
+
     "disclaimer.title": "Disclaimer",
     "disclaimer.description": "This is a community deployed open-source version of Pulse Protocol and is unaudited. You are acknowledging this software is provided as is with no warranty or guarantee.",
     "disclaimer.action.accept": "Accept",
