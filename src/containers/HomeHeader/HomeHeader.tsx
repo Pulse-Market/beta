@@ -1,4 +1,6 @@
 import React, { ReactElement } from 'react';
+import Big from "big.js";
+
 import Button from '../../components/Button';
 import { Account } from '../../models/Account';
 import trans from '../../translation/trans';
@@ -8,11 +10,13 @@ import s from './HomeHeader.module.scss';
 interface Props {
     onCreateMarketClick: () => void;
     account: Account | null;
+    unrealizedPnl: Big | "";
 }
 
 export default function HomeHeader({
     onCreateMarketClick,
     account,
+    unrealizedPnl
 }: Props): ReactElement {
     return (
         <div className={s.root}>
@@ -29,6 +33,7 @@ export default function HomeHeader({
                         : trans('home.title.subtitle.loggedIn')
                     }
                 </span>
+                <p>{unrealizedPnl.toString()}</p>
             </div>
             {process.env.REACT_APP_NETWORK !== "mainnet" && <Button onClick={onCreateMarketClick}>{trans('global.actions.createMarket')}</Button>}
         </div>

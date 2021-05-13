@@ -7,6 +7,7 @@ import {
     setNearToken,
     setWrappedNearToken,
     setEscrowStatus,
+    setUnrealizedPnl,
     setAccountTransactions,
     setTotalAccountTransactions,
     setAccountTransactionsLoading,
@@ -14,7 +15,15 @@ import {
     setTotalAccountParticipatedMarkets,
     setAccountParticipatedMarkets,
 } from "./account";
-import { signUserIn, getAccountInfo, signUserOut, getAccountBalancesInfo, fetchEscrowStatus, getParticipatedMarkets } from '../../services/AccountService';
+import {
+    signUserIn,
+    getAccountInfo,
+    signUserOut,
+    getAccountBalancesInfo,
+    getAccountUnrealizedPnl,
+    fetchEscrowStatus,
+    getParticipatedMarkets
+} from '../../services/AccountService';
 import { getNearToken, getWrappedNearToken } from "../../services/NearService";
 import { getTransactionsForAccount } from '../../services/TransactionService';
 import { Reducers } from "../reducers";
@@ -81,6 +90,20 @@ export function loadAccountBalanceInfo(accountId: string) {
             const accountBalancesInfo = await getAccountBalancesInfo(accountId);
             dispatch(setAccountPoolTokens(accountBalancesInfo.poolTokens));
             dispatch(setAccountBalances(accountBalancesInfo.marketBalances));
+            dispatch(setAccountPoolTokenLoading(false));
+        } catch (error) {
+            dispatch(setAccountPoolTokenLoading(false));
+            console.error('[getPoolTokensForAccount]', error);
+        }
+    }
+}
+
+export function loadAccountUnrealizedPnl(accountId: string) {
+    return async (dispatch: Function) => {
+        try {
+            dispatch(setAccountPoolTokenLoading(true));
+            const unrealizedPnl = await getAccountUnrealizedPnl(accountId);
+            dispatch(setUnrealizedPnl(unrealizedPnl));
             dispatch(setAccountPoolTokenLoading(false));
         } catch (error) {
             dispatch(setAccountPoolTokenLoading(false));

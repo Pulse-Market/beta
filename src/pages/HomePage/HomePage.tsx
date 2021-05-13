@@ -1,6 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Reducers } from '../../redux/reducers';
 import { Route, Switch, useHistory, useLocation } from 'react-router';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+
+import { loadAccountUnrealizedPnl } from '../../redux/account/accountActions';
 
 import BackgroundWave from '../../components/BackgroundWave';
 import TabBar from '../../containers/TabBar';
@@ -18,13 +22,20 @@ import PendingPage from './sub-pages/PendingPage';
 
 
 export default function HomePage() {
+    const dispatch = useDispatch();
     const isLargeScreen = useMediaQuery('(min-width: 1024px)');
     const history = useHistory();
     const location = useLocation();
+    const account = useSelector((store: Reducers) => store.account.account);
 
     const onTabClick = useCallback((item: TabBarItem) => {
         history.push(item.id);
     }, [history]);
+
+    useEffect(() => {
+        if (!account) return;
+        dispatch(loadAccountUnrealizedPnl(account.accountId));
+    }, [dispatch, account]);
 
     return (
         <Page className={s.homePage} bodyClassName={s.homePageBody} size="large" hasNavigation>
