@@ -32,8 +32,11 @@
 }
 
 .stats {
-    text-align: right;
     color: var(--c-text);
+    text-align: left;
+    @include for-size($default-bigger-screen-breakpoint) {
+        text-align: right;
+    }
 }
 
 .stats label {
