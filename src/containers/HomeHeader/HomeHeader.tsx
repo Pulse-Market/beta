@@ -3,7 +3,7 @@ import Big from "big.js";
 
 import Button from '../../components/Button';
 import { Account } from '../../models/Account';
-import { TokenMetadata } from "../../models/TokenMetadata";
+import { TokenViewModel } from "../../models/TokenViewModel";
 import trans from '../../translation/trans';
 import { formatCollateralToken } from '../../services/CollateralTokenService';
 
@@ -15,7 +15,7 @@ interface Props {
     unrealizedPnl: Big | null;
     totalSpent: string | null;
     outcomeTokenBalance: string | null;
-    collateralTokenMetadata: TokenMetadata | null;
+    collateralToken: TokenViewModel | null;
 }
 
 export default function HomeHeader({
@@ -24,7 +24,7 @@ export default function HomeHeader({
     unrealizedPnl,
     totalSpent,
     outcomeTokenBalance,
-    collateralTokenMetadata
+    collateralToken
 }: Props): ReactElement {
 
     return (
@@ -53,18 +53,31 @@ export default function HomeHeader({
                         </p>
                     </>
                 }
-        {
-                    (totalSpent !== null && collateralTokenMetadata !== null) &&
+                {
+                    (totalSpent !== null && collateralToken !== null) &&
                     <>
                         <label>{trans('home.title.summary.totalSpent')}</label>
-                        <p>{formatCollateralToken(totalSpent, collateralTokenMetadata!.decimals)} {collateralTokenMetadata?.symbol}</p>
+                        <p>
+                            {
+                                formatCollateralToken(
+                                    totalSpent,
+                                    collateralToken!.decimals
+                                )
+                            } { collateralToken?.tokenSymbol} / {collateralToken?.priceSymbol}
+                            {
+                                formatCollateralToken(
+                                    String(Number(totalSpent)*collateralToken.price), // calculate dollar price of collateral token
+                                    collateralToken!.decimals
+                                )
+                            }
+                        </p>
                     </>
                 }
                 {
-                    (outcomeTokenBalance !== null && collateralTokenMetadata !== null) &&
+                    (outcomeTokenBalance !== null && collateralToken !== null) &&
                     <>
                         <label>{trans('home.title.summary.totalBalance')}</label>
-                        <p>{formatCollateralToken(outcomeTokenBalance, collateralTokenMetadata!.decimals)}</p>
+                        <p>{formatCollateralToken(outcomeTokenBalance, collateralToken!.decimals)}</p>
                     </>
                 }
             </div>
