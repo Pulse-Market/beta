@@ -7,7 +7,6 @@ import { PoolToken } from '../../models/PoolToken';
 import { TokenViewModel } from '../../models/TokenViewModel';
 import { Transaction } from '../../models/Transaction';
 import { UserBalance } from '../../models/UserBalance';
-import { TokenMetadata } from '../../models/TokenMetadata';
 
 export type AccountState = Readonly<{
     account: Account | null;
@@ -24,7 +23,7 @@ export type AccountState = Readonly<{
         unrealizedPnl: Big | null;
         totalSpent: string | null;
         outcomeTokenBalance: string | null;
-        collateralTokenMetadata: TokenMetadata | null;
+        collateralToken: TokenViewModel | null;
     };
     accountTransactions: {
         loading: boolean;
@@ -50,7 +49,7 @@ const initialState: AccountState = {
         unrealizedPnl: null,
         totalSpent: null,
         outcomeTokenBalance: null,
-        collateralTokenMetadata: null,
+        collateralToken: null,
     },
     accountTransactions: {
         loading: false,
@@ -149,12 +148,12 @@ const accountSlice = createSlice({
                 }
             });
         },
-        setCollateralTokenMetadata(state: AccountState, action: PayloadAction<TokenMetadata>): AccountState {
+        setCollateralToken(state: AccountState, action: PayloadAction<TokenViewModel>): AccountState {
             return ({
                 ...state,
                 accountSummary: {
                     ...state.accountSummary,
-                    collateralTokenMetadata: action.payload,
+                    collateralToken: action.payload,
                 }
             });
         },
@@ -235,7 +234,7 @@ export const {
     setUnrealizedPnl,
     setTotalSpent,
     setOutcomeTokenBalance,
-    setCollateralTokenMetadata,
+    setCollateralToken,
     setAccountTransactions,
     setTotalAccountTransactions,
     setAccountTransactionsLoading,
