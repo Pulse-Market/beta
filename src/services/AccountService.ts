@@ -118,7 +118,6 @@ export async function getAccountBalancesInfo(accountId: string): Promise<Account
 
 export async function getAccountBalancesSummary(accountId: string): Promise<AccountBalancesSummary> {
     let accountBalancesInfo = await getAccountBalancesInfo(accountId);
-    console.log(accountBalancesInfo);
 
     let totalAvgPaidPrice = new Big("0");
     let totalOutcomePrice = 0;
