@@ -12,6 +12,7 @@ export default function HomeHeaderConnector(): ReactElement {
     const totalSpent = useSelector((store: Reducers) => store.account.accountSummary.totalSpent);
     const outcomeTokenBalance = useSelector((store: Reducers) => store.account.accountSummary.outcomeTokenBalance);
     const collateralToken = useSelector((store: Reducers) => store.account.accountSummary.collateralToken);
+    const hasMultipleCollateralTokens = useSelector((store: Reducers) => store.account.accountSummary.hasMultipleCollateralTokens);
 
     const handleCreateMarketClick = useCallback(() => {
         dispatch(setMarketCreationDialogOpen(true));
@@ -25,6 +26,7 @@ export default function HomeHeaderConnector(): ReactElement {
             totalSpent={totalSpent}
             outcomeTokenBalance={outcomeTokenBalance}
             collateralToken={collateralToken}
+            hasMultipleCollateralTokens={hasMultipleCollateralTokens}
         />
     );
 }

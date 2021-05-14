@@ -23,7 +23,8 @@ export type AccountState = Readonly<{
         unrealizedPnl: Big | null;
         totalSpent: string | null;
         outcomeTokenBalance: string | null;
-        collateralToken: TokenViewModel | null;
+        collateralToken: TokenViewModel | null; // first collateral token
+        hasMultipleCollateralTokens: boolean | null;
     };
     accountTransactions: {
         loading: boolean;
@@ -50,6 +51,7 @@ const initialState: AccountState = {
         totalSpent: null,
         outcomeTokenBalance: null,
         collateralToken: null,
+        hasMultipleCollateralTokens: null,
     },
     accountTransactions: {
         loading: false,
@@ -157,6 +159,15 @@ const accountSlice = createSlice({
                 }
             });
         },
+        setHasMultipleCollateralTokens(state: AccountState, action: PayloadAction<boolean>): AccountState {
+            return ({
+                ...state,
+                accountSummary: {
+                    ...state.accountSummary,
+                    hasMultipleCollateralTokens: action.payload,
+                }
+            });
+        },
         setAccountErrors(state: AccountState, action: PayloadAction<string[]>): AccountState {
             return ({
                 ...state,
@@ -235,6 +246,7 @@ export const {
     setTotalSpent,
     setOutcomeTokenBalance,
     setCollateralToken,
+    setHasMultipleCollateralTokens,
     setAccountTransactions,
     setTotalAccountTransactions,
     setAccountTransactionsLoading,

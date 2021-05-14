@@ -68,7 +68,8 @@ interface AccountBalancesSummary {
     unrealizedPnl: Big;
     totalSpent: string;
     outcomeTokenBalance: string;
-    collateralToken: TokenViewModel;
+    collateralToken: TokenViewModel | null;
+    hasMultipleCollateralTokens: boolean;
 }
 
 export async function getAccountBalancesInfo(accountId: string): Promise<AccountBalancesInfo> {
@@ -119,11 +120,22 @@ export async function getAccountBalancesInfo(accountId: string): Promise<Account
 export async function getAccountBalancesSummary(accountId: string): Promise<AccountBalancesSummary> {
     let accountBalancesInfo = await getAccountBalancesInfo(accountId);
 
+    if (accountBalancesInfo.marketBalances.length === 0) {
+        return {
+            unrealizedPnl: new Big("0"),
+            totalSpent: "0",
+            outcomeTokenBalance: "0",
+            collateralToken: null,
+            hasMultipleCollateralTokens: false,
+        }
+    }
+
     let totalAvgPaidPrice = new Big("0");
     let totalOutcomePrice = 0;
     let spent = 0;
     let outcomeTokens = 0;
     let collateralTokens = [];
+    let hasMultipleCollateralTokens = false;
 
     for (let i = 0; i < accountBalancesInfo.marketBalances.length; i++) {
         totalAvgPaidPrice = accountBalancesInfo.marketBalances[i].avgPaidPrice.add(totalAvgPaidPrice);
@@ -131,12 +143,20 @@ export async function getAccountBalancesSummary(accountId: string): Promise<Acco
         spent += Number(accountBalancesInfo.marketBalances[i].spent);
         outcomeTokens += Number(accountBalancesInfo.marketBalances[i].balance);
         collateralTokens.push(accountBalancesInfo.marketBalances[i].collateralTokenMetadata);
+
+        // check if multiple collateral token
+        if (
+            !hasMultipleCollateralTokens && i > 0 &&
+            accountBalancesInfo.marketBalances[i].collateralTokenMetadata.collateralTokenId !== accountBalancesInfo.marketBalances[i-1].collateralTokenMetadata.collateralTokenId
+        ) {
+            hasMultipleCollateralTokens = true;
+        }
     }
 
     const unrealizedPnl = totalAvgPaidPrice.gt("0") ? new Big(totalOutcomePrice).minus(totalAvgPaidPrice).div(totalAvgPaidPrice).mul(100).round(2) : new Big("0");
     const totalSpent = String(spent);
     const outcomeTokenBalance = String(outcomeTokens);
-    // assume all collateral tokens are the same as the first for master balance
+    // set collateralToken to first collateral token found. If this is the only one detected, display the symbol/amount on the landing page, otherwise just show the dollar value
     // TODO: account for multiple collateral tokens in total balance??
     let account = await getAccountId();
     const collateralToken = await transformToMainTokenViewModel(collateralTokens[0].collateralTokenId, account!);
@@ -145,7 +165,8 @@ export async function getAccountBalancesSummary(accountId: string): Promise<Acco
         unrealizedPnl,
         totalSpent,
         outcomeTokenBalance,
-        collateralToken
+        collateralToken,
+        hasMultipleCollateralTokens
     };
 }
 

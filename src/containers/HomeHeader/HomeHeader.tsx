@@ -16,6 +16,7 @@ interface Props {
     totalSpent: string | null;
     outcomeTokenBalance: string | null;
     collateralToken: TokenViewModel | null;
+    hasMultipleCollateralTokens: boolean | null;
 }
 
 export default function HomeHeader({
@@ -24,15 +25,16 @@ export default function HomeHeader({
     unrealizedPnl,
     totalSpent,
     outcomeTokenBalance,
-    collateralToken
+    collateralToken,
+    hasMultipleCollateralTokens
 }: Props): ReactElement {
 
     return (
         <div className={s.root}>
-        <div className={s.titleWrapper}>
-        <h1 className={s.title}>
-        { account === null
-        ? trans('home.title.welcome.loggedOut')
+            <div className={s.titleWrapper}>
+                <h1 className={s.title}>
+                    { account === null
+                      ? trans('home.title.welcome.loggedOut')
                       : trans('home.title.welcome.loggedIn', { username: account?.accountId || '' })
                     }
                 </h1>
@@ -44,41 +46,34 @@ export default function HomeHeader({
                 </span>
             </div>
             <div className={s.stats}>
-                {
-                    unrealizedPnl !== null &&
-                    <>
-                        <label>{trans('home.title.summary.pnl')}</label>
-                        <p className={unrealizedPnl.gt("0") ? s.link__green : s.link__red }>
-                            {unrealizedPnl.toString()}%
-                        </p>
-                    </>
+                { (unrealizedPnl !== null && collateralToken !== null) &&
+                  <>
+                      <label>{trans('home.title.summary.pnl')}</label>
+                      <p className={unrealizedPnl.gt("0") ? s.link__green : s.link__red }>
+                          {unrealizedPnl.toString()}%
+                      </p>
+                  </>
                 }
-                {
-                    (totalSpent !== null && collateralToken !== null) &&
-                    <>
-                        <label>{trans('home.title.summary.totalSpent')}</label>
-                        <p>
-                            {
-                                formatCollateralToken(
-                                    totalSpent,
-                                    collateralToken!.decimals
-                                )
-                            } { collateralToken?.tokenSymbol} / {collateralToken?.priceSymbol}
-                            {
-                                formatCollateralToken(
-                                    String(Number(totalSpent)*collateralToken.price), // calculate dollar price of collateral token
-                                    collateralToken!.decimals
-                                )
-                            }
-                        </p>
-                    </>
+                { (totalSpent !== null && collateralToken !== null) &&
+                  <>
+                      <label>{trans('home.title.summary.totalSpent')}</label>
+                      <p>
+                          {/* display amount of collateral token if they are all the same */}
+                          { (!hasMultipleCollateralTokens) && <span>{formatCollateralToken(totalSpent, collateralToken!.decimals)} {collateralToken?.tokenSymbol} / </span>}
+
+                          {/* display collateral token amount in USD */}
+                          {collateralToken?.priceSymbol}
+                          {
+                              String(Number(formatCollateralToken(totalSpent, collateralToken!.decimals))*collateralToken.price) // calculate dollar price of collateral token
+                          }
+                      </p>
+                  </>
                 }
-                {
-                    (outcomeTokenBalance !== null && collateralToken !== null) &&
-                    <>
-                        <label>{trans('home.title.summary.totalBalance')}</label>
-                        <p>{formatCollateralToken(outcomeTokenBalance, collateralToken!.decimals)}</p>
-                    </>
+                { (outcomeTokenBalance !== null && collateralToken !== null) &&
+                  <>
+                      <label>{trans('home.title.summary.totalBalance')}</label>
+                      <p>{formatCollateralToken(outcomeTokenBalance, collateralToken!.decimals)}</p>
+                  </>
                 }
             </div>
             {process.env.REACT_APP_NETWORK !== "mainnet" && <Button onClick={onCreateMarketClick}>{trans('global.actions.createMarket')}</Button>}
