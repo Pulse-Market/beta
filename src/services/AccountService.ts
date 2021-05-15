@@ -67,6 +67,7 @@ interface AccountBalancesInfo {
 interface AccountBalancesSummary {
     unrealizedPnl: Big;
     totalSpent: string;
+    priceSymbol: string;
 }
 
 export async function getAccountBalancesInfo(accountId: string): Promise<AccountBalancesInfo> {
@@ -121,6 +122,7 @@ export async function getAccountBalancesSummary(accountId: string): Promise<Acco
         return {
             unrealizedPnl: new Big("0"),
             totalSpent: "",
+            priceSymbol: "",
         }
     }
 
@@ -150,11 +152,12 @@ export async function getAccountBalancesSummary(accountId: string): Promise<Acco
     }
 
     const unrealizedPnl = totalAvgPaidPrice.gt("0") ? new Big(totalOutcomePrice).minus(totalAvgPaidPrice).div(totalAvgPaidPrice).mul(100).round(2) : new Big("0");
-    const totalSpent = priceSymbol + String(spent);
+    const totalSpent = String(spent);
 
     return {
         unrealizedPnl,
         totalSpent,
+        priceSymbol,
     };
 }
 

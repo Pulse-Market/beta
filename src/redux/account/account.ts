@@ -22,6 +22,7 @@ export type AccountState = Readonly<{
     accountSummary: {
         unrealizedPnl: Big | null;
         totalSpent: string | null;
+        priceSymbol: string | null;
     };
     accountTransactions: {
         loading: boolean;
@@ -46,6 +47,7 @@ const initialState: AccountState = {
     accountSummary: {
         unrealizedPnl: null,
         totalSpent: null,
+        priceSymbol: null,
     },
     accountTransactions: {
         loading: false,
@@ -135,6 +137,15 @@ const accountSlice = createSlice({
                 }
             });
         },
+        setPriceSymbol(state: AccountState, action: PayloadAction<string>): AccountState {
+            return ({
+                ...state,
+                accountSummary: {
+                    ...state.accountSummary,
+                    priceSymbol: action.payload,
+                }
+            });
+        },
         setAccountErrors(state: AccountState, action: PayloadAction<string[]>): AccountState {
             return ({
                 ...state,
@@ -211,6 +222,7 @@ export const {
     setEscrowStatus,
     setUnrealizedPnl,
     setTotalSpent,
+    setPriceSymbol,
     setAccountTransactions,
     setTotalAccountTransactions,
     setAccountTransactionsLoading,
