@@ -22,7 +22,6 @@ export type AccountState = Readonly<{
     accountSummary: {
         unrealizedPnl: Big | null;
         totalSpent: string | null;
-        collateralTokens: TokenViewModel[]; // first collateral token
     };
     accountTransactions: {
         loading: boolean;
@@ -47,7 +46,6 @@ const initialState: AccountState = {
     accountSummary: {
         unrealizedPnl: null,
         totalSpent: null,
-        collateralTokens: [],
     },
     accountTransactions: {
         loading: false,
@@ -137,15 +135,6 @@ const accountSlice = createSlice({
                 }
             });
         },
-        setCollateralTokens(state: AccountState, action: PayloadAction<TokenViewModel[]>): AccountState {
-            return ({
-                ...state,
-                accountSummary: {
-                    ...state.accountSummary,
-                    collateralTokens: action.payload,
-                }
-            });
-        },
         setAccountErrors(state: AccountState, action: PayloadAction<string[]>): AccountState {
             return ({
                 ...state,
@@ -222,7 +211,6 @@ export const {
     setEscrowStatus,
     setUnrealizedPnl,
     setTotalSpent,
-    setCollateralTokens,
     setAccountTransactions,
     setTotalAccountTransactions,
     setAccountTransactionsLoading,
