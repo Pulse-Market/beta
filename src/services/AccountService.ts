@@ -3,7 +3,7 @@ import { Account } from "../models/Account";
 import { TokenViewModel, transformToMainTokenViewModel } from "../models/TokenViewModel";
 import { PoolToken, transformToPoolToken } from "../models/PoolToken";
 import { transformToUserBalance, UserBalance } from "../models/UserBalance";
-import { getCollateralTokenMetadata } from "./CollateralTokenService";
+import { getCollateralTokenMetadata, formatCollateralToken } from "./CollateralTokenService";
 import createAuthContract from "./contracts/AuthContract";
 import { connectSdk } from "./WalletService";
 import { ENABLE_WHITELIST } from "../config";
@@ -67,9 +67,7 @@ interface AccountBalancesInfo {
 interface AccountBalancesSummary {
     unrealizedPnl: Big;
     totalSpent: string;
-    outcomeTokenBalance: string;
-    collateralToken: TokenViewModel | null;
-    hasMultipleCollateralTokens: boolean;
+    collateralTokens: TokenViewModel[];
 }
 
 export async function getAccountBalancesInfo(accountId: string): Promise<AccountBalancesInfo> {
@@ -124,49 +122,39 @@ export async function getAccountBalancesSummary(accountId: string): Promise<Acco
         return {
             unrealizedPnl: new Big("0"),
             totalSpent: "0",
-            outcomeTokenBalance: "0",
-            collateralToken: null,
-            hasMultipleCollateralTokens: false,
+            collateralTokens: []
         }
     }
 
     let totalAvgPaidPrice = new Big("0");
     let totalOutcomePrice = 0;
-    let spent = 0;
-    let outcomeTokens = 0;
+    let spent = "0.00";
     let collateralTokens = [];
-    let hasMultipleCollateralTokens = false;
+    let account = await getAccountId();
 
+    // loop through each market balance to find collateral token balances
     for (let i = 0; i < accountBalancesInfo.marketBalances.length; i++) {
         totalAvgPaidPrice = accountBalancesInfo.marketBalances[i].avgPaidPrice.add(totalAvgPaidPrice);
         totalOutcomePrice += accountBalancesInfo.marketBalances[i].outcomePrice;
-        spent += Number(accountBalancesInfo.marketBalances[i].spent);
-        outcomeTokens += Number(accountBalancesInfo.marketBalances[i].balance);
-        collateralTokens.push(accountBalancesInfo.marketBalances[i].collateralTokenMetadata);
 
-        // check if multiple collateral token
-        if (
-            !hasMultipleCollateralTokens && i > 0 &&
-            accountBalancesInfo.marketBalances[i].collateralTokenMetadata.collateralTokenId !== accountBalancesInfo.marketBalances[i-1].collateralTokenMetadata.collateralTokenId
-        ) {
-            hasMultipleCollateralTokens = true;
-        }
+        // find collateral token and add if it is unique
+        let collateralToken = await transformToMainTokenViewModel(accountBalancesInfo.marketBalances[i].collateralTokenMetadata.collateralTokenId, account!);
+        if (collateralTokens.includes(collateralToken) === false) collateralTokens.push(collateralToken); // skips duplicates
+
+        // calculate the price of the collateral token and add it to the total spent
+        let collateralTokenPrice = Number(formatCollateralToken(accountBalancesInfo.marketBalances[i].spent, collateralToken!.decimals)) * collateralToken.price;
+        spent = String(
+            (Number(spent) + collateralTokenPrice).toFixed(2)
+        );
     }
 
     const unrealizedPnl = totalAvgPaidPrice.gt("0") ? new Big(totalOutcomePrice).minus(totalAvgPaidPrice).div(totalAvgPaidPrice).mul(100).round(2) : new Big("0");
     const totalSpent = String(spent);
-    const outcomeTokenBalance = String(outcomeTokens);
-    // set collateralToken to first collateral token found. If this is the only one detected, display the symbol/amount on the landing page, otherwise just show the dollar value
-    // TODO: account for multiple collateral tokens in total balance??
-    let account = await getAccountId();
-    const collateralToken = await transformToMainTokenViewModel(collateralTokens[0].collateralTokenId, account!);
 
     return {
         unrealizedPnl,
         totalSpent,
-        outcomeTokenBalance,
-        collateralToken,
-        hasMultipleCollateralTokens
+        collateralTokens,
     };
 }
 

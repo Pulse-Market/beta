@@ -22,9 +22,7 @@ export type AccountState = Readonly<{
     accountSummary: {
         unrealizedPnl: Big | null;
         totalSpent: string | null;
-        outcomeTokenBalance: string | null;
-        collateralToken: TokenViewModel | null; // first collateral token
-        hasMultipleCollateralTokens: boolean | null;
+        collateralTokens: TokenViewModel[]; // first collateral token
     };
     accountTransactions: {
         loading: boolean;
@@ -49,9 +47,7 @@ const initialState: AccountState = {
     accountSummary: {
         unrealizedPnl: null,
         totalSpent: null,
-        outcomeTokenBalance: null,
-        collateralToken: null,
-        hasMultipleCollateralTokens: null,
+        collateralTokens: [],
     },
     accountTransactions: {
         loading: false,
@@ -141,30 +137,12 @@ const accountSlice = createSlice({
                 }
             });
         },
-        setOutcomeTokenBalance(state: AccountState, action: PayloadAction<string>): AccountState {
+        setCollateralTokens(state: AccountState, action: PayloadAction<TokenViewModel[]>): AccountState {
             return ({
                 ...state,
                 accountSummary: {
                     ...state.accountSummary,
-                    outcomeTokenBalance: action.payload,
-                }
-            });
-        },
-        setCollateralToken(state: AccountState, action: PayloadAction<TokenViewModel>): AccountState {
-            return ({
-                ...state,
-                accountSummary: {
-                    ...state.accountSummary,
-                    collateralToken: action.payload,
-                }
-            });
-        },
-        setHasMultipleCollateralTokens(state: AccountState, action: PayloadAction<boolean>): AccountState {
-            return ({
-                ...state,
-                accountSummary: {
-                    ...state.accountSummary,
-                    hasMultipleCollateralTokens: action.payload,
+                    collateralTokens: action.payload,
                 }
             });
         },
@@ -244,9 +222,7 @@ export const {
     setEscrowStatus,
     setUnrealizedPnl,
     setTotalSpent,
-    setOutcomeTokenBalance,
-    setCollateralToken,
-    setHasMultipleCollateralTokens,
+    setCollateralTokens,
     setAccountTransactions,
     setTotalAccountTransactions,
     setAccountTransactionsLoading,
