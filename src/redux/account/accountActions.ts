@@ -9,7 +9,6 @@ import {
     setEscrowStatus,
     setUnrealizedPnl,
     setTotalSpent,
-    setCollateralTokens,
     setAccountTransactions,
     setTotalAccountTransactions,
     setAccountTransactionsLoading,
@@ -107,7 +106,6 @@ export function loadAccountBalancesSummary(accountId: string) {
             const accountBalancesSummary = await getAccountBalancesSummary(accountId);
             dispatch(setUnrealizedPnl(accountBalancesSummary.unrealizedPnl));
             dispatch(setTotalSpent(accountBalancesSummary.totalSpent));
-            dispatch(setCollateralTokens(accountBalancesSummary.collateralTokens));
             dispatch(setAccountPoolTokenLoading(false));
         } catch (error) {
             dispatch(setAccountPoolTokenLoading(false));

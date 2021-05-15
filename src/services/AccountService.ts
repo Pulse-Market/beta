@@ -1,6 +1,6 @@
 import Big from "big.js";
 import { Account } from "../models/Account";
-import { TokenViewModel, transformToMainTokenViewModel } from "../models/TokenViewModel";
+import { transformToMainTokenViewModel } from "../models/TokenViewModel";
 import { PoolToken, transformToPoolToken } from "../models/PoolToken";
 import { transformToUserBalance, UserBalance } from "../models/UserBalance";
 import { getCollateralTokenMetadata, formatCollateralToken } from "./CollateralTokenService";
@@ -67,7 +67,6 @@ interface AccountBalancesInfo {
 interface AccountBalancesSummary {
     unrealizedPnl: Big;
     totalSpent: string;
-    collateralTokens: TokenViewModel[];
 }
 
 export async function getAccountBalancesInfo(accountId: string): Promise<AccountBalancesInfo> {
@@ -121,15 +120,14 @@ export async function getAccountBalancesSummary(accountId: string): Promise<Acco
     if (accountBalancesInfo.marketBalances.length === 0) {
         return {
             unrealizedPnl: new Big("0"),
-            totalSpent: "0",
-            collateralTokens: []
+            totalSpent: "",
         }
     }
 
     let totalAvgPaidPrice = new Big("0");
     let totalOutcomePrice = 0;
     let spent = "0.00";
-    let collateralTokens = [];
+    let priceSymbol = "";
     let account = await getAccountId();
 
     // loop through each market balance to find collateral token balances
@@ -137,24 +135,26 @@ export async function getAccountBalancesSummary(accountId: string): Promise<Acco
         totalAvgPaidPrice = accountBalancesInfo.marketBalances[i].avgPaidPrice.add(totalAvgPaidPrice);
         totalOutcomePrice += accountBalancesInfo.marketBalances[i].outcomePrice;
 
-        // find collateral token and add if it is unique
         let collateralToken = await transformToMainTokenViewModel(accountBalancesInfo.marketBalances[i].collateralTokenMetadata.collateralTokenId, account!);
-        if (collateralTokens.includes(collateralToken) === false) collateralTokens.push(collateralToken); // skips duplicates
 
         // calculate the price of the collateral token and add it to the total spent
-        let collateralTokenPrice = Number(formatCollateralToken(accountBalancesInfo.marketBalances[i].spent, collateralToken!.decimals)) * collateralToken.price;
+        let collateralTokenPrice = Number(formatCollateralToken(accountBalancesInfo.marketBalances[i].spent, collateralToken.decimals)) * collateralToken.price;
         spent = String(
             (Number(spent) + collateralTokenPrice).toFixed(2)
         );
+
+        // assume same price symbol for all tokens (usually $ for USD)
+        if (i === 1) {
+            priceSymbol = collateralToken.priceSymbol;
+        }
     }
 
     const unrealizedPnl = totalAvgPaidPrice.gt("0") ? new Big(totalOutcomePrice).minus(totalAvgPaidPrice).div(totalAvgPaidPrice).mul(100).round(2) : new Big("0");
-    const totalSpent = String(spent);
+    const totalSpent = priceSymbol + String(spent);
 
     return {
         unrealizedPnl,
         totalSpent,
-        collateralTokens,
     };
 }
 

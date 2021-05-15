@@ -13,7 +13,6 @@ interface Props {
     account: Account | null;
     unrealizedPnl: Big | null;
     totalSpent: string | null;
-    collateralTokens: TokenViewModel[];
 }
 
 export default function HomeHeader({
@@ -21,7 +20,6 @@ export default function HomeHeader({
     account,
     unrealizedPnl,
     totalSpent,
-    collateralTokens,
 }: Props): ReactElement {
 
     return (
@@ -41,7 +39,7 @@ export default function HomeHeader({
                 </span>
             </div>
             <div className={s.stats}>
-                { (unrealizedPnl !== null && collateralTokens.length > 0) &&
+                { unrealizedPnl !== null &&
                   <>
                       <label>{trans('home.title.summary.pnl')}</label>
                       <p className={unrealizedPnl.gt("0") ? s.link__green : s.link__red }>
@@ -49,11 +47,11 @@ export default function HomeHeader({
                       </p>
                   </>
                 }
-                { (totalSpent !== null && collateralTokens.length > 0) &&
+                { totalSpent !== null &&
                   <>
                       <label>{trans('home.title.summary.totalSpent')}</label>
                       <p>
-                          {collateralTokens[0]?.priceSymbol}{totalSpent}
+                          {totalSpent}
                       </p>
                   </>
                 }
