@@ -51,7 +51,7 @@ export default function HomeHeader({
                   <>
                       <label>{trans('home.title.summary.pnl')}</label>
                       <p className={unrealizedPnl.gt("0") ? s.link__green : s.link__red }>
-                          {unrealizedPnl.toString()}% / {totalSpent.charAt(0)}{ (Number(totalSpent.slice(1)) + ((Number(unrealizedPnl)/100) * Number(totalSpent.slice(1)))).toFixed(2) }
+                          {unrealizedPnl.toString()}% / {totalSpent.charAt(0)}{ ((Number(unrealizedPnl)/100) * Number(totalSpent.slice(1))).toFixed(2) }
                       </p>
                   </>
                 }
