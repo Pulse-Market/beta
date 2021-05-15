@@ -39,19 +39,19 @@ export default function HomeHeader({
                 </span>
             </div>
             <div className={s.stats}>
-                { unrealizedPnl !== null &&
-                  <>
-                      <label>{trans('home.title.summary.pnl')}</label>
-                      <p className={unrealizedPnl.gt("0") ? s.link__green : s.link__red }>
-                          {unrealizedPnl.toString()}%
-                      </p>
-                  </>
-                }
                 { totalSpent !== null &&
                   <>
                       <label>{trans('home.title.summary.totalSpent')}</label>
                       <p>
                           {totalSpent}
+                      </p>
+                  </>
+                }
+                { (unrealizedPnl !== null && totalSpent !== null) &&
+                  <>
+                      <label>{trans('home.title.summary.pnl')}</label>
+                      <p className={unrealizedPnl.gt("0") ? s.link__green : s.link__red }>
+                          {unrealizedPnl.toString()}% / {totalSpent.charAt(0)}{ (Number(totalSpent.slice(1)) + ((Number(unrealizedPnl)/100) * Number(totalSpent.slice(1)))).toFixed(2) }
                       </p>
                   </>
                 }
