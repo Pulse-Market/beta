@@ -144,7 +144,7 @@ export async function getAccountBalancesSummary(accountId: string): Promise<Acco
         );
 
         // assume same price symbol for all tokens (usually $ for USD)
-        if (i === 1) {
+        if (i === 0) {
             priceSymbol = collateralToken.priceSymbol;
         }
     }
