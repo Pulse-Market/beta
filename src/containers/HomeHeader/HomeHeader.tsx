@@ -39,25 +39,27 @@ export default function HomeHeader({
                     }
                 </span>
             </div>
-            <div className={s.stats}>
-                { totalSpent !== null &&
-                  <>
-                      <label>{trans('home.title.summary.totalSpent')}</label>
-                      <p>
-                          {priceSymbol}{totalSpent}
-                      </p>
-                  </>
-                }
-                { (unrealizedPnl !== null && totalSpent !== null) &&
-                  <>
-                      <label>{trans('home.title.summary.pnl')}</label>
-                      <p className={unrealizedPnl.gt("0") ? s.link__green : s.link__red }>
-                          {unrealizedPnl.toString()}% / {priceSymbol}{ ((Number(unrealizedPnl)/100) * Number(totalSpent)).toFixed(2) }
-                      </p>
-                  </>
-                }
+            <div className={s.right}>
+                <div className={s.stats}>
+                    { totalSpent !== null &&
+                      <>
+                          <label>{trans('home.title.summary.totalSpent')}</label>
+                          <p>
+                              {priceSymbol}{totalSpent}
+                          </p>
+                      </>
+                    }
+                    { (unrealizedPnl !== null && totalSpent !== null) &&
+                      <>
+                          <label>{trans('home.title.summary.pnl')}</label>
+                          <p className={unrealizedPnl.gt("0") ? s.link__green : s.link__red }>
+                              {unrealizedPnl.toString()}% / {priceSymbol}{ ((Number(unrealizedPnl)/100) * Number(totalSpent)).toFixed(2) }
+                          </p>
+                      </>
+                    }
+                </div>
+                {process.env.REACT_APP_NETWORK !== "mainnet" && <Button onClick={onCreateMarketClick}>{trans('global.actions.createMarket')}</Button>}
             </div>
-            {process.env.REACT_APP_NETWORK !== "mainnet" && <Button onClick={onCreateMarketClick}>{trans('global.actions.createMarket')}</Button>}
         </div>
     );
 }
