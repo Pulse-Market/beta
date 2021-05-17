@@ -1,3 +1,4 @@
+import Big from "big.js";
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Account } from '../../models/Account';
 import { EscrowStatus } from '../../models/EscrowStatus';
@@ -18,6 +19,11 @@ export type AccountState = Readonly<{
     requiredWrappedNearDeposit?: string;
     errors: string[];
     escrowStatus: EscrowStatus[];
+    accountSummary: {
+        unrealizedPnl: Big | null;
+        totalSpent: string | null;
+        priceSymbol: string | null;
+    };
     accountTransactions: {
         loading: boolean;
         transactions: Transaction[];
@@ -38,6 +44,11 @@ const initialState: AccountState = {
     errors: [],
     balances: [],
     escrowStatus: [],
+    accountSummary: {
+        unrealizedPnl: null,
+        totalSpent: null,
+        priceSymbol: null,
+    },
     accountTransactions: {
         loading: false,
         transactions: [],
@@ -106,6 +117,33 @@ const accountSlice = createSlice({
             return ({
                 ...state,
                 escrowStatus: action.payload,
+            });
+        },
+        setUnrealizedPnl(state: AccountState, action: PayloadAction<Big>): AccountState {
+            return ({
+                ...state,
+                accountSummary: {
+                    ...state.accountSummary,
+                    unrealizedPnl: action.payload,
+                }
+            });
+        },
+        setTotalSpent(state: AccountState, action: PayloadAction<string>): AccountState {
+            return ({
+                ...state,
+                accountSummary: {
+                    ...state.accountSummary,
+                    totalSpent: action.payload,
+                }
+            });
+        },
+        setPriceSymbol(state: AccountState, action: PayloadAction<string>): AccountState {
+            return ({
+                ...state,
+                accountSummary: {
+                    ...state.accountSummary,
+                    priceSymbol: action.payload,
+                }
             });
         },
         setAccountErrors(state: AccountState, action: PayloadAction<string[]>): AccountState {
@@ -182,6 +220,9 @@ export const {
     setWrappedNearToken,
     setRequiredWrappedNearDeposit,
     setEscrowStatus,
+    setUnrealizedPnl,
+    setTotalSpent,
+    setPriceSymbol,
     setAccountTransactions,
     setTotalAccountTransactions,
     setAccountTransactionsLoading,

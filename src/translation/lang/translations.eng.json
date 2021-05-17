@@ -35,8 +35,14 @@
     "menu.balance": ":amount :tokenSymbol",
 
     "home.title.head": ":appName - Markets",
-    "home.title.welcome": "Welcome :username",
-    "home.title.latestTrends": "These are the latest trends",
+    "home.title.welcome.loggedIn": "Welcome :username!",
+    "home.title.subtitle.loggedIn": "See what markets are trending on Pulse 🤫",
+    "home.title.welcome.loggedOut": "i know the future 🤫",
+    "home.title.subtitle.loggedOut": "Pulse is a fair launch open-source app for prediction markets",
+
+    "home.title.summary.pnl": "Unrealized PnL",
+    "home.title.summary.totalSpent": "Total spent",
+    "home.title.summary.totalBalance": "Total outcome tokens",
 
     "disclaimer.title": "Disclaimer",
     "disclaimer.description": "This is a community deployed open-source version of Pulse Protocol and is unaudited. You are acknowledging this software is provided as is with no warranty or guarantee.",

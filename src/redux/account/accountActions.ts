@@ -7,6 +7,9 @@ import {
     setNearToken,
     setWrappedNearToken,
     setEscrowStatus,
+    setUnrealizedPnl,
+    setTotalSpent,
+    setPriceSymbol,
     setAccountTransactions,
     setTotalAccountTransactions,
     setAccountTransactionsLoading,
@@ -14,7 +17,15 @@ import {
     setTotalAccountParticipatedMarkets,
     setAccountParticipatedMarkets,
 } from "./account";
-import { signUserIn, getAccountInfo, signUserOut, getAccountBalancesInfo, fetchEscrowStatus, getParticipatedMarkets } from '../../services/AccountService';
+import {
+    signUserIn,
+    getAccountInfo,
+    signUserOut,
+    getAccountBalancesInfo,
+    getAccountBalancesSummary,
+    fetchEscrowStatus,
+    getParticipatedMarkets
+} from '../../services/AccountService';
 import { getNearToken, getWrappedNearToken } from "../../services/NearService";
 import { getTransactionsForAccount } from '../../services/TransactionService';
 import { Reducers } from "../reducers";
@@ -81,6 +92,22 @@ export function loadAccountBalanceInfo(accountId: string) {
             const accountBalancesInfo = await getAccountBalancesInfo(accountId);
             dispatch(setAccountPoolTokens(accountBalancesInfo.poolTokens));
             dispatch(setAccountBalances(accountBalancesInfo.marketBalances));
+            dispatch(setAccountPoolTokenLoading(false));
+        } catch (error) {
+            dispatch(setAccountPoolTokenLoading(false));
+            console.error('[getPoolTokensForAccount]', error);
+        }
+    }
+}
+
+export function loadAccountBalancesSummary(accountId: string) {
+    return async (dispatch: Function) => {
+        try {
+            dispatch(setAccountPoolTokenLoading(true));
+            const accountBalancesSummary = await getAccountBalancesSummary(accountId);
+            dispatch(setUnrealizedPnl(accountBalancesSummary.unrealizedPnl));
+            dispatch(setTotalSpent(accountBalancesSummary.totalSpent));
+            dispatch(setPriceSymbol(accountBalancesSummary.priceSymbol));
             dispatch(setAccountPoolTokenLoading(false));
         } catch (error) {
             dispatch(setAccountPoolTokenLoading(false));

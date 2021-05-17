@@ -8,6 +8,9 @@ import { Reducers } from '../../redux/reducers';
 export default function HomeHeaderConnector(): ReactElement {
     const dispatch = useDispatch();
     const account = useSelector((store: Reducers) => store.account.account);
+    const unrealizedPnl = useSelector((store: Reducers) => store.account.accountSummary.unrealizedPnl);
+    const totalSpent = useSelector((store: Reducers) => store.account.accountSummary.totalSpent);
+    const priceSymbol = useSelector((store: Reducers) => store.account.accountSummary.priceSymbol);
 
     const handleCreateMarketClick = useCallback(() => {
         dispatch(setMarketCreationDialogOpen(true));
@@ -17,6 +20,9 @@ export default function HomeHeaderConnector(): ReactElement {
         <HomeHeader
             onCreateMarketClick={handleCreateMarketClick}
             account={account}
+            unrealizedPnl={unrealizedPnl}
+            totalSpent={totalSpent}
+            priceSymbol={priceSymbol}
         />
     );
 }

@@ -1,7 +1,9 @@
+import Big from "big.js";
 import { Account } from "../models/Account";
+import { transformToMainTokenViewModel } from "../models/TokenViewModel";
 import { PoolToken, transformToPoolToken } from "../models/PoolToken";
 import { transformToUserBalance, UserBalance } from "../models/UserBalance";
-import { getCollateralTokenMetadata } from "./CollateralTokenService";
+import { getCollateralTokenMetadata, formatCollateralToken } from "./CollateralTokenService";
 import createAuthContract from "./contracts/AuthContract";
 import { connectSdk } from "./WalletService";
 import { ENABLE_WHITELIST } from "../config";
@@ -62,6 +64,12 @@ interface AccountBalancesInfo {
     marketBalances: UserBalance[];
 }
 
+interface AccountBalancesSummary {
+    unrealizedPnl: Big;
+    totalSpent: string;
+    priceSymbol: string;
+}
+
 export async function getAccountBalancesInfo(accountId: string): Promise<AccountBalancesInfo> {
     try {
         const sdk = await connectSdk();
@@ -105,6 +113,52 @@ export async function getAccountBalancesInfo(accountId: string): Promise<Account
              marketBalances: [],
         };
     }
+}
+
+export async function getAccountBalancesSummary(accountId: string): Promise<AccountBalancesSummary> {
+    let accountBalancesInfo = await getAccountBalancesInfo(accountId);
+
+    if (accountBalancesInfo.marketBalances.length === 0) {
+        return {
+            unrealizedPnl: new Big("0"),
+            totalSpent: "",
+            priceSymbol: "",
+        }
+    }
+
+    let totalAvgPaidPrice = new Big("0");
+    let totalOutcomePrice = 0;
+    let spent = "0.00";
+    let priceSymbol = "";
+    let account = await getAccountId();
+
+    // loop through each market balance to find collateral token balances
+    for (let i = 0; i < accountBalancesInfo.marketBalances.length; i++) {
+        totalAvgPaidPrice = accountBalancesInfo.marketBalances[i].avgPaidPrice.add(totalAvgPaidPrice);
+        totalOutcomePrice += accountBalancesInfo.marketBalances[i].outcomePrice;
+
+        let collateralToken = await transformToMainTokenViewModel(accountBalancesInfo.marketBalances[i].collateralTokenMetadata.collateralTokenId, account!);
+
+        // calculate the price of the collateral token and add it to the total spent
+        let collateralTokenPrice = Number(formatCollateralToken(accountBalancesInfo.marketBalances[i].spent, collateralToken.decimals)) * collateralToken.price;
+        spent = String(
+            (Number(spent) + collateralTokenPrice).toFixed(2)
+        );
+
+        // assume same price symbol for all tokens (usually $ for USD)
+        if (i === 0) {
+            priceSymbol = collateralToken.priceSymbol;
+        }
+    }
+
+    const unrealizedPnl = totalAvgPaidPrice.gt("0") ? new Big(totalOutcomePrice).minus(totalAvgPaidPrice).div(totalAvgPaidPrice).mul(100).round(2) : new Big("0");
+    const totalSpent = String(spent);
+
+    return {
+        unrealizedPnl,
+        totalSpent,
+        priceSymbol,
+    };
 }
 
 export async function getBalancesForMarketByAccount(accountId: string, marketId: string): Promise<UserBalance[]> {
