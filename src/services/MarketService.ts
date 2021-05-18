@@ -120,15 +120,11 @@ export async function getMarketById(marketId: string): Promise<MarketViewModel |
         }
 
         const collateralToken = await transformToMainTokenViewModel(market.pool.collateral_token_id, accountId);
-        return transformToMarketViewModel({
-            resolution_time: null,
-            ...market,
-        }, collateralToken, balances);
+        return transformToMarketViewModel(market, collateralToken, balances);
     } catch (error) {
         console.error('[getMarketById]', error);
         return null;
     }
-
 }
 
 export interface MarketFilters {
@@ -145,10 +141,7 @@ export async function getMarkets(filters: MarketFilters): Promise<MarketViewMode
         const markets = await sdk.getMarkets(filters);
         const marketsPromises = markets.items.map(async (market) => {
             const collateralToken = await transformToMainTokenViewModel(market.pool.collateral_token_id);
-            return transformToMarketViewModel({
-                resolution_time: null,
-                ...market,
-            }, collateralToken);
+            return transformToMarketViewModel(market, collateralToken);
         });
 
         return Promise.all(marketsPromises);

@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMarkets } from '../../redux/market/marketActions';
+import { loadOracleConfig } from '../../redux/oracle/oracleActions';
 import { Reducers } from '../../redux/reducers';
 import { routePaths } from '../../routes';
 import { MarketFilters } from '../../services/MarketService';
@@ -11,6 +12,7 @@ export default function TradeableMarketsOverviewConnector() {
     const dispatch = useDispatch();
     const markets = useSelector((store: Reducers) => store.market.markets);
     const handleFetchMarkets = useCallback((filters: MarketFilters, append: boolean) => {
+        dispatch(loadOracleConfig());
         dispatch(fetchMarkets(filters, append));
     }, [dispatch]);
 

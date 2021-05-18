@@ -78,7 +78,7 @@ export function getTokenImageByCollateralAccountId(collateralTokenId: string): s
 
 export function createDefaultTokenMetadata(collateralTokenId: string): TokenMetadata {
     return {
-        decimals: 18,
+        decimals: WRAPPED_NEAR_ACCOUNT_ID === collateralTokenId ? 24 : 18,
         name: collateralTokenId,
         reference: '',
         symbol: collateralTokenId,

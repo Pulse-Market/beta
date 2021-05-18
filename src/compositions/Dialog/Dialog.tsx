@@ -19,6 +19,7 @@ interface Props {
     canSubmit?: boolean;
     hideButtons?: boolean;
     paperClassName?: string;
+    submitLoading?: boolean;
 }
 
 export default function Dialog({
@@ -28,6 +29,7 @@ export default function Dialog({
     isInfoDialog = false,
     onRequestClose,
     onSubmitClick,
+    submitLoading = false,
     canSubmit = true,
     hideButtons = false,
     paperClassName = '',
@@ -53,7 +55,8 @@ export default function Dialog({
                     <Button className={s.cancelButton} onClick={onRequestClose}>
                         {trans('global.action.cancel')}
                     </Button>
-                    <Button disabled={!canSubmit} className={s.confirmButton} onClick={onSubmitClick}>
+
+                    <Button disabled={!canSubmit} loading={submitLoading} className={s.confirmButton} onClick={onSubmitClick}>
                         {trans('global.action.submit')}
                     </Button>
                 </DialogActions>

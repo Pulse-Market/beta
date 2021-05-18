@@ -12,6 +12,8 @@ export default function MarketCreationDialogConnector(): ReactElement {
     const dispatch = useDispatch();
     const isDialogOpen = useSelector((store: Reducers) => store.dialogs.isMarketCreationOpen);
     const tokenWhitelist = useSelector((store: Reducers) => store.market.tokenWhitelist);
+    const submitLoading = useSelector((store: Reducers) => store.market.editLoading);
+    const oracleConfig = useSelector((store: Reducers) => store.oracle.oracleConfig);
 
     useEffect(() => {
         dispatch(loadTokenWhitelist());
@@ -25,12 +27,18 @@ export default function MarketCreationDialogConnector(): ReactElement {
         dispatch(createNewMarket(market));
     }, [dispatch]);
 
+    if (!oracleConfig) {
+        return  <></>;
+    }
+
     return (
         <MarketCreationDialog
             tokenWhitelist={tokenWhitelist}
             open={isDialogOpen}
             onRequestClose={handleRequestClose}
             onSubmit={handleSubmit}
+            submitLoading={submitLoading}
+            oracleConfig={oracleConfig}
         />
     );
 }

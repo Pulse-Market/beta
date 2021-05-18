@@ -19,3 +19,10 @@
     color: var(--c-text);
     border: 1px solid var(--c-tertiary);
 }
+
+.loader {
+    color: var(--c-white);
+    position: absolute;
+    width: 1.7rem !important;
+    height: 1.7rem !important;
+}

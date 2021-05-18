@@ -7,7 +7,7 @@ import { MarketFormValues } from "../../../services/MarketService";
 export default function createDefaultMarketFormValues(): MarketFormValues {
     return {
         type: MarketType.Binary,
-        resolutionDate: addDays(new Date(), 1),
+        resolutionDate: addDays(new Date(), 2),
         closeDate: addDays(new Date(), 1),
         categories: [],
         isCategoricalMarket: false,

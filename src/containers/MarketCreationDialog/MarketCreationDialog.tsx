@@ -18,9 +18,13 @@ import { TokenMetadata } from '../../models/TokenMetadata';
 import ToggleButtons from '../../components/ToggleButtons';
 import Big from 'big.js';
 import { validateMarketFormValues } from './utils/validateMarketFormValues';
+import { formatCollateralToken } from '../../services/CollateralTokenService';
+import { OracleConfig } from '../../models/OracleConfig';
 
 interface Props {
     open: boolean;
+    oracleConfig: OracleConfig;
+    submitLoading: boolean;
     tokenWhitelist: TokenMetadata[];
     onRequestClose: () => void;
     onSubmit: (values: MarketFormValues) => void;
@@ -31,6 +35,8 @@ export default function MarketCreationDialog({
     tokenWhitelist,
     onRequestClose,
     onSubmit,
+    submitLoading,
+    oracleConfig,
 }: Props): ReactElement {
     const formRef = useRef<HTMLFormElement>(null);
     const [formValues, setFormValues] = useState(createDefaultMarketFormValues());
@@ -130,7 +136,14 @@ export default function MarketCreationDialog({
     const errors = validateMarketFormValues(formValues);
 
     return (
-        <Dialog open={open} title="" canSubmit={errors.canSubmit} onRequestClose={onRequestClose} onSubmitClick={handleFormSubmit}>
+        <Dialog
+            open={open}
+            submitLoading={submitLoading}
+            title=""
+            canSubmit={errors.canSubmit}
+            onRequestClose={onRequestClose}
+            onSubmitClick={handleFormSubmit}
+        >
             <form className={s.filters} ref={formRef}>
                 <div className={s.inputsWrapper}>
                     <label className={s.label}>
@@ -245,6 +258,13 @@ export default function MarketCreationDialog({
                         helperText={errors.resolutionDate || trans('marketCreation.label.helperText.resolutionDate')}
                         error={!!errors.resolutionDate}
                     />
+                </div>
+
+                <div>
+                    {trans('marketCreation.label.oracleBond', {
+                        amount: formatCollateralToken(oracleConfig.validityBond.toString(), oracleConfig.token.decimals, 2),
+                        tokenName: oracleConfig.token.tokenSymbol,
+                    })}
                 </div>
             </form>
         </Dialog>
