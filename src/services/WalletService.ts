@@ -5,13 +5,14 @@ import {
 
 import FluxSdk from '@fluxprotocol/amm-sdk';
 
-import { API_URL, NETWORK, NULL_CONTRACT, ORACLE_ACCOUNT_ID, PROTOCOL_ACCOUNT_ID } from '../config';
+import { API_URL, NETWORK, NULL_CONTRACT, ORACLE_ACCOUNT_ID, ORACLE_API_URL, PROTOCOL_ACCOUNT_ID } from '../config';
 
 let sdkInstance = new FluxSdk({
     network: NETWORK,
     protocolContractId: PROTOCOL_ACCOUNT_ID,
     nullContractId: NULL_CONTRACT,
     graphApiUrl: API_URL,
+    oracleGraphApiUrl: ORACLE_API_URL,
     oracleContractId: ORACLE_ACCOUNT_ID,
 });
 

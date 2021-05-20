@@ -265,5 +265,7 @@
     "escrowStatus.table.amount": "amount",
     "escrowStatus.table.payoutState": "if market is",
     "escrowStatus.table.valid": "valid",
-    "escrowStatus.table.invalid": "invalid"
+    "escrowStatus.table.invalid": "invalid",
+
+    "marketResolutionInfo.text.oracle": "This market will be resolved by the Flux Oracle."
 }

@@ -1,4 +1,4 @@
-import FluxSdk from "@fluxprotocol/amm-sdk";
+import FluxSdk, { DataRequest } from "@fluxprotocol/amm-sdk";
 import Big from "big.js";
 import trans from "../translation/trans";
 import { ClaimViewModel, GraphClaimResponse, transformToClaimViewModel } from "./Claim";
@@ -74,6 +74,7 @@ export interface MarketViewModel {
     invalid: boolean;
     payoutNumerator: string[] | null;
     claim?: ClaimViewModel;
+    oracleId?: string;
     type: MarketType;
     poolTokenInfo: {
         totalSupply: string;
@@ -84,6 +85,7 @@ export async function transformToMarketViewModel(
     graphResponse: GraphMarketResponse,
     collateralToken: TokenViewModel,
     userBalances: UserBalance[] = [],
+    dataRequest?: DataRequest,
 ): Promise<MarketViewModel> {
     const tokensInfo = graphResponse.pool.tokens_info || [];
     const poolTokenInfo = tokensInfo.find(info => info.is_pool_token);
@@ -104,6 +106,7 @@ export async function transformToMarketViewModel(
         extraInfo: graphResponse.extra_info,
         finalized: graphResponse.finalized,
         owner: graphResponse.pool.owner,
+        oracleId: dataRequest?.id,
         // Old markets use the end_time as resolution time
         resolutionDate: new Date(parseInt(graphResponse.resolution_time ?? graphResponse.end_time)),
         closeDate: new Date(parseInt(graphResponse.end_time)),

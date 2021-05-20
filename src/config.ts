@@ -1,7 +1,9 @@
 import BN from 'bn.js';
 import Big from 'big.js';
 export const API_URL = process.env.REACT_APP_API_URL || '';
+export const ORACLE_API_URL = process.env.REACT_APP_ORACLE_API_URL ?? '';
 export const NULL_CONTRACT = process.env.REACT_APP_NULL_CONTRACT ?? 'null_contract.flux-dev';
+export const ORACLE_EXPLORER_URL = process.env.REACT_APP_ORACLE_EXPLORER_URL ?? '';
 export const COINGECKO_API_URL = process.env.REACT_APP_COINGECKO_API_URL || '';
 export const PROTOCOL_ACCOUNT_ID = process.env.REACT_APP_PROTOCOL_ACCOUNT_ID || 'amm.flux-dev';
 export const ORACLE_ACCOUNT_ID = process.env.REACT_APP_ORACLE_ACCOUNT_ID ?? 'oracle.flux-dev';

@@ -13,6 +13,7 @@ import trans from '../translation/trans';
 import cache from '../utils/cache';
 import { getBalancesForMarketByAccount } from './AccountService';
 import { createDefaultTokenMetadata, getCollateralTokenMetadata } from './CollateralTokenService';
+import { getOracleDataRequest } from './OracleService';
 import { SwapFormValues } from './SwapService';
 import { connectSdk } from './WalletService';
 
@@ -119,8 +120,10 @@ export async function getMarketById(marketId: string): Promise<MarketViewModel |
             balances = await getBalancesForMarketByAccount(accountId, marketId);
         }
 
+        const dataRequest = await getOracleDataRequest(marketId);
         const collateralToken = await transformToMainTokenViewModel(market.pool.collateral_token_id, accountId);
-        return transformToMarketViewModel(market, collateralToken, balances);
+
+        return transformToMarketViewModel(market, collateralToken, balances, dataRequest);
     } catch (error) {
         console.error('[getMarketById]', error);
         return null;

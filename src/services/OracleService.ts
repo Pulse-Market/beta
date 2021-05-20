@@ -13,3 +13,8 @@ export async function getOracleConfig(): Promise<OracleConfig> {
         validityBond: new Big(config.validity_bond),
     }
 }
+
+export async function getOracleDataRequest(marketId: string) {
+    const sdk = await connectSdk();
+    return sdk.getOracleDataRequest(marketId);
+}
