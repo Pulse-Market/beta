@@ -31,12 +31,15 @@
     opacity: 0.7;
 }
 
-.stats {
-    color: var(--c-text);
+.right {
     text-align: left;
     @include for-size($default-bigger-screen-breakpoint) {
         text-align: right;
     }
+}
+
+.stats {
+    color: var(--c-text);
 }
 
 .stats label {
