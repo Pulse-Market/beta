@@ -133,7 +133,7 @@ export default function MarketCreationDialog({
         });
     }
 
-    const errors = validateMarketFormValues(formValues);
+    const errors = validateMarketFormValues(formValues, oracleConfig);
 
     return (
         <Dialog
@@ -261,10 +261,12 @@ export default function MarketCreationDialog({
                 </div>
 
                 <div>
-                    {trans('marketCreation.label.oracleBond', {
+                    {!errors.validityBond && trans('marketCreation.label.oracleBond', {
                         amount: formatCollateralToken(oracleConfig.validityBond.toString(), oracleConfig.token.decimals, 2),
                         tokenName: oracleConfig.token.tokenSymbol,
                     })}
+
+                    {errors.validityBond}
                 </div>
             </form>
         </Dialog>

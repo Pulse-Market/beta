@@ -169,6 +169,7 @@
     "marketCreation.errors.resolutionDateEarlierThanToday": "Resolution date cannot be in the past",
     "marketCreation.errors.closeDateEarlierThanToday": "Market close date cannot be in the past",
     "marketCreation.errors.closeDateLaterThanResolution": "Market close can't be later than resolution date",
+    "marketCreation.errors.validityBond": "You do not have enough :tokenName in order to create this market. You need a minimum of :amount :tokenName",
 
     "marketClosed.description": "This market has ended. Resolution is currently in progress, come back later to claim your earnings.",
 

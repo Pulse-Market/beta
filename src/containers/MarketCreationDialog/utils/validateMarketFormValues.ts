@@ -1,4 +1,7 @@
+import Big from "big.js";
 import { MarketType } from "../../../models/Market";
+import { OracleConfig } from "../../../models/OracleConfig";
+import { formatCollateralToken } from "../../../services/CollateralTokenService";
 import { MarketFormValues } from "../../../services/MarketService";
 import trans from "../../../translation/trans";
 
@@ -7,14 +10,16 @@ export interface MarketFormErrors {
     upperBound: string;
     resolutionDate: string;
     closeDate: string;
+    validityBond: string;
 }
 
-export function validateMarketFormValues(formValues: MarketFormValues): MarketFormErrors {
+export function validateMarketFormValues(formValues: MarketFormValues, oracleConfig: OracleConfig): MarketFormErrors {
     const errors: MarketFormErrors = {
         canSubmit: true,
         upperBound: '',
         resolutionDate: '',
         closeDate: '',
+        validityBond: '',
     };
 
     if (formValues.type === MarketType.Scalar) {
@@ -63,6 +68,14 @@ export function validateMarketFormValues(formValues: MarketFormValues): MarketFo
         if (formValues.outcomes.some(o => o.trim() === '')) {
             errors.canSubmit = false;
         }
+    }
+
+    if (new Big(oracleConfig.token.balance).lt(oracleConfig.validityBond)) {
+        errors.validityBond = trans('marketCreation.errors.validityBond', {
+            amount: formatCollateralToken(oracleConfig.validityBond.toString(), oracleConfig.token.decimals, 2),
+            tokenName: oracleConfig.token.tokenSymbol,
+        });
+        errors.canSubmit = false;
     }
 
     return errors;

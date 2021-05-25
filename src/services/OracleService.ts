@@ -6,7 +6,7 @@ import { connectSdk } from "./WalletService";
 export async function getOracleConfig(): Promise<OracleConfig> {
     const sdk = await connectSdk();
     const config = await sdk.getOracleConfig();
-    const token = await transformToMainTokenViewModel(config.bond_token, undefined, false);
+    const token = await transformToMainTokenViewModel(config.bond_token, sdk.getAccountId(), false);
 
     return {
         token,
