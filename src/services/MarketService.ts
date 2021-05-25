@@ -59,8 +59,7 @@ export async function createMarket(values: MarketFormValues): Promise<void> {
         sdk.createMarket({
             description: values.description,
             endDate: values.closeDate,
-            // TODO: Add this to the SDK
-            // resolutionDate: values.resolutionDate,
+            resolutionDate: values.resolutionDate,
             extraInfo: values.extraInfo,
             outcomes,
             categories: values.categories,
