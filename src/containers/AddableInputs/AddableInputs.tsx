@@ -12,11 +12,13 @@ import s from './AddableInputs.module.scss';
 interface Props {
     onChange: (values: string[]) => void;
     values: string[];
+    disableAddButton?: boolean;
 }
 
 export default function AddableInputs({
     onChange,
     values,
+    disableAddButton = false,
 }: Props): ReactElement {
     function handleAddMoreClick() {
         values.push('');
@@ -49,7 +51,13 @@ export default function AddableInputs({
                 ))}
             </div>
 
-            <Button onClick={handleAddMoreClick} className={s.addMoreButton}>{trans('marketCreation.label.addMoreOutcomes')}</Button>
+            <Button
+                onClick={handleAddMoreClick}
+                className={s.addMoreButton}
+                disabled={disableAddButton}
+            >
+                {trans('marketCreation.label.addMoreOutcomes')}
+            </Button>
         </div>
     );
 }

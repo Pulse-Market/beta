@@ -217,7 +217,11 @@ export default function MarketCreationDialog({
                 {formValues.type === MarketType.Categorical && (
                     <div className={s.inputsWrapper}>
                         <Label text={trans('marketCreation.label.outcomes')} />
-                        <AddableInputs onChange={handleOutcomesChange} values={formValues.outcomes} />
+                        <AddableInputs
+                            onChange={handleOutcomesChange}
+                            values={formValues.outcomes}
+                            disableAddButton={formValues.outcomes.length >= oracleConfig.maxOutcomes}
+                        />
                     </div>
                 )}
 

@@ -10,6 +10,7 @@ export async function getOracleConfig(): Promise<OracleConfig> {
 
     return {
         token,
+        maxOutcomes: config.max_outcomes,
         validityBond: new Big(config.validity_bond),
     }
 }
