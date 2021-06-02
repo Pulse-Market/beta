@@ -245,7 +245,7 @@
 
     "accountTransactionsOverview.title": "Transactions",
     "accountTransactionsOverview.redeem.type": "Redeem",
-    "accountTransactionsOverview.claimEarnings.type": "Claim Earnings",
+    "accountTransactionsOverview.claimEarnings.type": "Claim",
     "accountTransactionsOverview.addLiquidity.type": "Add Liquidity",
     "accountTransactionsOverview.removeLiquidity.type": "Remove Liquidity",
     "accountTransactionsOverview.removeLiquidity.feesEarned": "Fees earned",

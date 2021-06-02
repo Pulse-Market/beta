@@ -41,6 +41,7 @@
         text-align: left;
         overflow: hidden;
         text-overflow: ellipsis;
+        max-width: 20rem;
     }
 }
 
@@ -50,10 +51,4 @@
     padding: 0.8rem;
     text-decoration: none;
     color: var(--c-text);
-}
-
-.marketDescription {
-    text-align: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
