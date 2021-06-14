@@ -8,6 +8,7 @@ import styles from './Page.module.scss';
 import WrapNearDialogConnector from "../../connectors/WrapNearDialogConnector";
 import { setDarkmode } from "../../utils/darkmode";
 import DisclaimerDialogConnector from "../../connectors/DisclaimerDialogConnector";
+import StorageManagerDialogConnector from "../../connectors/StorageManagerDialogConnector";
 interface Props {
     className?: string;
     bodyClassName?: string;
@@ -39,6 +40,7 @@ export default function Page({
             {hasNavigation && <MenuConnector />}
             <WrapNearDialogConnector />
             <DisclaimerDialogConnector />
+            <StorageManagerDialogConnector />
             <main className={pageBodyClassName}>
                 {children}
             </main>

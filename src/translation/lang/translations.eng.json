@@ -33,6 +33,7 @@
     "menu.positions": "Positions",
     "menu.wrapNear": "Wrap NEAR",
     "menu.balance": ":amount :tokenSymbol",
+    "menu.storageManager": "Storage manager",
 
     "home.title.head": ":appName - Markets",
     "home.title.welcome.loggedIn": "Welcome :username!",
@@ -267,6 +268,13 @@
     "escrowStatus.table.payoutState": "if market is",
     "escrowStatus.table.valid": "valid",
     "escrowStatus.table.invalid": "invalid",
+
+    "storageManagerDialog.title": "Storage withdrawing",
+    "storageManagerDialog.description": "Everytime you stake on a outcome NEAR is deposited in order to pay for storage. The amount deposited isn't always the amount you use. This will leave unused NEAR in the oracle contract. You can either leave it there to pay for a future transaction or withdraw your unused NEAR here.",
+    "storageManagerDialog.label.withdrawAmount": "Withdraw amount in NEAR",
+    "storageManagerDialog.errors.withdrawAmount.notEnoughToWithdraw": "You can't withdraw more than available",
+    "storageManagerDialog.label.amountAvailable": "Amount available to withdraw: :amount NEAR",
+    "storageManagerDialog.label.storageTokenName": "Unused :nativeToken for storage",
 
     "marketResolutionInfo.text.oracle": "This market will be resolved by the Flux Oracle."
 }

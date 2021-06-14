@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Menu from '../../containers/Menu';
 import { loadAccount, signIn, signOut } from '../../redux/account/accountActions';
-import { setWrappingNearDialogOpen } from '../../redux/dialogs/dialogs';
+import { setStorageManagerDialogOpen, setWrappingNearDialogOpen } from '../../redux/dialogs/dialogs';
 import { Reducers } from '../../redux/reducers';
 import { routePaths } from '../../routes';
 
@@ -37,12 +37,19 @@ export default function MenuConnector(): ReactElement {
         dispatch(setWrappingNearDialogOpen(true));
     }, [dispatch]);
 
+    const handleStorageManagerClick = useCallback(() => {
+        dispatch(setStorageManagerDialogOpen({
+            open: true,
+        }));
+    }, [dispatch]);
+
     return (
         <Menu
             onLoginClick={handleLoginClick}
             onLogoutClick={handleLogoutClick}
             onProfileClick={handleProfileClick}
             onWrapNearClick={handleWrapNearClick}
+            onStorageManagerClick={handleStorageManagerClick}
             account={accountInfo}
             loading={accountLoading}
             wrappedNear={wrappedNear}

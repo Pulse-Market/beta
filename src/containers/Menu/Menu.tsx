@@ -20,6 +20,7 @@ interface Props {
     onLoginClick: () => void;
     onLogoutClick: () => void;
     onProfileClick: () => void;
+    onStorageManagerClick: () => void;
     onWrapNearClick: () => void;
     account: Account | null;
     wrappedNear?: TokenViewModel;
@@ -30,6 +31,7 @@ export default function Menu({
     onLogoutClick,
     onProfileClick,
     onWrapNearClick,
+    onStorageManagerClick,
     account,
     loading,
     wrappedNear,
@@ -60,6 +62,11 @@ export default function Menu({
         onWrapNearClick();
     }
 
+    function handleStorageManagerClick() {
+        handleMenuClose();
+        onStorageManagerClick();
+    }
+
     return (
         <header className={classnames(s.menu, className)}>
             <div className={s.menu__items}>
@@ -87,6 +94,7 @@ export default function Menu({
                                 <MuiMenuItem disabled>NEAR: {formatCollateralToken(account.balance, 24)} Ⓝ</MuiMenuItem>
                                 <MuiMenuItem onClick={handleWrapNearClick}>{trans('menu.wrapNear')}</MuiMenuItem>
                                 <MuiMenuItem onClick={handleProfileClick}>{trans('menu.profile')}</MuiMenuItem>
+                                <MuiMenuItem onClick={handleStorageManagerClick}>{trans('menu.storageManager')}</MuiMenuItem>
                                 <MuiMenuItem onClick={handleLogoutClick}>{trans('menu.logout')}</MuiMenuItem>
                             </MuiMenu>
                         </>

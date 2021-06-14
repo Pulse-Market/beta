@@ -151,3 +151,30 @@ export async function transformToMainTokenViewModel(
         colorVar: '--c-blue',
     };
 }
+
+export function createEmptyTokenViewModel(
+    tokenName: string,
+    tokenSymbol: string,
+    balance: string,
+    decimals: number,
+): TokenViewModel {
+    return {
+        balance,
+        balanceFormatted: formatCollateralToken(balance, decimals),
+        bound: new Big(0),
+        colorVar: '--c-blue',
+        decimals,
+        isCollateralToken: false,
+        odds: new Big(0),
+        outcomeId: NaN,
+        poolBalance: "",
+        poolWeight: new Big(0),
+        price: 0,
+        priceSymbol: '$',
+        priceSymbolPosition: 'left',
+        spent: "0",
+        tokenName,
+        tokenSymbol,
+        weight: 0,
+    }
+}

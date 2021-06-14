@@ -10,6 +10,9 @@ export type DialogsState = Readonly<{
     isMarketCreationOpen: boolean;
     isWrappingNearOpen: boolean;
     noBalanceDialog: NoBalanceDialogProps;
+    storageManager: {
+        open: boolean;
+    }
 }>;
 
 const initialState: DialogsState = {
@@ -18,6 +21,9 @@ const initialState: DialogsState = {
     noBalanceDialog: {
         open: false,
     },
+    storageManager: {
+        open: false,
+    }
 };
 
 const dialogsSlice = createSlice({
@@ -41,6 +47,12 @@ const dialogsSlice = createSlice({
                 ...state,
                 noBalanceDialog: action.payload,
             });
+        },
+        setStorageManagerDialogOpen(state: DialogsState, action: PayloadAction<DialogsState['storageManager']>): DialogsState {
+            return {
+                ...state,
+                storageManager: action.payload,
+            };
         }
     },
 });
@@ -49,6 +61,7 @@ export const {
     setMarketCreationDialogOpen,
     setWrappingNearDialogOpen,
     setNoBalanceDialog,
+    setStorageManagerDialogOpen,
 } = dialogsSlice.actions;
 
 export default dialogsSlice.reducer;

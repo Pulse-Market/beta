@@ -6,10 +6,10 @@ import { transformToUserBalance, UserBalance } from "../models/UserBalance";
 import { getCollateralTokenMetadata, formatCollateralToken } from "./CollateralTokenService";
 import createAuthContract from "./contracts/AuthContract";
 import { connectSdk } from "./WalletService";
-import { ENABLE_WHITELIST } from "../config";
+import { ENABLE_WHITELIST, PROTOCOL_ACCOUNT_ID } from "../config";
 import { EscrowStatus, transformEscrowStatusViewModel } from "../models/EscrowStatus";
 import { ParticipatedMarket, transformToParticipatedMarket } from "../models/ParticipatedMarket";
-import { Pagination } from "@fluxprotocol/amm-sdk/dist/models/Pagination";
+import FluxSdk, { Pagination } from "@fluxprotocol/amm-sdk";
 
 export async function signUserIn() {
     const sdk = await connectSdk();
@@ -36,10 +36,14 @@ export async function getAccountInfo(): Promise<Account | null> {
         canUseApp = await auth.isAuthenticated(accountId);
     }
 
+    const storageInfo = await FluxSdk.utils.getStorageBalance(PROTOCOL_ACCOUNT_ID, accountId, sdk.walletConnection!);
+
     return {
         accountId,
         balance: (await sdk.getNearBalance()).available,
         canUseApp,
+        storageAvailable: storageInfo.available,
+        storageTotal: storageInfo.total,
     };
 }
 

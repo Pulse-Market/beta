@@ -1,0 +1,17 @@
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.formItem {
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.formInput {
+    width: 100%;
+}
+
+.error {
+    color: var(--c-error);
+}

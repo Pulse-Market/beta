@@ -1,5 +1,6 @@
 import BN from 'bn.js';
 import Big from 'big.js';
+
 export const API_URL = process.env.REACT_APP_API_URL || '';
 export const ORACLE_API_URL = process.env.REACT_APP_ORACLE_API_URL ?? '';
 export const NULL_CONTRACT = process.env.REACT_APP_NULL_CONTRACT ?? 'null_contract.flux-dev';
@@ -29,8 +30,8 @@ export const SCALAR_VALUE_DECIMALS = 2;
 export const SELECTED_OUTCOME_TOKEN_STORAGE_KEY = `flux_selected_outcome_${NETWORK}_`;
 export const REF_FINANCE_LINK = 'https://app.ref.finance/';
 export const RAINBOW_BRIDGE_LINK = 'https://ethereum.bridgetonear.org/';
-
-
 export const DEFAULT_LIMIT = 100;
+export const NATIVE_TOKEN_DECIMALS = 24;
+export const NATIVE_TOKEN_NAME = 'NEAR';
 
 Big.PE = 1000000;
