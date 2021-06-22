@@ -16,6 +16,7 @@ export type MarketState = Readonly<{
     editLoading: boolean,
     poolTokenBalance?: PoolToken;
     tokenWhitelist: TokenMetadata[];
+    tokenList: TokenViewModel[]; // Used for creating markets with crypto prices
 }>;
 
 const initialState: MarketState = {
@@ -26,6 +27,7 @@ const initialState: MarketState = {
     escrowStatus: [],
     resolutingMarkets: [],
     tokenWhitelist: [],
+    tokenList: [],
 };
 
 const marketsSlice = createSlice({
@@ -123,6 +125,13 @@ const marketsSlice = createSlice({
                 escrowStatus: action.payload,
             });
         },
+
+        setTokenList(state: MarketState, action: PayloadAction<TokenViewModel[]>): MarketState {
+            return ({
+                ...state,
+                tokenList: action.payload,
+            });
+        }
     },
 });
 
@@ -141,6 +150,7 @@ export const {
     setPendingMarkets,
     appendResolutingMarkets,
     setMarketEscrowStatus,
+    setTokenList,
 } = marketsSlice.actions;
 
 export default marketsSlice.reducer;

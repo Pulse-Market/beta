@@ -5,7 +5,7 @@ import { BANANAS_NEAR_ACCOUNT_ID, WRAPPED_NEAR_ACCOUNT_ID, DAI_NEAR_ACCOUNT_ID, 
 import { isFetchResultSuccesful } from "../models/FetchResult";
 import { TokenMetadata } from '../models/TokenMetadata';
 import cache from '../utils/cache';
-import { getTokenPriceByTicker } from "./TokenPriceService";
+import { getTokenPriceByTicker } from "./CoingeckoService";
 import { connectSdk } from "./WalletService";
 import wrappedNearIcon from '../assets/images/icons/wrapped-near.svg';
 import bananaTokenIcon from '../assets/images/icons/banana-token.svg';

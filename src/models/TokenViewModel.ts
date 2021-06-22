@@ -10,6 +10,7 @@ import trans from "../translation/trans";
 import { getColorForOutcome } from "../utils/getColorForOutcome";
 
 export interface TokenViewModel {
+    id: string;
     tokenImage?: string;
     tokenName: string;
     balance: string;
@@ -84,6 +85,7 @@ export function transformToTokenViewModels(
         const scalarName = bounds?.lowerBound.eq(bound) ? trans('market.outcomes.short') : trans('market.outcomes.long');
 
         return {
+            id: '',
             balance: userBalance?.balance || '0',
             balanceFormatted: formatCollateralToken(userBalance?.balance ?? '0', collateralToken?.decimals ?? 18),
             outcomeId,
@@ -130,6 +132,7 @@ export async function transformToMainTokenViewModel(
     const metadata = await metadataRequest;
 
     return {
+        id: '',
         balance,
         balanceFormatted: formatCollateralToken(balance, metadata.decimals),
         decimals: metadata.decimals,
@@ -157,8 +160,10 @@ export function createEmptyTokenViewModel(
     tokenSymbol: string,
     balance: string,
     decimals: number,
+    id = '',
 ): TokenViewModel {
     return {
+        id,
         balance,
         balanceFormatted: formatCollateralToken(balance, decimals),
         bound: new Big(0),

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import MarketCreationDialog from '../../containers/MarketCreationDialog';
 import { setMarketCreationDialogOpen } from '../../redux/dialogs/dialogs';
-import { createNewMarket, loadTokenWhitelist } from '../../redux/market/marketActions';
+import { createNewMarket, loadPopularTokens, loadTokenWhitelist } from '../../redux/market/marketActions';
 import { Reducers } from '../../redux/reducers';
 import { MarketFormValues } from '../../services/MarketService';
 
@@ -14,9 +14,11 @@ export default function MarketCreationDialogConnector(): ReactElement {
     const tokenWhitelist = useSelector((store: Reducers) => store.market.tokenWhitelist);
     const submitLoading = useSelector((store: Reducers) => store.market.editLoading);
     const oracleConfig = useSelector((store: Reducers) => store.oracle.oracleConfig);
+    const tokens = useSelector((store: Reducers) => store.market.tokenList);
 
     useEffect(() => {
         dispatch(loadTokenWhitelist());
+        dispatch(loadPopularTokens());
     }, [dispatch]);
 
     const handleRequestClose = useCallback(() => {
@@ -34,6 +36,7 @@ export default function MarketCreationDialogConnector(): ReactElement {
     return (
         <MarketCreationDialog
             tokenWhitelist={tokenWhitelist}
+            tokens={tokens}
             open={isDialogOpen}
             onRequestClose={handleRequestClose}
             onSubmit={handleSubmit}

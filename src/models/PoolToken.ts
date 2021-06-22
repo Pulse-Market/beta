@@ -49,6 +49,7 @@ export function transformToPoolToken(graphData: EarnedFeesGraphData, collateralT
 
 export function transformPoolTokenToTokenViewModel(pooltoken: PoolToken): TokenViewModel {
     return {
+        id: '',
         balance: pooltoken.balance,
         balanceFormatted: pooltoken.balanceFormatted,
         decimals: pooltoken.collateralTokenDecimals,

@@ -1,11 +1,12 @@
 import { MarketViewModel } from "../../models/Market";
 import { TokenViewModel } from "../../models/TokenViewModel";
 import { getAccountId, getPoolBalanceForMarketByAccount } from "../../services/AccountService";
+import { getPopularTokens } from "../../services/CoingeckoService";
 import { getCollateralTokenMetadata } from "../../services/CollateralTokenService";
 import { createMarket, getEscrowStatus, getMarketById, getMarketOutcomeTokens, getMarkets, getTokenWhiteListWithDefaultMetadata, MarketFilters, MarketFormValues } from "../../services/MarketService";
 import { seedPool, exitPool, SeedPoolFormValues, seedScalarMarket, SeedScalarMarketFormValues } from "../../services/PoolService";
 import { Reducers } from "../reducers";
-import { setMarketEscrowStatus, appendResolutingMarkets, appendMarkets, setMarketErrors, setMarketLoading, setMarketDetail, setMarkets, setResolutingMarkets, setMarketEditLoading, setMarketPoolTokenBalance, setMarketDetailTokens, setTokenWhitelist, setPendingMarkets, appendPendingMarkets } from "./market";
+import { setMarketEscrowStatus, appendResolutingMarkets, appendMarkets, setMarketErrors, setMarketLoading, setMarketDetail, setMarkets, setResolutingMarkets, setMarketEditLoading, setMarketPoolTokenBalance, setMarketDetailTokens, setTokenWhitelist, setPendingMarkets, appendPendingMarkets, setTokenList } from "./market";
 
 export function createNewMarket(values: MarketFormValues) {
     return async (dispatch: Function) => {
@@ -173,5 +174,17 @@ export function loadTokenWhitelist() {
 
         const realMetadata = await Promise.all(metadataPromises);
         dispatch(setTokenWhitelist(realMetadata));
+    }
+}
+
+export function loadPopularTokens() {
+    return async (dispatch: Function) => {
+        const tokens = (await getPopularTokens()).sort((a, b) => {
+            if (a.tokenName < b.tokenName) return -1;
+            if (a.tokenName > b.tokenName) return 1;
+            return 0;
+        });
+
+        dispatch(setTokenList(tokens));
     }
 }

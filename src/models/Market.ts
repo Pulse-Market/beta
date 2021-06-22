@@ -21,6 +21,7 @@ export enum MarketType {
     Binary = 'binary',
     Categorical = 'categorical',
     Scalar = 'scalar',
+    CryptoPrice = 'crypto-price',
 }
 
 export interface GraphMarketResponse {
@@ -38,6 +39,7 @@ export interface GraphMarketResponse {
     payout_numerator?: string[] | null;
     claimed_earnings?: GraphClaimResponse;
     is_scalar?: boolean;
+    scalar_multiplier: string;
     pool: {
         owner: string;
         collateral_token_id: string;
@@ -91,11 +93,15 @@ export async function transformToMarketViewModel(
     const poolTokenInfo = tokensInfo.find(info => info.is_pool_token);
     const payoutNumerator = graphResponse.payout_numerator ? graphResponse.payout_numerator : null;
     const marketType = graphResponse.is_scalar ? MarketType.Scalar : MarketType.Categorical;
-
     const formattedVolume = FluxSdk.utils.formatToken(graphResponse.volume, collateralToken.decimals);
     const volumeInMoney = new Big(formattedVolume).mul(collateralToken.price).toString();
     const formattedLiquidity = FluxSdk.utils.formatToken(graphResponse.liquidity ?? '0', collateralToken.decimals);
     const liquidityInMoney = new Big(formattedLiquidity).mul(collateralToken.price).toString();
+    let outcomeTags = graphResponse.outcome_tags;
+
+    if (marketType === MarketType.Scalar) {
+        outcomeTags = outcomeTags.map(tag => new Big(tag).div(graphResponse.scalar_multiplier ?? '100').toString());
+    }
 
     return {
         id: graphResponse.id,
@@ -120,7 +126,7 @@ export async function transformToMarketViewModel(
         payoutNumerator,
         claim: graphResponse.claimed_earnings ? transformToClaimViewModel(graphResponse.claimed_earnings, collateralToken) : undefined,
         outcomeTokens: transformToTokenViewModels(
-            graphResponse.outcome_tags,
+            outcomeTags,
             graphResponse.pool.pool_balances as any,
             userBalances,
             marketType,

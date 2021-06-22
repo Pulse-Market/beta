@@ -20,12 +20,15 @@ import Big from 'big.js';
 import { validateMarketFormValues } from './utils/validateMarketFormValues';
 import { formatCollateralToken } from '../../services/CollateralTokenService';
 import { OracleConfig } from '../../models/OracleConfig';
+import { TokenViewModel } from '../../models/TokenViewModel';
+import { prettyFormatDate } from '../../services/DateService';
 
 interface Props {
     open: boolean;
     oracleConfig: OracleConfig;
     submitLoading: boolean;
     tokenWhitelist: TokenMetadata[];
+    tokens: TokenViewModel[];
     onRequestClose: () => void;
     onSubmit: (values: MarketFormValues) => void;
 }
@@ -35,12 +38,14 @@ export default function MarketCreationDialog({
     tokenWhitelist,
     onRequestClose,
     onSubmit,
+    tokens,
     submitLoading,
     oracleConfig,
 }: Props): ReactElement {
     const formRef = useRef<HTMLFormElement>(null);
     const [formValues, setFormValues] = useState(createDefaultMarketFormValues());
     const marketCategories = useMemo(() => Object.values(MarketCategory).filter(category => category !== MarketCategory.Unknown), []);
+    const selectedToken = tokens.find(token => token.id === formValues.selectedTokenId);
 
     function handleFormSubmit() {
         onSubmit(formValues);
@@ -64,10 +69,26 @@ export default function MarketCreationDialog({
     function handleResolutionDateChange(date: Date | null) {
         if (!date) return;
 
-        setFormValues({
+        const newValues: MarketFormValues = {
             ...formValues,
             resolutionDate: date,
-        });
+        };
+
+        if (formValues.type === MarketType.CryptoPrice) {
+            newValues.extraInfo = trans('marketCreation.description.cryptoPriceResolutionInfo', {
+                url: `https://www.coingecko.com/en/coins/${selectedToken?.id ?? ''}`,
+                time: newValues.resolutionDate.getTime().toString(),
+                tokenSymbol: selectedToken?.tokenSymbol ?? '',
+                tokenName: selectedToken?.tokenName ?? '',
+            });
+
+            newValues.description = trans('marketCreation.description.cryptoPrice', {
+                tokenName: selectedToken?.tokenName ?? '',
+                tokenSymbol: selectedToken?.tokenSymbol ?? '',
+            });
+        }
+
+        setFormValues(newValues);
     }
 
     function handleCloseDateChange(date: Date | null) {
@@ -133,6 +154,33 @@ export default function MarketCreationDialog({
         });
     }
 
+    function handleTokenChange(item: SelectItem) {
+        const token = tokens.find(token => token.id === item.value);
+
+        setFormValues({
+            ...formValues,
+            selectedTokenId: item.value,
+            description: trans('marketCreation.description.cryptoPrice', {
+                tokenName: token?.tokenName ?? '',
+                tokenSymbol: token?.tokenSymbol ?? '',
+                date: prettyFormatDate(formValues.resolutionDate),
+            }),
+            extraInfo: trans('marketCreation.description.cryptoPriceResolutionInfo', {
+                url: `https://www.coingecko.com/en/coins/${token?.id ?? ''}`,
+                time: formValues.resolutionDate.getTime().toString(),
+                tokenSymbol: token?.tokenSymbol ?? '',
+                tokenName: token?.tokenName ?? '',
+            }),
+        });
+    }
+
+    function handleDecimalsChange(value: string) {
+        setFormValues({
+            ...formValues,
+            decimals: value,
+        });
+    }
+
     const errors = validateMarketFormValues(formValues, oracleConfig);
 
     return (
@@ -177,18 +225,6 @@ export default function MarketCreationDialog({
                 </div>
                 <div className={s.inputsWrapper}>
                     <label className={s.label}>
-                        {trans('marketCreation.label.description')}
-                    </label>
-                    <TextInput required multiline onChange={handleDescriptionChange} value={formValues.description} />
-                </div>
-                <div className={s.inputsWrapper}>
-                    <label className={s.label}>
-                        {trans('marketCreation.label.extraInfo')}
-                    </label>
-                    <TextInput required multiline onChange={handleExtraInfoChange} value={formValues.extraInfo} />
-                </div>
-                <div className={s.inputsWrapper}>
-                    <label className={s.label}>
                         {trans('marketCreation.label.marketType')}
                     </label>
                     <ToggleButtons
@@ -209,10 +245,47 @@ export default function MarketCreationDialog({
                             {
                                 id: MarketType.Scalar,
                                 text: trans('marketCreation.label.scalar'),
+                            },
+                            {
+                                id: MarketType.CryptoPrice,
+                                text: trans('marketCreation.label.cryptoPrice'),
                             }
                         ]}
                     />
                 </div>
+
+                {formValues.type !== MarketType.CryptoPrice && (
+                    <>
+                        <div className={s.inputsWrapper}>
+                            <label className={s.label}>
+                                {trans('marketCreation.label.description')}
+                            </label>
+                            <TextInput required multiline onChange={handleDescriptionChange} value={formValues.description} />
+                        </div>
+                        <div className={s.inputsWrapper}>
+                            <label className={s.label}>
+                                {trans('marketCreation.label.extraInfo')}
+                            </label>
+                            <TextInput required multiline onChange={handleExtraInfoChange} value={formValues.extraInfo} />
+                        </div>
+                    </>
+                )}
+
+                {formValues.type === MarketType.CryptoPrice && (
+                    <div className={s.inputsWrapper}>
+                        <label className={s.label}>
+                            {trans('marketCreation.label.selectCoin')}
+                        </label>
+                        <Select
+                            onChange={handleTokenChange}
+                            value={formValues.selectedTokenId}
+                            items={tokens.map((token) => ({
+                                label: `${token.tokenName} - ${token.tokenSymbol}`,
+                                value: token.id,
+                            }))}
+                        />
+                    </div>
+                )}
 
                 {formValues.type === MarketType.Categorical && (
                     <div className={s.inputsWrapper}>
@@ -225,11 +298,21 @@ export default function MarketCreationDialog({
                     </div>
                 )}
 
-                {formValues.type === MarketType.Scalar && (
+                {(formValues.type === MarketType.Scalar || formValues.type === MarketType.CryptoPrice) && (
                     <>
                         <div className={s.inputsWrapper}>
+                            <Label text={trans('marketCreation.label.scalarDecimals')} />
+                            <TextInput
+                                type="number"
+                                value={formValues.decimals.toString()}
+                                onChange={handleDecimalsChange}
+                                error={!!errors.decimals}
+                                helperText={errors.decimals}
+                            />
+                        </div>
+                        <div className={s.inputsWrapper}>
                             <Label text={trans('marketCreation.label.scalarLowerBound')} />
-                            <TextInput type="number" value={formValues.lowerBound.toString()} onChange={handleLowerBoundChange} />
+                            <TextInput type="number" value={formValues.lowerBound.toString()} onChange={handleLowerBoundChange} helperText={errors.lowerBound} error={!!errors.lowerBound} />
                         </div>
                         <div className={s.inputsWrapper}>
                             <Label text={trans('marketCreation.label.scalarUpperBound')} />
@@ -264,7 +347,29 @@ export default function MarketCreationDialog({
                     />
                 </div>
 
-                <div>
+                {formValues.type === MarketType.CryptoPrice && selectedToken && (
+                    <>
+                        <div className={s.inputsWrapper}>
+                            <label className={s.label}>
+                                {trans('marketCreation.label.cryptoPriceDescription')}
+                            </label>
+                            <p>
+                                {formValues.description}
+                            </p>
+                        </div>
+
+                        <div className={s.inputsWrapper}>
+                            <label className={s.label}>
+                                {trans('marketCreation.label.cryptoPriceResolutionInfo')}
+                            </label>
+                            <p>
+                                {formValues.extraInfo}
+                            </p>
+                        </div>
+                    </>
+                )}
+
+                <div className={s.inputsWrapper}>
                     {!errors.validityBond && trans('marketCreation.label.oracleBond', {
                         amount: formatCollateralToken(oracleConfig.validityBond.toString(), oracleConfig.token.decimals, 2),
                         tokenName: oracleConfig.token.tokenSymbol,

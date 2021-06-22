@@ -11,6 +11,7 @@ import { MAX_GAS, PROTOCOL_ACCOUNT_ID } from "../config";
 
 export async function getNearToken(): Promise<TokenViewModel> {
     const defaults: TokenViewModel = {
+        id: 'near',
         decimals: 24,
         isCollateralToken: false,
         odds: new Big(0),
@@ -48,6 +49,7 @@ export async function getNearToken(): Promise<TokenViewModel> {
 
 export async function getWrappedNearToken(): Promise<TokenViewModel> {
     const defaults: TokenViewModel = {
+        id: 'near',
         decimals: 24,
         isCollateralToken: false,
         odds: new Big(0),

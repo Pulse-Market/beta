@@ -19,6 +19,7 @@ import { connectSdk } from './WalletService';
 
 export interface MarketFormValues {
     type: MarketType;
+    selectedTokenId: string;
     isCategoricalMarket: boolean;
     categories: MarketCategory[];
     resolutionDate: Date;
@@ -29,6 +30,7 @@ export interface MarketFormValues {
     collateralTokenId: string;
     lowerBound: Big;
     upperBound: Big;
+    decimals: string;
 }
 
 function createOutcomes(values: MarketFormValues): string[] {
@@ -36,7 +38,7 @@ function createOutcomes(values: MarketFormValues): string[] {
         return values.outcomes;
     }
 
-    if (values.type === MarketType.Scalar) {
+    if (values.type === MarketType.Scalar || values.type === MarketType.CryptoPrice) {
         return [
             values.lowerBound.toString(),
             values.upperBound.toString(),
@@ -64,8 +66,9 @@ export async function createMarket(values: MarketFormValues): Promise<void> {
             outcomes,
             categories: values.categories,
             collateralTokenId: values.collateralTokenId,
-            isScalar: values.type === MarketType.Scalar,
+            isScalar: values.type === MarketType.Scalar || values.type === MarketType.CryptoPrice,
             swapFee: new Big(`1e${tokenMetadata.decimals}`).div(formattedFee).toString(),
+            scalarMultiplier: new Big(`1e${values.decimals}`).toString(),
         });
     } catch (error) {
         console.error('[createMarket]', error);
@@ -159,13 +162,18 @@ export async function getMarketOutcomeTokens(marketId: string, collateralToken?:
         const result = await sdk.getMarketPoolBalances(marketId);
         const accountId = account?.accountId;
         let balances: UserBalance[] = [];
+        let outcomeTags = result.outcome_tags;
+
+        if (result.is_scalar) {
+            outcomeTags = outcomeTags.map(tag => new Big(tag).div(result.scalar_multiplier ?? '100').toString());
+        }
 
         if (accountId) {
             balances = await getBalancesForMarketByAccount(accountId, marketId);
         }
 
         return transformToTokenViewModels(
-            result.outcome_tags,
+            outcomeTags,
             result.pool.pool_balances as any,
             balances,
             result.is_scalar ? MarketType.Scalar : MarketType.Categorical,

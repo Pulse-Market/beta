@@ -17,5 +17,7 @@ export default function createDefaultMarketFormValues(): MarketFormValues {
         collateralTokenId: FUNGIBLE_TOKEN_ACCOUNT_ID,
         lowerBound: new Big(0),
         upperBound: new Big(1),
+        selectedTokenId: '',
+        decimals: '2',
     }
 }
