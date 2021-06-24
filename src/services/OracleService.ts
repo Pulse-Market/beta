@@ -8,6 +8,8 @@ export async function getOracleConfig(): Promise<OracleConfig> {
     const config = await sdk.getOracleConfig();
     const token = await transformToMainTokenViewModel(config.bond_token, sdk.getAccountId(), false);
 
+    token.decimals = 18;
+
     return {
         token,
         maxOutcomes: config.max_outcomes,
