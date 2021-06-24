@@ -29,7 +29,7 @@ export async function getAccountInfo(): Promise<Account | null> {
     }
 
     let canUseApp = true;
-    const accountId = sdk.getAccountId() ?? '';
+    const accountId = await getAccountId() ?? '';
 
     if (ENABLE_WHITELIST) {
         const auth = await createAuthContract();
