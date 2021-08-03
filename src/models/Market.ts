@@ -6,7 +6,6 @@ import { TokenViewModel, transformToTokenViewModels } from "./TokenViewModel";
 import { UserBalance } from "./UserBalance";
 
 export enum MarketCategory {
-    Stocks = 'stocks',
     Esports = 'esports',
     Meme = 'meme',
     Politics = 'politics',

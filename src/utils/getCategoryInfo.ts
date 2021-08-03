@@ -98,15 +98,6 @@ export default function getCategoryInfo(category?: MarketCategory | string): Cat
                 title: trans('market.category.startups'),
                 color: '#5390D9',
             };
-        case MarketCategory.Stocks:
-            return {
-                circleIcon: circleStocks,
-                category,
-                cardIcon: cardStocks,
-                icon: iconStocks,
-                title: trans('market.category.stocks'),
-                color: '#4EA8DE',
-            };
         case MarketCategory.Viral:
             return {
                 circleIcon: circleViral,
